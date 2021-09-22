@@ -1,0 +1,42 @@
+.card {
+
+  height: 100%;
+  width: 100%;
+  border: 1px solid $dark;
+
+  &__header {
+    height: auto;
+    padding: 1rem;
+    border-bottom:  inherit;
+  }
+
+  &__body {
+    height: auto;
+    padding: 1rem;
+  }
+
+  &__borderless {
+    border: none !important;
+  }
+
+  &__footer {
+
+  }
+
+  &__flat {
+
+  }
+
+  &__theme {
+    &__default {
+      color: $dark;
+      background-color: transparent;
+    }
+
+    &__primary {
+      color: $light !important;
+      background-color: $primary;
+      border: 1px solid white;
+    }
+  }
+}

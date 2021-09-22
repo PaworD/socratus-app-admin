@@ -1,0 +1,33 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+   th {
+     text-transform: uppercase;
+     text-align: left;
+     border: 1px solid  $dark;
+     color: $dark;
+     cursor: pointer;
+     padding: 8px;
+     min-width: 30px;
+   }
+
+  td {
+    text-align: left;
+    padding: 8px;
+    border-right: 1px solid $light;
+    border-bottom: 1px solid $light;
+
+    &:last-child {
+        border-right: none;
+    }
+  }
+
+  tbody {
+    tr:hover {
+      background-color: #fafafa;
+    }
+  }
+
+
+}

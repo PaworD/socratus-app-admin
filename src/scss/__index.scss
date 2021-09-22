@@ -1,0 +1,23 @@
+//External Imports
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap');
+
+@import './__variables.scss';
+
+@import './shared/ButtonEffects.scss';
+@import './shared/Dropdown/_Dropdown';
+@import './shared/Dropdown/_Accordion';
+@import './shared/Tabs/_Tabs';
+@import './shared/Card/_Card';
+@import "./shared/Calendar/_Calendar";
+@import "./shared/RadioButton/_RadioButton";
+@import "./shared/Table/_Table";
+@import "./shared/Checkbox/_Checkbox";
+@import "./shared/Timetable/_Timetable";
+@import "./views/auth/_Auth";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
