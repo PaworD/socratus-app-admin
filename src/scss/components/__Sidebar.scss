@@ -1,0 +1,45 @@
+.sidebar {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-flow: column;
+
+  &__list {
+    flex: 1;
+
+    li {
+      list-style: none;
+
+      &:not(:last-child) {
+        margin-bottom: .4rem;
+      }
+
+      a {
+        display: block;
+        text-decoration: none;
+
+        width: 100%;
+        padding: .8rem;
+
+        color: $dark;
+        background-color: transparent;
+
+        transition: background-color .3s ease-in-out;
+        will-change: background;
+
+        &:hover {
+          background-color: $accent;
+          color: $black;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    height: auto;
+    font-size: 10px;
+    color: $ft-light;
+    text-align: center;
+  }
+}

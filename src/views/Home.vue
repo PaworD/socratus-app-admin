@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <AuthView />
+
   </div>
 </template>
 

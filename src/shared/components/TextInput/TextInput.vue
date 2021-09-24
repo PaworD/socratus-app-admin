@@ -51,9 +51,15 @@ export default STextInput
     width: 100%;
 		background: #fff;
 		font: inherit;
-		outline: 0;
+		outline: none;
     border: 2px solid $dark;
     transition: all .3s ease;
+
+    padding-left: .7rem;
+
+    &::placeholder {
+      color: $ft-light;
+    }
 
     &:focus {
       border: 2px solid #3a3a3a;
@@ -61,7 +67,14 @@ export default STextInput
 
     &--flat {
       box-shadow: none;
-      border-bottom: 1px solid #3a3a3a;
+      border: none;
+
+      color: $ft-light;
+      background: $gray-10;
+
+      &:focus {
+        border: none;
+      }
     }
 
     //Sizes
@@ -75,6 +88,7 @@ export default STextInput
 
     &--small {
       padding: 8px 4px;
+      font-size: .8rem;
     }
   }
 </style>

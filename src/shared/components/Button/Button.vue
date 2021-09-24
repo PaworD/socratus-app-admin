@@ -3,7 +3,10 @@
   @click="onClick"
   :data-tooltip="tooltip"
   :class="[ 'button ', `button--${theme}`, `button--${size}`, { 'button--flat' : flat }]"
-  >{{label}}</button>
+  >
+    <div v-if="!$slots.icon">{{label}}</div>
+    <div v-if="$slots.icon"><slot name="icon"></slot></div>
+  </button>
 </template>
 
 <script lang="ts">
@@ -18,7 +21,7 @@ import { ButtonSize, ButtonTheme } from './Button.contracts'
  */
 @Component({ name: 'SButton' })
 export class SButton extends Vue {
-  @Prop({type: String, required: true, default: {}})
+  @Prop({type: String, required: true, default: ''})
   private readonly label!: string
 
   @Prop({type: String, required: false, default: ''})
@@ -49,6 +52,10 @@ export default SButton
     cursor: pointer;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     outline: 0;
+
+    display: flex;
+    gap: 5px;
+
 
     &--flat {
       box-shadow: none;

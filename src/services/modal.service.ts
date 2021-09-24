@@ -2,7 +2,11 @@ import Vue, { VueConstructor } from "vue";
 
 import { AbstractModalService, ModalConfigs } from "@/shared/abstract";
 import { AnyObject } from "@/shared/models";
+import SModalWrapper from "@/shared/components/Modal/Modal.vue";
 
+/**
+ * Type declaration for global access to $modalService
+ */
 declare module 'vue/types/vue' {
     interface Vue {
         $modalService: {
@@ -11,18 +15,40 @@ declare module 'vue/types/vue' {
     }
 }
 
+/**
+ * Modal Service class
+ *
+ * @inheritDoc
+ *
+ * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
+ */
 export class ModalService extends AbstractModalService {
 
+    /**
+     * Template to render
+     * @private
+     */
     private modalTemplate =
         `
-            <div style="width: 100px; height: 100px; position: absolute; top: 0; left: 0; z-index: 11; background-color: #2c3e50;">
-                <ModalComponent :modalData="modalData" :showDialog.sync="showDialog"/>
-            </div>
+                <SModalWrapper :show="showDialog" :setting="modalOptions" @on-close="closeModal">
+                    <ModalComponent :modal-data="modalData" :showDialog.sync="showDialog"/>
+                </SModalWrapper>
         `
 
+    /**
+     *
+     * @inheritDoc
+     *
+     * @param Modal
+     * @param payload
+     * @param configs
+     */
     public open(Modal: VueConstructor, payload: AnyObject, configs?: ModalConfigs): Promise<AnyObject> {
         return new Promise((resolve) => {
             const _extendedModalComponent = Vue.extend(Modal).extend({
+                components: {
+                    SModalWrapper,
+                },
                 props: {
                     showDialog: Boolean,
                     modalData: Object || undefined
@@ -36,6 +62,7 @@ export class ModalService extends AbstractModalService {
             })
             const _tempComponent = Vue.component('modal-component', {
                 components: {
+                    SModalWrapper,
                     ModalComponent: _extendedModalComponent
                 },
                 data () {
@@ -58,7 +85,11 @@ export class ModalService extends AbstractModalService {
             })
 
             const _modal = new _tempComponent()
-            _modal.$mount()
+            // Inject Div into DOM
+            const div = document.createElement('div')
+            div.setAttribute('id', 'async-div')
+            document.body.appendChild(div);
+            _modal.$mount('#async-div')
         })
     }
 
