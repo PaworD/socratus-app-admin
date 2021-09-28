@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <Layout>
+    <template v-if="!isLoggedIn">
+      <AuthView/>
+    </template>
+    <Layout v-else>
       <template v-slot:sidebar>
           <Sidebar/>
       </template>
       <template v-slot:content>
-        <transition name="scale">
           <router-view></router-view>
-        </transition>
       </template>
     </Layout>
   </div>
@@ -17,15 +18,19 @@
 import {Component, Vue} from "vue-property-decorator";
 import { Layout } from "@/components/Layout.vue";
 import { Sidebar } from "@/components/Sidebar.vue";
+import { AuthView } from "@/views/auth/views";
 
 @Component({
   name: 'App',
   components: {
+    AuthView,
     Layout,
     Sidebar
   }
 })
 export class App extends Vue {
+
+  public isLoggedIn = false
 
 }
 export default App
@@ -33,16 +38,5 @@ export default App
 <style lang="scss">
 * {
   //
-}
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.5s ease;
-}
-
-
-.scale-enter-from,
-.scale-leave-to {
-  opacity: 0;
-  transform: scale(0.9);
 }
 </style>

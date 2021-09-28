@@ -1,4 +1,6 @@
 import { Identifier } from "@/shared/models";
+import { AxiosInstance } from "axios";
+import { Axios } from "@/config";
 
 
 export interface IService<T> {
@@ -9,11 +11,21 @@ export interface IService<T> {
 }
 
 /**
- * Base Service abstraction that every Service *should* extend
+ * Base Service abstraction that every Model Based Service *should* extend
  *
  * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
  */
 export abstract class AbstractService<T> implements IService<T>{
+
+    /**
+     * Instance of AxiosConfig
+     * @protected
+     */
+    protected http: AxiosInstance
+
+    protected constructor() {
+        this.http = Axios((process.env.VUE_APP_SOCRATUS_APP_URL))
+    }
 
     /**
      * Url of api (Not base url)

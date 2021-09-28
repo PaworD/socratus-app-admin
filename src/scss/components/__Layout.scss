@@ -49,12 +49,15 @@
 
     &__content {
       padding: 1.5rem;
+      overflow-y: scroll;
     }
   }
 
   &__sidebar {
     width: 25%;
     height: 100vh;
+
+    min-width: 300px;
 
     border-right: 1px solid #f3f3f3;
   }

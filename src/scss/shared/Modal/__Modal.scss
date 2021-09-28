@@ -18,6 +18,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
+    border-radius: 4px;
+
     &__header {
       height: 3rem;
       width: 100%;
@@ -80,6 +82,12 @@
     &__small {
       width: 50%;
       height: 50%;
+
+    }
+
+    &__extra_small {
+      width: 30%;
+      height: 40%;
 
     }
   }

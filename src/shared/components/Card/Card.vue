@@ -3,7 +3,7 @@
     <div v-if="$slots.header" :class="['card__header', headerClass]">
       <slot name="header"></slot>
     </div>
-    <div :class="['card__body', bodyClass]">
+    <div v-if="$slots.body" :class="['card__body', bodyClass]">
       <slot name="body"></slot>
     </div>
     <div v-if="$slots.footer" :class="['card__footer', footerClass]">

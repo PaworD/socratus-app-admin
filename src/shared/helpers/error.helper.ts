@@ -10,19 +10,24 @@ export const resolveWithResponse: Record<ResponseCode, string> = {
     [ResponseCode.SERVERERROR] : 'Server Error has occured'
 }
 
-export const hasResponseFailed = (response: AxiosResponse) :boolean => {
-    if (response.status === 200 || response.status === 201)
+export const hasResponseFailed = (response: AxiosResponse): boolean => {
+    if (response.status === 200 || response.status === 201) {
         return false
-    return true
+    }
+        return true
 }
 
 export const resolveWithError = (response: AxiosResponse) : string => {
-    switch (response.status) {
-        case 404:
-            return resolveWithResponse[ResponseCode.NOTFOUND]
-        case 500:
-            return resolveWithResponse[ResponseCode.SERVERERROR]
-        default:
-            return 'Unexpected Error'
+    if(process.env.VUE_APP_ENV == 'local') {
+        return response.data.message
+    } else {
+        switch (response.status) {
+            case 404:
+                return resolveWithResponse[ResponseCode.NOTFOUND]
+            case 500:
+                return resolveWithResponse[ResponseCode.SERVERERROR]
+            default:
+                return 'Unexpected Error'
+        }
     }
 }

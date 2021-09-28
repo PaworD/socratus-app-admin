@@ -1,0 +1,104 @@
+.courses {
+
+  &__lead {
+    display: flex;
+    justify-content: space-between;
+
+    > button {
+      margin-right: 2rem;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 1rem;
+
+    margin-top: 1rem;
+
+    > .card {
+      width: calc(100% / 3 - 15px);
+
+      min-height: 300px;
+      max-height: 300px;
+
+      border-radius: 4px;
+      position: relative;
+
+      box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+
+      .course__hero {
+        margin: 0;
+
+        height: 100%;
+        width: 100%;
+
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          height: 100%;
+          width: 100%;
+
+          background:
+                  linear-gradient(
+                                  rgba(161, 161, 161, 0.75),
+                                  rgba(87, 87, 87, 0.45)
+                  );
+        }
+
+        > img  {
+          border-radius: 4px;
+          width: 100%;
+          object-fit: cover;
+
+        }
+      }
+
+      .course__description {
+        height: 35%;
+        width: 100%;
+
+        padding: 1rem;
+
+        position: absolute;
+
+        bottom: 0;
+
+        background-color: #fff;
+
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+        p {
+          font-weight: bold;
+        }
+
+      }
+    }
+  }
+
+  .course__card__body {
+    padding: 0;
+  }
+
+  &__modals {
+    padding: 1rem;
+    &__create {
+      height: 90%;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+
+      input {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

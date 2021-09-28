@@ -4,7 +4,7 @@
   :data-tooltip="tooltip"
   :class="[ 'button ', `button--${theme}`, `button--${size}`, { 'button--flat' : flat }]"
   >
-    <div v-if="!$slots.icon">{{label}}</div>
+    <div v-if="!$slots.icon && label">{{label}}</div>
     <div v-if="$slots.icon"><slot name="icon"></slot></div>
   </button>
 </template>
@@ -21,10 +21,10 @@ import { ButtonSize, ButtonTheme } from './Button.contracts'
  */
 @Component({ name: 'SButton' })
 export class SButton extends Vue {
-  @Prop({type: String, required: true, default: ''})
+  @Prop({type: String, required: false})
   private readonly label!: string
 
-  @Prop({type: String, required: false, default: ''})
+  @Prop({type: String, required: false})
   private readonly tooltip!: string
 
   @Prop({type: Boolean, required: false, default: false})
@@ -45,7 +45,7 @@ export default SButton
 
 <style lang="scss">
   .button {
-    overflow: auto;
+    overflow: visible;
     border: none;
     color: #fff;
     font-size: 1rem;

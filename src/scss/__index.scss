@@ -1,5 +1,6 @@
 //External Imports
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 
 @import './__variables.scss';
 @import "_Icons";
@@ -16,6 +17,7 @@
 @import "./shared/Checkbox/_Checkbox";
 @import "./shared/Timetable/_Timetable";
 @import "./views/auth/_Auth";
+@import "./views/courses/_Courses";
 @import "./components/_Layout";
 @import "./components/_Sidebar";
 @import "./views/root/_Dashboard";

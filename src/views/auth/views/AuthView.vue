@@ -20,7 +20,7 @@ import { AuthCard } from "../components/AuthCard";
 @Component({name: 'AuthView',
   components: {
     AuthCard
-  }
+  },
 })
 export class AuthView extends Vue {
 

@@ -5,7 +5,7 @@
       <div class="dashboard__inner__atoms">
         <SCard>
           <template v-slot:header>
-            Some Header
+            <button @click="openModal">OPen</button>
           </template>
           <template v-slot:body>
             Some body Text
@@ -29,7 +29,6 @@
         </SCard>
       </div>
       <h1>Timetable</h1>
-      <button @click="openModal">Click to Open</button>
       <div class="dashboard__inner__timetable">
         <STimetable/>
       </div>
@@ -42,16 +41,29 @@
 import {Component, Vue} from "vue-property-decorator";
 import {SCard} from "@/shared/components/Card";
 import {STimetable} from "@/shared/components/Timetable";
+import {Action} from "vuex-class";
+import HelloWorld from "@/components/HelloWorld.vue";
 import {ModalSize} from "@/shared/abstract";
-import { AppModals } from "@/shared/models/modals";
 
-@Component({name: 'Dashboard', components: { SCard, STimetable }})
+@Component<Dashboard>({
+  name: 'Dashboard',
+  components: { SCard, STimetable },
+
+  mounted (): void {
+    this.fetchStudents()
+  }
+})
 export class Dashboard extends Vue {
 
-  public async openModal (): void {
-    const modalResult = await this.$modalService.open(AppModals.createStudent, {data: 'Hello'}, {size: ModalSize.Small, hasHeader: true, persistent: true})
-    console.log(modalResult)
+  @Action
+  private fetchStudents!: () => Promise<void>
+
+
+  public async openModal(): Promise<void> {
+    const data = await this.$modalService.open(HelloWorld, {data: '123'}, {size: ModalSize.FullScreen, persistent: false, hasHeader: true})
+    console.log(data)
   }
+
 }
 export default Dashboard
 </script>

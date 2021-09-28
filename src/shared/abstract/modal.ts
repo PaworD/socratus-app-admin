@@ -7,6 +7,7 @@ import { AnyObject } from "@/shared/models";
  * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
  */
 export enum ModalSize {
+    ExtraSmall = 'extra_small',
     Small= 'small',
     Large = 'large',
     FullScreen = 'fullscreen'
@@ -50,6 +51,7 @@ export interface ModalSizeConfig {
  *
  */
 export const sizeMap: Record<ModalSize, ModalSizeConfig> = {
+    [ModalSize.ExtraSmall] : {w: 25, h:25},
     [ModalSize.FullScreen] : {w: 100, h: 100},
     [ModalSize.Large] : {w: 75, h: 75},
     [ModalSize.Small] : {w: 50, h: 50}
@@ -74,6 +76,6 @@ export abstract class AbstractModalService {
      *
      * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
      */
-    public abstract open(Modal: VueConstructor, payload: AnyObject, configs?: ModalConfigs): Promise<AnyObject>
+    public abstract open(Modal: VueConstructor, payload: AnyObject, configs: ModalConfigs): Promise<AnyObject>
 
 }

@@ -1,18 +1,20 @@
 <template>
   <div class="hello">
-    <h1>Hello World</h1>
+    {{modalData}}
     <button @click="close()">Close</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import ModalWrapper from "@/components/_abstract/ModalWrapper.vue";
 
-@Component({name: 'HelloWorld',
+@Component<HelloWorld>({name: 'HelloWorld',
   mounted(): void {
     console.log(this.modalData)
-  }})
-export class HelloWorld extends Vue {
+  }
+})
+export class HelloWorld extends ModalWrapper {
   @Prop() private msg!: string;
 
   public close (): void {

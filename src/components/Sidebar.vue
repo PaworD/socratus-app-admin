@@ -1,14 +1,38 @@
 <template>
   <aside class="sidebar">
+    <div class="sidebar__organization">
+      <div class="sidebar__organization__logo">
+        <img src="@/assets/courses/math.jpg" alt="LOGO">
+      </div>
+      <div class="sidebar__organization__info">
+          <p>Organization Name</p>
+          <small>ID #000090</small>
+      </div>
+    </div>
     <ul class="sidebar__list">
       <li>
-        <router-link to="/">Dashboard</router-link>
+        <router-link to="/" active-class="sidebar__list__active">
+          <i class="bi-layout-wtf"></i>
+          Dashboard
+        </router-link>
       </li>
       <li>
-        <router-link to="/courses">Courses</router-link>
+        <router-link to="courses">
+          <i class="bi-files"></i>
+          Courses
+        </router-link>
       </li>
       <li>
-        <router-link to="/groups">Groups</router-link>
+        <router-link to="groups">
+          <i class="bi-people"></i>
+          Groups
+        </router-link>
+      </li>
+      <li>
+        <router-link to="teachers">
+          <i class="bi-people"></i>
+          Teachers
+        </router-link>
       </li>
     </ul>
     <div class="sidebar__footer">
