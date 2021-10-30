@@ -1,13 +1,13 @@
-import { Identifier } from "@/shared/models";
+import { Id } from "@/shared/models";
 import { AxiosInstance } from "axios";
 import { Axios } from "@/config";
 
 
 export interface IService<T> {
     create(payload: T): Promise<T | string>
-    delete(id: Identifier): Promise<string>
-    get(): Promise<T | string>
-    update(payload: T): Promise<T | string>
+    delete(id: Id): Promise<string>
+    get(): Promise< T | T[] | string>
+    update(id: Id, payload: T): Promise<T | string>
 }
 
 /**
@@ -44,19 +44,19 @@ export abstract class AbstractService<T> implements IService<T>{
      *
      * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
      */
-    public abstract delete(id: Identifier): Promise<string>
+    public abstract delete(id: Id): Promise<string>
 
     /**
      * Fetch data of <T> from server
      *
      * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
      */
-    public abstract get(): Promise<T | string>
+    public abstract get(): Promise< T | T[] |string>
 
     /**
      * Update data of <T>
      *
      * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
      */
-    public abstract update(payload: Partial<T>): Promise<T | string>
+    public abstract update(id: Id, payload: Partial<T>): Promise<T | string>
 }

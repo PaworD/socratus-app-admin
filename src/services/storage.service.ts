@@ -14,7 +14,7 @@ export interface ILocalStorageService {
 
 
 @injectable()
-export class LocalStorageService implements ILocalStorageService{
+export class LocalStorageService implements ILocalStorageService {
 
     public setItem(key: string, value: AnyObject | string): void {
         localStorage.setItem(key, String(value))

@@ -1,9 +1,7 @@
 <template>
-  <transition-group v-if="content.show" name="toasts" tag="div" class="toasts">
-  <div :class="['toast', `toast__toast_theme__${content.theme}`]">
+  <div v-if="content.show" :class="['toast', `toast__toast_theme__${content.theme}`]">
     {{content.message}}
   </div>
-  </transition-group>
 </template>
 
 <script lang="ts">

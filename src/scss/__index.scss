@@ -6,21 +6,27 @@
 @import "_Icons";
 
 @import './shared/ButtonEffects.scss';
+@import './shared/Avatar/_Avatar';
 @import './shared/Dropdown/_Dropdown';
 @import './shared/Dropdown/_Accordion';
 @import './shared/Tabs/_Tabs';
 @import './shared/Card/_Card';
 @import './shared/Modal/_Modal';
+@import './shared/Toast/_Toast';
 @import "./shared/Calendar/_Calendar";
 @import "./shared/RadioButton/_RadioButton";
 @import "./shared/Table/_Table";
+@import "./shared/Loader/_Loader";
 @import "./shared/Checkbox/_Checkbox";
 @import "./shared/Timetable/_Timetable";
 @import "./views/auth/_Auth";
 @import "./views/courses/_Courses";
+@import "./views/groups/_Groups";
 @import "./components/_Layout";
 @import "./components/_Sidebar";
+@import "./components/_SettingsBar";
 @import "./views/root/_Dashboard";
+@import "./views/students/_Students";
 
 * {
   margin: 0;
@@ -29,6 +35,11 @@
   font-family: 'Poppins', sans-serif;
 }
 
-body {
-
+/// @author Javlon Khalimjonov
+/// This is defined as a global style for all labels
+/// If you want to use another styling for particular `label`s
+/// please decorate them with either `id` or `class` attributes
+label {
+  font-size: .83rem;
+  color: darken(#ccc, 45%);
 }

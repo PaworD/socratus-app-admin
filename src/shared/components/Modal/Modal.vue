@@ -3,6 +3,7 @@
   <div class="modal" v-if="show" @keydown.esc="closeOnEsc">
     <div :class="['modal__wrapper', `modal__wrapper__${this.setting.size}`]">
       <div v-if="canHaveHeader" :class="[`modal__wrapper__header`]">
+        <span>{{ setting.headerText }}</span>
         <span class="modal__header__close" @click="close"></span>
       </div>
       <slot></slot>

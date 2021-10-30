@@ -1,12 +1,10 @@
 .select {
     width: auto;
-    margin: 20px auto;
 
     &--selector {
      border: 1px solid gainsboro;
      background: #F8F8F8;
      position: relative;
-     z-index: 1;
 
       &--label {
           display: block;
@@ -45,6 +43,9 @@
         background: #fff;
         transition: all .15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity .1s linear;
         transform-origin: 50% 0;
+
+        max-height: 250px;
+        overflow: auto;
 
         li {
           padding: 12px;

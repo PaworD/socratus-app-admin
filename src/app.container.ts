@@ -1,8 +1,20 @@
 import { container } from "inversify-props";
-import { StudentService } from "@/services";
-import { Student } from "@/shared/models";
-import { RootService } from "@/services/root.service";
-import { LocalStorageService } from "@/services/storage.service";
+
+import {
+    CourseService,
+    GroupService,
+    RootService,
+    StudentService,
+    ToastService,
+    LocalStorageService, TeacherService
+} from "@/services";
+
+import {
+    Course,
+    Group,
+    Student,
+    Teacher
+} from "@/shared/models";
 
 /**
  * Main registry of DICs
@@ -11,6 +23,10 @@ import { LocalStorageService } from "@/services/storage.service";
  */
 export default function _buildDependencyContainer(): void {
     container.addTransient<Student>(StudentService)
+    container.addTransient<Course>(CourseService)
+    container.addTransient<Group>(GroupService)
+    container.addTransient<Teacher>(TeacherService)
     container.addTransient<any>(RootService)
-    container.addTransient<string>(LocalStorageService)
+    container.addTransient<any>(LocalStorageService)
+    container.addTransient<any>(ToastService)
 }

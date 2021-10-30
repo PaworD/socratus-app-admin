@@ -4,8 +4,7 @@
     <STextInput placeholder="Email" size="normal" v-model="payload.phone"/>
     <STextInput placeholder="Password" type="password" size="normal" v-model="payload.password"/>
     <SDropdown :list="schoolsList" :value="selectedSchool" type="simple" @on-select="selectSchool"/>
-    <span v-if="signInError">{{signInError}}</span>
-    <SButton v-ripple label="Sign In" flat theme="secondary" @onClick="signIn"/>
+    <SButton label="Sign In" flat theme="secondary" @onClick="signIn"/>
   </div>
 </template>
 
@@ -41,9 +40,6 @@ export class AuthCard extends Vue {
   @Getter
   public schools!: School[]
 
-  @Getter
-  public signInError!: string
-
   public errorMessage: string | null = null
 
   public selectedSchool = 'Select school'
@@ -51,7 +47,7 @@ export class AuthCard extends Vue {
   public payload : {phone: string; password: string, tenant: string} = {
     phone: '+998903001105',
     password: 'Hello0909',
-    tenant: 'pantera_1'
+    tenant: ''
   }
 
   public get schoolsList(): DropdownItemProps[] {
@@ -59,7 +55,7 @@ export class AuthCard extends Vue {
       return [...this.schools].map((school) => {
         return {
           label: school.name!,
-          value: String(school.id)
+          value: school.tenant!
         }
       })
     } else {
@@ -68,10 +64,10 @@ export class AuthCard extends Vue {
   }
 
   public selectSchool (value: string): void {
-    console.log(value)
+    this.payload.tenant = value
   }
 
-  public async signIn (): void {
+  public async signIn (): Promise<void> {
     if (!this.payload) {
       return
     }

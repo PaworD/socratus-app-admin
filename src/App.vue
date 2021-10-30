@@ -1,7 +1,12 @@
 <template>
   <div id="app">
-    <template v-if="!isLoggedIn">
+    <template v-if="!authState">
       <AuthView/>
+    </template>
+    <template v-if="loading">
+      <transition name="fade">
+        <SLoader/>
+      </transition>
     </template>
     <Layout v-else>
       <template v-slot:sidebar>
@@ -11,6 +16,7 @@
           <router-view></router-view>
       </template>
     </Layout>
+    <div id="toast-div"/>
   </div>
 </template>
 
@@ -19,24 +25,47 @@ import {Component, Vue} from "vue-property-decorator";
 import { Layout } from "@/components/Layout.vue";
 import { Sidebar } from "@/components/Sidebar.vue";
 import { AuthView } from "@/views/auth/views";
+import {Action, Getter} from "vuex-class";
+import {SLoader} from "@/shared/components/Loader";
 
-@Component({
+@Component<App>({
   name: 'App',
   components: {
     AuthView,
     Layout,
-    Sidebar
+    Sidebar,
+    SLoader
+  },
+
+  beforeMount (): void {
+    this.loading = true
+    this.init().then(() => {
+      this.loading = false
+    })
   }
 })
 export class App extends Vue {
 
-  public isLoggedIn = false
+  @Action
+  public init!: () => Promise<void>
+
+  @Getter
+  public authState!: boolean
+
+  public loading = false
 
 }
 export default App
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 * {
   //
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .7s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

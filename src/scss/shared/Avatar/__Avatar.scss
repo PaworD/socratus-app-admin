@@ -1,0 +1,36 @@
+.avatars {
+
+  display: inline-flex;
+  flex-direction: row-reverse;
+
+  justify-content: center;
+  align-items: center;
+
+  small {
+
+    font-size: 1rem;
+
+    margin-left: .4rem;
+    color: $ft-light;
+  }
+
+  .avatar {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: white;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:not(:last-of-type) {
+      background-color: $light;
+      margin-left: -1.22rem;
+    }
+  }
+}

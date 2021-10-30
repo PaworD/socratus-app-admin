@@ -6,6 +6,8 @@ export interface Identifier {
     id: number | string
 }
 
+export type Id = number
+
 export enum Role {
     ADMIN = 1
 }

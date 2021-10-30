@@ -48,19 +48,11 @@ import {ModalSize} from "@/shared/abstract";
 @Component<Dashboard>({
   name: 'Dashboard',
   components: { SCard, STimetable },
-
-  mounted (): void {
-    this.fetchStudents()
-  }
 })
 export class Dashboard extends Vue {
 
-  @Action
-  private fetchStudents!: () => Promise<void>
-
-
   public async openModal(): Promise<void> {
-    const data = await this.$modalService.open(HelloWorld, {data: '123'}, {size: ModalSize.FullScreen, persistent: false, hasHeader: true})
+    const data = await this.$modalService.open(HelloWorld, {data: '123'}, {size: ModalSize.FullScreen, persistent: false, hasHeader: true, headerText: 'Some title'})
     console.log(data)
   }
 

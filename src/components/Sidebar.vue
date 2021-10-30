@@ -17,21 +17,49 @@
         </router-link>
       </li>
       <li>
-        <router-link to="courses">
+        <router-link to="/applicants">
+          <i class="bi-tags"></i>
+          Applicants
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/courses">
           <i class="bi-files"></i>
           Courses
         </router-link>
       </li>
       <li>
-        <router-link to="groups">
+        <router-link to="/students">
           <i class="bi-people"></i>
+          Students
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/groups">
+          <i class="bi-diagram-2"></i>
           Groups
         </router-link>
       </li>
       <li>
-        <router-link to="teachers">
+        <router-link to="/teachers">
           <i class="bi-people"></i>
           Teachers
+        </router-link>
+      </li>
+      <li>
+        <hr>
+      </li>
+      <!-- TODO: Implement router guard for addon paths -->
+      <li>
+        <router-link to="/addons/payments">
+          <i class="bi-cash-stack"></i>
+          Payments
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/addons/payments">
+          <i class="bi-puzzle"></i>
+          Quizes <small style="background: #ccc; border-radius: 10px; padding: 0 .5rem"><strong>beta</strong></small>
         </router-link>
       </li>
     </ul>
@@ -55,5 +83,7 @@ export default Sidebar
 </script>
 
 <style lang="scss" scoped>
-
+.router-link-exact-active {
+  background: $light !important;
+}
 </style>

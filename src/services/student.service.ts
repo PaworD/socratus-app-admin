@@ -1,9 +1,8 @@
-import axios from "axios";
 import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
-import { Student, Identifier } from "@/shared/models";
-import { hasResponseFailed, resolveWithError } from "@/shared/helpers";
+import { Student, Id } from "@/shared/models";
+import { composeModel, hasResponseFailed, resolveWithError } from "@/shared/helpers";
 
 @injectable()
 export class StudentService extends AbstractService<Student> {
@@ -12,31 +11,41 @@ export class StudentService extends AbstractService<Student> {
         super();
     }
 
-     protected readonly url ='/tenants'
+     protected readonly url ='/students'
 
      async create(payload: Student): Promise<Student | string> {
-         return Promise.resolve({});
+       try {
+          //
+       } catch (e) {
+         return e
+       }
      }
 
-     async delete(id: Identifier): Promise<string> {
-        return Promise.resolve("");
+     async delete(id: Id): Promise<string> {
+         try {
+             const response = await this.http.delete(this.url + `/${id}`)
+
+             return response.data.message
+         } catch (e) {
+             return e.toString()
+         }
      }
 
-     async get(): Promise<Student | string> {
+     async get(): Promise<Student | Student[] | string> {
         try {
-            const _response = await this.http.get(this.url + '/schools/')
+            const _response = await this.http.get(this.url)
 
             if(hasResponseFailed(_response)) {
                 return resolveWithError(_response)
             }
 
-            return _response.data
+            return composeModel<Student>(_response.data.data) as Student[]
         } catch (e) {
             return e
         }
      }
 
-     async update(payload: Partial<Student>): Promise<Student> {
+     async update(id: Id, payload: Partial<Student>): Promise<Student> {
         return Promise.resolve({});
      }
 

@@ -1,1 +1,7 @@
 export * from './student.service'
+export * from './course.service'
+export * from './toast.service'
+export * from './root.service'
+export * from './storage.service'
+export * from './group.service'
+export * from './teacher.service'

@@ -3,6 +3,7 @@ import Vue, { VueConstructor } from "vue";
 import { AbstractModalService, ModalConfigs } from "@/shared/abstract";
 import { AnyObject } from "@/shared/models";
 import SModalWrapper from "@/shared/components/Modal/Modal.vue";
+import store from '@/store'
 
 /**
  * Type declaration for global access to $modalService
@@ -46,6 +47,7 @@ export class ModalService extends AbstractModalService {
     public open(Modal: VueConstructor, payload: AnyObject, configs?: ModalConfigs): Promise<AnyObject> {
         return new Promise((resolve) => {
             const _extendedModalComponent = Vue.extend(Modal).extend({
+                store: store,
                 components: {
                     SModalWrapper,
                 },

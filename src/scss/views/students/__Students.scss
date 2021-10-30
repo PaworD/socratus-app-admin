@@ -1,0 +1,16 @@
+.students {
+  &__lead {
+    display: flex;
+    justify-content: space-between;
+
+    &__options {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+  }
+
+  &__list {
+    margin-top: 1rem;
+  }
+}

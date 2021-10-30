@@ -2,10 +2,10 @@
   <button
   @click="onClick"
   :data-tooltip="tooltip"
-  :class="[ 'button ', `button--${theme}`, `button--${size}`, { 'button--flat' : flat }]"
+  :class="[ 'button ', `button--${theme}`, `button--${size}`, { 'button--flat' : flat },{'--loading': isLoading}]"
   >
-    <div v-if="!$slots.icon && label">{{label}}</div>
-    <div v-if="$slots.icon"><slot name="icon"></slot></div>
+      <div v-if="!$slots.icon && label" class="button--label">{{label}}</div>
+      <div v-if="$slots.icon" class="button--icon"><slot name="icon"></slot></div>
   </button>
 </template>
 
@@ -36,8 +36,11 @@ export class SButton extends Vue {
   @Prop({type: String, required: false, default: ButtonSize.NORMAL})
   private readonly size!: ButtonSize
 
+  @Prop({type: Boolean, required: false, default: false})
+  private readonly isLoading!: boolean
+
   public onClick(): void {
-    this.$emit('onClick', true)
+    this.$emit('onClick')
   }
 }
 export default SButton
@@ -45,6 +48,7 @@ export default SButton
 
 <style lang="scss">
   .button {
+    position: relative;
     overflow: visible;
     border: none;
     color: #fff;
@@ -55,6 +59,11 @@ export default SButton
 
     display: flex;
     gap: 5px;
+
+    &.--loading &--label, &--icon {
+      visibility: hidden;
+      opacity: 0;
+    }
 
 
     &--flat {
@@ -89,6 +98,35 @@ export default SButton
     &--small {
       padding: 0.4rem;
       font-size: .9rem;
+    }
+
+    //States
+    &.--loading {
+      display: block;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 4px solid transparent;
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        animation: button-loading-spinner 1s ease infinite;
+      }
+    }
+    @keyframes button-loading-spinner {
+      from {
+        transform: rotate(0turn);
+      }
+
+      to {
+        transform: rotate(1turn);
+      }
     }
   }
 </style>

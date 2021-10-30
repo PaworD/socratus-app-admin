@@ -5,7 +5,9 @@
     'input--small' : size == sizes.SMALL,
     'input--medium' : size == sizes.MEDIUM,
     'input--normal' : size == sizes.NORMAL
-  }]" :placeholder="placeholder" :value="value" @input="updateSelf">
+  },
+  {'--with-radius' : withRadius }
+  ]" :placeholder="placeholder" :value="value" @input="updateSelf">
 </template>
 
 <script lang="ts">
@@ -35,6 +37,9 @@ export class STextInput extends Vue {
   @Prop({type: String, required: false})
   private readonly type!: InputType
 
+  @Prop({type: Boolean, required: false, default: false})
+  private readonly withRadius!: boolean
+
   private readonly sizes = InputSize
 
   public updateSelf($event: any) {
@@ -63,6 +68,10 @@ export default STextInput
 
     &:focus {
       border: 2px solid #3a3a3a;
+    }
+
+    &.--with-radius {
+      border-radius: 5px;
     }
 
     &--flat {

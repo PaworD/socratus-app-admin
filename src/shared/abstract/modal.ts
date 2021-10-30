@@ -25,6 +25,12 @@ export interface ModalConfigs {
     hasHeader: boolean
 
     /**
+     * Modal Header text content
+     * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
+     */
+    headerText: string
+
+    /**
      * Modal Size configuration
      * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
      */
@@ -33,7 +39,7 @@ export interface ModalConfigs {
      * Modal screen persistent state
      * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
      */
-    persistent: boolean
+    persistent?: boolean
 }
 
 /**

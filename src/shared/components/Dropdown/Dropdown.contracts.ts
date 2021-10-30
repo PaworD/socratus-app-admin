@@ -1,4 +1,4 @@
-import {DropdownItemProps} from "@/shared/components/Dropdown/DropdownItem";
+import { DropdownItemProps } from "./DropdownItem";
 
 export enum DropdownType {
     SIMPLE = 'simple',

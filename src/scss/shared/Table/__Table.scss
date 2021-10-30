@@ -10,6 +10,12 @@
      cursor: pointer;
      padding: 8px;
      min-width: 30px;
+
+     &.--short {
+       padding: 3px 0;
+       text-align: center;
+       width: 100px;
+     }
    }
 
   td {
@@ -19,7 +25,11 @@
     border-bottom: 1px solid $light;
 
     &:last-child {
-        border-right: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-right: none;
     }
   }
 

@@ -1,0 +1,69 @@
+.groups {
+
+  &__lead {
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  &__cards {
+    &__card {
+      &__body {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &__footer {
+        padding: 1rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    margin-top: 1rem;
+
+    .card {
+      border-radius: 4px;
+
+      box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+    }
+  }
+
+  &__modals {
+    padding: 1rem;
+    &__create {
+      form {
+
+        .select {
+          margin-bottom: 1rem;
+        }
+
+        input:not(:last-of-type) {
+          margin-bottom: 1rem;
+        }
+
+        small {
+          display: block;
+
+          margin-bottom: 1rem;
+
+          color: $ft-light;
+          font-size: .6rem;
+        }
+
+        > button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

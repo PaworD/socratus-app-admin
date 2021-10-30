@@ -1,3 +1,6 @@
 export * from './atom'
 export * from './student.model'
 export * from './admin.model'
+export * from './course.model'
+export * from './group.model'
+export * from './teacher.model'
