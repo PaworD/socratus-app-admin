@@ -18,7 +18,7 @@ export class RootService extends AbstractService<School> {
         return Promise.resolve({});
     }
 
-    async delete(id: Identifier): Promise<string> {
+    async delete(id: number): Promise<string> {
         return Promise.resolve("");
     }
 
@@ -71,7 +71,7 @@ export class RootService extends AbstractService<School> {
         }
     }
 
-    async update(payload: Partial<School>): Promise<School> {
+    async update(id: number, payload: Partial<School>): Promise<School> {
         return Promise.resolve({});
     }
 

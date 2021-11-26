@@ -44,7 +44,7 @@ export class AuthCard extends Vue {
 
   public selectedSchool = 'Select school'
 
-  public payload : {phone: string; password: string, tenant: string} = {
+  public payload : { phone: string; password: string, tenant: string } = {
     phone: '+998903001105',
     password: 'Hello0909',
     tenant: ''
@@ -63,8 +63,8 @@ export class AuthCard extends Vue {
     }
   }
 
-  public selectSchool (value: string): void {
-    this.payload.tenant = value
+  public selectSchool (value: DropdownItemProps): void {
+    this.payload.tenant = value.value!
   }
 
   public async signIn (): Promise<void> {

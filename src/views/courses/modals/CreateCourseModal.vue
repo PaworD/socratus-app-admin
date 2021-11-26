@@ -1,8 +1,29 @@
 <template>
-  <div class="courses__modals courses__modals__create">
-    <STextInput placeholder="Course name" size="medium" v-model="payload.name"/>
-    <STextInput placeholder="Price" size="medium" v-model="payload.price"/>
-    <SButton label="Create" size="normal" theme="secondary" flat @onClick="submit"/>
+  <div class=" courses__modals__create">
+    <form @submit.prevent="submit">
+      <div class="input-group">
+        <label for="course-name">Write name for the course</label>
+        <STextInput placeholder="Course name" flat size="medium" v-model="payload.name"
+                    id="course-name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="course-price">Define price for the course</label>
+        <STextInput placeholder="Price" flat size="medium" v-model="payload.price"
+                    id="course-price" required />
+      </div>
+
+      <div class="input-group">
+        <label for="course-level">
+          Define level for the course (Beginner)
+        </label>
+        <STextInput placeholder="Price" flat size="medium" v-model="payload.level" id="course-level" />
+      </div>
+
+
+      <SButton :label="isUpdateMode ? 'Update' : 'Create'" size="medium" theme="secondary"
+               :isLoading="isLoading" flat/>
+    </form>
   </div>
 </template>
 
@@ -17,7 +38,7 @@ import { Course } from "@/shared/models";
 import { SDropdown } from "@/shared/components/Dropdown";
 import { mask } from 'vue-the-mask'
 
-@Component({
+@Component<CreateCourseModal>({
   name: 'CreateCourseModal',
   components: {
     STextInput,
@@ -26,7 +47,13 @@ import { mask } from 'vue-the-mask'
   },
 
   mounted(): void {
-    //
+    if (this.isUpdateMode) {
+      this.payload = {
+        name: this.modalData.course.name,
+        price: this.modalData.course.price,
+        level: this.modalData.course.level
+      }
+    }
   },
 
   directives: {
@@ -38,15 +65,27 @@ export class CreateCourseModal extends ModalWrapper {
   @Action
   public createCourse!: (payload: Course) => Promise<void>
 
-  public payload: Course = {}
+  @Action
+  public updateCourse!: (payload: { course: Course, id: number }) => Promise<void>
 
-  public async submit (): Promise<void> {
-    if (this.payload === {}) {
-      return
+  public payload: Course = {} as Course
+
+  public isLoading = false
+
+  public submit (): void {
+    if (this.isUpdateMode) {
+      this.isLoading = true
+      this.updateCourse({course: this.payload, id: this.modalData.id}).then(() => {
+        this.isLoading = false
+        this.closeModal(null)
+      })
+    } else {
+      this.createCourse({...this.payload, price: Number(this.payload.price)}).then(() => {
+        this.isLoading = false
+        this.closeModal(null)
+      })
     }
-    console.log(this.payload.price)
-    await this.createCourse({...this.payload, price: Number(this.payload.price)})
-    this.closeModal(null)
+
   }
 
 }

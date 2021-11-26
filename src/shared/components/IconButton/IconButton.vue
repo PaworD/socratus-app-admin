@@ -1,13 +1,14 @@
 <template>
   <button class="icon-button" :class="{'--borderless': borderless}" @click="onClick">
-    <slot name="icon"></slot>
+    <slot v-if="$slots.icon" name="icon"></slot>
+    <slot></slot>
   </button>
 </template>
 
 
 <script lang="ts">
 
-import {Component, Prop, Vue} from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component<SIconButton>({name: 'SIconButton'})
 export class SIconButton extends Vue {

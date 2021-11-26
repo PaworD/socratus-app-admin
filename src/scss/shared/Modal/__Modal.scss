@@ -87,7 +87,8 @@
 
     &__small {
       width: 50%;
-      height: 50%;
+      height: auto;
+      max-height: 80%;
 
     }
 

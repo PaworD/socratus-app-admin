@@ -2,7 +2,7 @@ import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
 import { Student, Id } from "@/shared/models";
-import { composeModel, hasResponseFailed, resolveWithError } from "@/shared/helpers";
+import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
 
 @injectable()
 export class StudentService extends AbstractService<Student> {
@@ -15,9 +15,16 @@ export class StudentService extends AbstractService<Student> {
 
      async create(payload: Student): Promise<Student | string> {
        try {
-          //
+         const _response = await this.http.post(this.url, decomposeModel(payload))
+
+         if(hasResponseFailed(_response)) {
+           return resolveWithError(_response)
+         }
+
+         return _response.data.data.message
+
        } catch (e) {
-         return e
+         throw new Error(e)
        }
      }
 
@@ -45,8 +52,13 @@ export class StudentService extends AbstractService<Student> {
         }
      }
 
-     async update(id: Id, payload: Partial<Student>): Promise<Student> {
-        return Promise.resolve({});
+     async update(id: number, payload: Partial<Student>): Promise<Student> {
+       try {
+         const response = await this.http.put(this.url + `/${id}`, decomposeModel(payload))
+         return response.data
+       } catch (e) {
+         return e.toString()
+       }
      }
 
 }

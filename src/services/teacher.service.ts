@@ -18,7 +18,7 @@ export class TeacherService extends AbstractService<Teacher> {
         return Promise.resolve('undefined');
     }
 
-    public delete(id: Identifier): Promise<string> {
+    public delete(id: number): Promise<string> {
         return Promise.resolve("");
     }
 
@@ -36,7 +36,7 @@ export class TeacherService extends AbstractService<Teacher> {
         }
     }
 
-    public update(id: Identifier, payload: Partial<Teacher>): Promise<string | Teacher> {
+    public update(id: number, payload: Partial<Teacher>): Promise<string | Teacher> {
         return Promise.resolve('undefined');
     }
 }

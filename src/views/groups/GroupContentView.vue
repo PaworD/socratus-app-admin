@@ -1,11 +1,9 @@
 <template>
-  <div>
     <STabs>
       <STab v-for="(tab, index) in tabs" :key="index" :title="tab.title">
-        <component :is="tab.component" />
+        <component :is="tab.component" v-bind="{ group }" />
       </STab>
     </STabs>
-  </div>
 </template>
 
 <script lang="ts">
@@ -13,7 +11,10 @@ import {Component, Vue} from "vue-property-decorator";
 
 import { STabs, STab } from '@/shared/components'
 import CreateGroupModal from "@/views/groups/modals/CreateGroupModal.vue";
-import GroupsView from "@/views/groups/GroupsView.vue";
+import GroupStudents from '@/views/groups/components/GroupStudents.vue'
+import { Action, Getter } from 'vuex-class'
+import { Group } from '@/shared/models'
+import GroupSchedule from '@/views/groups/components/GroupSchedule.vue'
 
 @Component<GroupContentView>({
   name: 'GroupContentView',
@@ -21,9 +22,23 @@ import GroupsView from "@/views/groups/GroupsView.vue";
   components: {
     STabs,
     STab
+  },
+
+  mounted (): void {
+    this.fetchGroups()
   }
 })
 export class GroupContentView extends Vue {
+
+  @Action
+  private fetchGroups!: () => Promise<void>
+
+  @Getter
+  private groups!: Group[]
+
+  public get group (): Group {
+    return this.groups.filter(group => group.id === Number(this.$route.params.id))[0]
+  }
 
   /**
    * Tabs to be rendered
@@ -42,11 +57,11 @@ export class GroupContentView extends Vue {
     return [
       {
         title: 'Schedule',
-        component: CreateGroupModal
+        component: GroupSchedule
       },
       {
         title: 'Students list',
-        component: GroupsView
+        component: GroupStudents
       },
       {
         title: 'Attendance',

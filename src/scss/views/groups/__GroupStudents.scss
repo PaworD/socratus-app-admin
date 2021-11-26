@@ -1,0 +1,15 @@
+.groupStudents {
+  display: flex;
+  flex-direction: column;
+
+  &__lead {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 1rem;
+  }
+
+  &__students_table {
+
+  }
+}

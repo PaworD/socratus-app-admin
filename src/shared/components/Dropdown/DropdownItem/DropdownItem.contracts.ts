@@ -1,5 +1,5 @@
 export interface DropdownItemProps {
     label: string
-    value: string
+    value: string | null
     icon?: string
 }

@@ -38,7 +38,17 @@ export class CourseModule extends VuexModule {
     }
 
     @Action
-    public async deleteCourse(id: Identifier): Promise<void> {
+    public async updateCourse(payload: { course: Course, id: number }): Promise<void> {
+        try {
+            const createdCourse = await this.courseService.update(payload.id, payload.course)
+            this.toastService.show(true, String(createdCourse), ToastType.SUCCESS, 100000)
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+        }
+    }
+
+    @Action
+    public async deleteCourse(id: number): Promise<void> {
         try {
             const deleteCourse = await this.courseService.delete(id)
             console.log(deleteCourse)

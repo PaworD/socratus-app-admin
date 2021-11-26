@@ -25,8 +25,8 @@ export class SAvatar extends Vue {
   public get firstAndLast (): string[] {
     if (this.source.length > 0) {
       const some = [...this.source.splice(0, 3)]
-      return some.map((src) => {
-        return `${src.split(' ')[0][0]}${src.split(' ')[1][0]}`
+      return some.map((src: string) => {
+        return `${String(src).split(' ')[0][0]}${String(src).split(' ')[1][0]}`
       })
     }
     return ['']

@@ -24,20 +24,27 @@ const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${le
  * @param data
  */
 export function composeModel<T>(data: any) {
-
     if (Array.isArray(data)) {
         const _arrOfSanitizedObjs = [] as T[]
 
         for (let i = 0; i < data.length; i++) {
             const _sanitizedObj = Object.fromEntries(Object.entries(data[i]).map(([key, value]) => {
-                // if (typeof value !== 'string') {
-                //     const deep = Object.fromEntries(Object.entries(value as any).map(([k, v]) => {
-                //         return [snakeToCamel(String(k)) , v]
-                //     }))
-                //     return [snakeToCamel(String(key)) , deep]
-                // } else {
+                if (value === 'null') { value = null }
+                if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+                    value =  Object.fromEntries(Object.entries(value as any).map(([k, v]) => {
+                        return [snakeToCamel(String(k)) , v]
+                    }))
                     return [snakeToCamel(String(key)) , value]
-                // }
+                } else if (Array.isArray(value) && value.length > 0) {
+                    value = value.map((val) => Object.fromEntries(Object.entries(val as any).map(([k, v]) => {
+                        console.log([snakeToCamel(String(k)) , v])
+                        return [snakeToCamel(String(k)) , v]
+                    })))
+                    console.log(value)
+                    return [snakeToCamel(String(key)) , value]
+                } else {
+                    return [snakeToCamel(String(key)) , value]
+                }
                 })
             ) as unknown as T
 
@@ -48,14 +55,15 @@ export function composeModel<T>(data: any) {
         return _arrOfSanitizedObjs
     } else {
         const _sanitizedObj = Object.fromEntries(Object.entries(data).map(([key, value]) => {
-            // if (typeof value !== 'string') {
-            //     const deep = Object.fromEntries(Object.entries(value as any).map(([k, v]) => {
-            //         return [snakeToCamel(String(k)) , v]
-            //     }))
-            //     return [snakeToCamel(String(key)) , deep]
-            // } else {
-                return [snakeToCamel(String(key)) , value]
-            // }
+          if (Array.isArray(value) && value.length > 0) {
+                  value.map((val) => Object.fromEntries(Object.entries(val as any).map(([k, v]) => {
+                      return [snakeToCamel(String(k)) , v]
+                  })))
+                  console.log(value)
+                  return [snakeToCamel(String(key)) , value]
+              } else {
+              return [snakeToCamel(String(key)) , value]
+                }
             })
         )
         return _sanitizedObj as unknown as T

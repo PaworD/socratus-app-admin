@@ -7,6 +7,7 @@ import { CourseModule } from "@/store/modules/course.module";
 import { GroupModule} from "@/store/modules/group.module";
 import { TeacherModule } from "@/store/modules/teacher.module";
 import { StudentModule } from "@/store/modules/student.module";
+import { RoomModule } from '@/store/modules/room.module'
 
 Vue.use(Vuex)
 
@@ -29,7 +30,8 @@ const store: StoreOptions<RootState> = {
     RootModule,
     TeacherModule,
     AdminModule,
-    StudentModule
+    StudentModule,
+    RoomModule
   }
 
 }

@@ -3,10 +3,6 @@
   &__lead {
     display: flex;
     justify-content: space-between;
-
-    > button {
-      margin-right: 1.2rem;
-    }
   }
 
   &__list {
@@ -104,17 +100,13 @@
   }
 
   &__modals {
-    padding: 1rem;
     &__create {
-      height: 90%;
-      display: flex;
-      flex-flow: column;
-      align-items: center;
-      justify-content: center;
+      margin: 1rem;
+      form{
+        display: flex;
+        flex-direction: column;
 
-      input {
-        margin-bottom: 1rem;
-      }
-    }
+        gap: 1rem;
+      } }
   }
 }

@@ -20,7 +20,7 @@
 
   td {
     text-align: left;
-    padding: 8px;
+    padding: 4px;
     border-right: 1px solid $light;
     border-bottom: 1px solid $light;
 
@@ -36,6 +36,10 @@
   tbody {
     tr:hover {
       background-color: #fafafa;
+    }
+
+    tr:nth-child(even) {
+      background-color: $light;
     }
   }
 

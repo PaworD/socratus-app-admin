@@ -58,6 +58,7 @@ export default SButton
     outline: 0;
 
     display: flex;
+    justify-content: center;
     gap: 5px;
 
     &.--loading &--label, &--icon {

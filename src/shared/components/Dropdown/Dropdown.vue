@@ -9,7 +9,7 @@
         <ul>
           <SDropdownItem
               v-for="item in list"
-              :key="item.label"
+              :key="JSON.stringify(item)"
               :label="item.label"
               :value="item.value"
               :class="{'current' : item.label === val}"
@@ -33,6 +33,9 @@ export class SDropdown extends Vue {
   @Prop({type: String, required: true })
   private value!: string
 
+  @Prop( { type: Boolean, required: false, default: false })
+  public multiselect!: boolean
+
   public visible: boolean | null = false
   public val: string = this.value
 
@@ -41,8 +44,12 @@ export class SDropdown extends Vue {
   }
 
   public selectItem(item: DropdownItemProps): void {
-    this.val = item.label
-    this.$emit('on-select', item.value)
+    if (this.multiselect) {
+      this.val = this.value
+    } else {
+      this.val = item.label
+    }
+    this.$emit('on-select', item)
   }
 }
 

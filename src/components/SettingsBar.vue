@@ -2,17 +2,46 @@
   <div>
     <div class="overlay"></div>
     <div class="settings">
-      <button @click="close">Close</button>
+
+      <SIconButton @onClick="close" borderless>
+        <template v-slot:icon>
+          <i class="bi-x"></i>
+        </template>
+      </SIconButton>
+
+      <SAccordion>
+        <template v-slot:header>
+          Rooms
+        </template>
+        <template v-slot:default>
+          <Rooms/>
+        </template>
+      </SAccordion>
+      <SAccordion>
+        <template v-slot:header>
+          General Settings
+        </template>
+        <template v-slot:default>
+          Hello
+        </template>
+      </SAccordion>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 
-import {Component, Prop, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator"
+import { Rooms } from '@/views/root/Rooms.vue'
+import { SIconButton, SAccordion } from '@/shared/components'
 
 @Component({
-  name: 'SettingsBar'
+  name: 'SettingsBar',
+  components: {
+    SAccordion,
+    SIconButton,
+    Rooms
+  }
 })
 export class SettingsBar extends Vue{
 

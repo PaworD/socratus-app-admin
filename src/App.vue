@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <template v-if="!authState">
-      <AuthView/>
-    </template>
     <template v-if="loading">
       <transition name="fade">
         <SLoader/>
       </transition>
+    </template>
+    <template v-if="!authState">
+      <AuthView/>
     </template>
     <Layout v-else>
       <template v-slot:sidebar>

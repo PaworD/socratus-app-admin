@@ -6,15 +6,18 @@ import {
     RootService,
     StudentService,
     ToastService,
-    LocalStorageService, TeacherService
-} from "@/services";
+    LocalStorageService,
+    TeacherService,
+    RoomService
+} from '@/services'
 
 import {
     Course,
     Group,
+    Room,
     Student,
     Teacher
-} from "@/shared/models";
+} from '@/shared/models'
 
 /**
  * Main registry of DICs
@@ -26,6 +29,7 @@ export default function _buildDependencyContainer(): void {
     container.addTransient<Course>(CourseService)
     container.addTransient<Group>(GroupService)
     container.addTransient<Teacher>(TeacherService)
+    container.addTransient<Room>(RoomService)
     container.addTransient<any>(RootService)
     container.addTransient<any>(LocalStorageService)
     container.addTransient<any>(ToastService)

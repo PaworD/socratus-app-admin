@@ -2,10 +2,12 @@
   <div class="groups__modals groups__modals__create">
     <form @submit.prevent="onSubmit">
       <label for="coursesList">Please select appropriate course</label>
-      <SDropdown :list="coursesList" :value="coursesList[0].label" id="coursesList" @on-select="selectCourse"/>
+      <SDropdown :list="coursesList" :value="coursesList[0].label" id="coursesList"
+                 @on-select="selectCourse"/>
 
       <label for="teachersList">Please assign teacher</label>
-      <SDropdown :list="teachersList" :value="teachersList[0].label" id="teachersList" @on-select="selectTeacher"/>
+      <SDropdown :list="teachersList" :value="teachersList[0].label" id="teachersList"
+                 @on-select="selectTeacher"/>
 
       <label for="courseName">Enter name of the course</label>
       <STextInput placeholder="Group Name" size="medium" type="text" id="courseName" v-model="groupData.name" flat required/>
@@ -96,15 +98,16 @@ export class CreateGroupModal extends ModalWrapper {
     this.isLoading = true
     this.createGroup(this.groupData).finally(() => {
       this.isLoading = false
+      this.closeModal(null)
     })
   }
 
-  public selectCourse (courseId: string): void {
-    this.groupData.course = Number(courseId)
+  public selectCourse (course: DropdownItemProps): void {
+    this.groupData.course = Number(course.value)
   }
 
-  public selectTeacher (teacherId: string): void {
-    this.groupData.teacher = Number(teacherId)
+  public selectTeacher (teacher: DropdownItemProps): void {
+    this.groupData.teacher = Number(teacher.value)
   }
 
 }

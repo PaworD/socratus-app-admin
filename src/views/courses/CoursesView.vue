@@ -13,7 +13,7 @@
         <template v-slot:body>
           <div class="course__hero">
             <div class="action-group">
-              <SIconButton>
+              <SIconButton @onClick="openUpdateCourseModal(course)">
                 <template v-slot:icon>
                   <i class="bi-pen-fill"></i>
                 </template>
@@ -87,6 +87,20 @@ export class CoursesView extends Vue {
         })
   }
 
+  public async openUpdateCourseModal (course: Course): Promise<void> {
+    await this.$modalService.open(CreateCourseModal,
+        {
+          id: course.id,
+          course: course
+        },
+        {
+          size: ModalSize.ExtraSmall,
+          persistent: false,
+          hasHeader: true,
+          headerText: 'Update Course'
+        })
+  }
+
   public async openDeleteCourseModal (course: Course): Promise<void> {
     const modalResponse = await this.$modalService.open(DeleteCourseModal,
         {
@@ -97,9 +111,8 @@ export class CoursesView extends Vue {
           size: ModalSize.ExtraSmall,
           persistent: false,
           hasHeader: true,
-          headerText: 'Create Course'
+          headerText: 'Delete Course'
         })
-    console.log(modalResponse)
     if(typeof modalResponse !== 'undefined') {
       this.courses.splice(this.courses.indexOf(course), 1)
     }

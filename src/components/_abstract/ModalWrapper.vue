@@ -27,6 +27,17 @@ export class ModalWrapper extends Vue {
    */
   protected modalData!: AnyObject
 
+  /**
+   * Determines where current Modal should if for Update or Create
+   */
+  public get isUpdateMode (): boolean {
+    if (Object.prototype.hasOwnProperty.call(this.modalData, 'id')) {
+      return true
+    } else {
+      return false
+    }
+  }
+
 }
 export default ModalWrapper
 </script>

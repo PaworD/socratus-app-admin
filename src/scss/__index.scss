@@ -19,13 +19,18 @@
 @import "./shared/Loader/_Loader";
 @import "./shared/Checkbox/_Checkbox";
 @import "./shared/Timetable/_Timetable";
+@import "./shared/Skeleton/_Skeleton";
+@import "./shared/Badge/_Badge";
 @import "./views/auth/_Auth";
 @import "./views/courses/_Courses";
 @import "./views/groups/_Groups";
+@import "./views/groups/_GroupStudents";
+@import "./views/groups/_GroupSchedule";
 @import "./components/_Layout";
 @import "./components/_Sidebar";
 @import "./components/_SettingsBar";
 @import "./views/root/_Dashboard";
+@import "./views/root/_Rooms";
 @import "./views/students/_Students";
 
 * {

@@ -9,8 +9,8 @@
   }
 
   &__header {
-    height: 40px;
-    line-height: 40px;
+    height: 60px;
+    line-height: 60px;
     padding: 0 40px 0 8px;
     position: relative;
     color: $ft-light;
@@ -34,14 +34,13 @@
 
   &__body {
     background: #fff;
-    overflow: hidden;
+    height: auto;
+    overflow: auto;
     border-top: 0;
     transition: 150ms ease-out;
 
     &__inner {
       padding: 8px;
-      overflow-wrap: break-word;
-      /*   white-space: pre-wrap; */
     }
   }
 

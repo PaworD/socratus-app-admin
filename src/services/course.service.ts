@@ -31,7 +31,7 @@ export class CourseService extends AbstractService<Course> {
         }
     }
 
-    async delete(id: Identifier): Promise<string> {
+    async delete(id: number): Promise<string> {
         try {
             const response = await this.http.delete(this.url + `/${id}`)
             console.log(response.data)
@@ -48,14 +48,14 @@ export class CourseService extends AbstractService<Course> {
             if (hasResponseFailed(response)) {
                 resolveWithError(response)
             }
-
+            console.log(composeModel<Course>(response.data.data) as Course[])
             return composeModel<Course>(response.data.data) as Course[]
         } catch (e) {
             return e.toString()
         }
     }
 
-    async update(id: Identifier ,payload: Partial<Course>): Promise<string | Course> {
+    async update(id: number, payload: Partial<Course>): Promise<string | Course> {
         try {
             const response = await this.http.put(this.url + `/${id}`, decomposeModel(payload))
             return response.data

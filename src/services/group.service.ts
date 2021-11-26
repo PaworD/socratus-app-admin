@@ -1,5 +1,5 @@
 import { AbstractService } from "@/shared/abstract";
-import { Identifier, Group} from "@/shared/models";
+import { Group} from "@/shared/models";
 import {
     composeModel, decomposeModel,
     hasResponseFailed,
@@ -17,15 +17,21 @@ export class GroupService extends AbstractService<Group> {
                 return resolveWithError(_response)
             }
 
-            return _response.data.data.message
+            return _response.data.message
 
         } catch (e) {
             throw new Error(e)
         }
     }
 
-    public delete(id: Identifier): Promise<string> {
-        return Promise.resolve("");
+    public async delete(id: number): Promise<string> {
+        try {
+            const _response = await  this.http.delete(this.url + `/${id}`)
+
+            return _response.data.message
+        } catch (e) {
+            throw new Error(e)
+        }
     }
 
     public async get(): Promise<Group[] | string | Group> {
@@ -33,16 +39,46 @@ export class GroupService extends AbstractService<Group> {
             const _response = await this.http.get(this.url)
 
             if(hasResponseFailed(_response)) {
-                return resolveWithError(_response)
+                throw resolveWithError(_response)
             }
+
+            console.log(composeModel<Group>(_response.data.data) as Group[])
 
             return composeModel<Group>(_response.data.data) as Group[]
         } catch (e) {
-            return e.toString()
+            throw new Error(e)
         }
     }
 
-    public update(id: Identifier, payload: Partial<Group>): Promise<string | Group> {
+    public update(id: number, payload: Partial<Group>): Promise<string | Group> {
         return Promise.resolve('undefined');
+    }
+
+    public async removeStudentFromGroup (data: { groupId: number, studentId: number }): Promise<string> {
+        try {
+            const _response = await this.http.post(this.url + `/${data.groupId}/remove_student/${data.studentId}`)
+
+            if(hasResponseFailed(_response)) {
+                throw resolveWithError(_response)
+            }
+
+            return _response.data.message
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async addStudentsToGroup (payload: { groupId: number, studentIds: number[] }): Promise<string> {
+        try {
+            const _response = await this.http.post(this.url + `/${payload.groupId}/add_students`, { student_ids: payload.studentIds })
+
+            if(hasResponseFailed(_response)) {
+                throw resolveWithError(_response)
+            }
+
+            return _response.data.message
+        } catch (e) {
+            throw new Error(e)
+        }
     }
 }

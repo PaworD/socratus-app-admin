@@ -1,0 +1,23 @@
+.rooms {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__room {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__modals {
+    &__create {
+      margin: 1rem;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 1rem;
+    }
+  }
+}

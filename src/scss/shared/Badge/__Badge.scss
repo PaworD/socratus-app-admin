@@ -1,0 +1,25 @@
+.badge {
+  display: inline-block;
+  padding: .2rem .3rem;
+
+  border-radius: 3px;
+
+  &__dark {
+    background-color: $dark;
+    color: $light;
+  }
+
+  &__light {
+    background-color: $light;
+    color: $dark;
+  }
+
+  &__alt {
+    background-color: $alt;
+    color: $ft-alt;
+  }
+
+  > span {
+    cursor: pointer;
+  }
+}

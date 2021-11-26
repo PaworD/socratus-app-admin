@@ -12,7 +12,8 @@
       </div>
     </div>
     <div class="students__list">
-      <STable v-if="students.length > 0" :rows="rows" :searchQuery="searchQuery"/>
+      <STable v-if="students.length > 0" :rows="rows" :searchQuery="searchQuery"
+              :isLoading="isLoading"/>
     </div>
   </div>
 </template>
@@ -37,7 +38,7 @@ import { ModalSize } from "@/shared/abstract";
   },
 
   mounted(): void {
-    this.fetchStudents()
+    this.getStudents()
   }
 })
 export class StudentsView extends Vue {
@@ -50,6 +51,8 @@ export class StudentsView extends Vue {
 
   public searchQuery = ''
 
+  public isLoading = false
+
   public get rows(): TableRowItem[] {
     return this.students.map(student => {
       return {
@@ -59,7 +62,9 @@ export class StudentsView extends Vue {
         email: student.email ?? '(not set)',
         actions: [
           {
-            component: StudentActions
+            component: StudentActions,
+            onDelete: this.fetchStudents,
+            onUpdate: this.fetchStudents
           }
         ]
       }
@@ -72,6 +77,15 @@ export class StudentsView extends Vue {
       size: ModalSize.ExtraSmall,
       persistent: false,
       headerText: 'Create Student'
+    }).then(() => {
+      this.fetchStudents()
+    })
+  }
+
+  public getStudents (): void {
+    this.isLoading = true
+    this.fetchStudents().then(() => {
+      this.isLoading = false
     })
   }
 }

@@ -8,6 +8,7 @@ export interface CourseData extends Identifier{
     name: string
     price: number
     priceCurrency: string
+    level?: string
 }
 
-export type Course = Partial<ICourse & CourseData>
+export type Course = Partial<ICourse> & CourseData

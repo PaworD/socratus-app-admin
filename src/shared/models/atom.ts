@@ -3,7 +3,7 @@ export interface AnyObject {
 }
 
 export interface Identifier {
-    id: number | string
+    id: number
 }
 
 export type Id = number

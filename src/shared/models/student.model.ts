@@ -1,17 +1,20 @@
-import {Identifier} from "@/shared/models/atom";
+import { Identifier } from "@/shared/models/atom";
 
 export interface IStudent {
     getName(): string
 }
 
 export interface StudentData extends Identifier{
+    email: string
     firstName: string
+    groups: number[]
     lastName: string
     phone: string
-    email: string
 }
 
 export type Student = Partial<StudentData & IStudent>
+
+export type StudentUpdateIntention = Omit<StudentData, 'groups'>
 
 export interface ISchool {
     getName(): string
