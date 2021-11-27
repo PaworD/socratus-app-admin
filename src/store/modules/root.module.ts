@@ -21,7 +21,7 @@ export class RootModule extends VuexModule {
 
     public _schools: School[] = []
 
-    @Action
+    @Action({ rawError: true })
     public async init(): Promise<void> {
         try {
             await this.rootService.init()
@@ -31,7 +31,7 @@ export class RootModule extends VuexModule {
         }
     }
 
-    @Action
+    @Action({ rawError: true })
     public async fetchSchoolSet(): Promise<void> {
         try {
             const schools = await this.rootService.get()
@@ -41,7 +41,7 @@ export class RootModule extends VuexModule {
         }
     }
 
-    @Action
+    @Action({ rawError: true })
     public async signInWith(payload: AnyObject): Promise<Admin> {
         try {
             const response = await this.rootService.signIn(payload)
