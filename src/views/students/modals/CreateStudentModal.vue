@@ -59,8 +59,7 @@ import { Action, Getter } from 'vuex-class'
 
     if (this.isUpdateMode) {
       this.studentData = {
-        email: this.modalData.student.email === '(not set)' ? undefined :
-            this.modalData.student.email,
+        email: this.modalData.student.email === '(not set)' ? undefined : this.modalData.student.email,
         firstName: this.modalData.student.firstName,
         lastName: this.modalData.student.lastName,
         phone: this.modalData.student.phone,

@@ -68,19 +68,27 @@ export class CreateCourseModal extends ModalWrapper {
   @Action
   public updateCourse!: (payload: { course: Course, id: number }) => Promise<void>
 
-  public payload: Course = {} as Course
+  public payload: {
+    name: string
+    price: number
+    priceCurrency?: string
+    level?: string
+  } = {
+    name: "",
+    price: 0,
+  }
 
   public isLoading = false
 
   public submit (): void {
     if (this.isUpdateMode) {
       this.isLoading = true
-      this.updateCourse({course: this.payload, id: this.modalData.id}).then(() => {
+      this.updateCourse({course: this.payload as Course, id: this.modalData.id}).then(() => {
         this.isLoading = false
         this.closeModal(null)
       })
     } else {
-      this.createCourse({...this.payload, price: Number(this.payload.price)}).then(() => {
+      this.createCourse({...this.payload as Course, price: Number(this.payload.price)}).then(() => {
         this.isLoading = false
         this.closeModal(null)
       })

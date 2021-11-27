@@ -57,14 +57,14 @@ export class AddStudentModal extends ModalWrapper {
       return [...filteredStudents.map((student) => {
         return {
           label: student.firstName + ' ' + student.lastName,
-          value: student.id
+          value: String(student.id)
         }
       })]
     } else {
       return [...this.students.map((student) => {
         return {
           label: student.firstName + ' ' + student.lastName,
-          value: student.id
+          value: String(student.id)
         }
       })]
     }
@@ -88,7 +88,11 @@ export class AddStudentModal extends ModalWrapper {
   }
 
   public removeStudent (student: Student): void {
-    const studentIndex = this.filteredStudents.indexOf(student)
+    const studentAsDropdownItem = {
+      label: student.firstName + ' ' + student.lastName,
+      value: String(student.id)
+    }
+    const studentIndex = this.filteredStudents.indexOf(studentAsDropdownItem)
 
     this.selectedStudents.splice(studentIndex, 1)
   }
