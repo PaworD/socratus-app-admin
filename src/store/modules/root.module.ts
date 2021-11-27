@@ -6,14 +6,15 @@ import {Admin, AnyObject, School} from "@/shared/models";
 import {RootService} from "@/services/root.service";
 import {LocalStorageService} from "@/services/storage.service";
 import {ToastService, ToastType} from "@/services/toast.service";
+import { TYPES } from '@/services'
 
 @Module
 export class RootModule extends VuexModule {
 
-    @Inject()
+    @Inject(TYPES.RootServiceType)
     private rootService!: RootService
 
-    @Inject()
+    @Inject(TYPES.StorageServiceType)
     private localStorageService!: LocalStorageService
 
     @Inject()

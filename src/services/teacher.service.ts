@@ -14,6 +14,10 @@ export class TeacherService extends AbstractService<Teacher> {
 
     protected url = '/teachers'
 
+    constructor() {
+        super();
+    }
+
     public create(payload: Teacher): Promise<string | Teacher> {
         return Promise.resolve('undefined');
     }

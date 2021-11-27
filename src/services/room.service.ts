@@ -22,6 +22,10 @@ export class RoomService extends AbstractService<Room> {
 
   protected url = '/rooms'
 
+  constructor() {
+    super();
+  }
+
   async create(payload: Room): Promise<string | Room> {
     try {
       const response = await this.http.post(this.url, decomposeModel(payload))

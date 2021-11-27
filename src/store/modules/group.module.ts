@@ -2,16 +2,16 @@ import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
 import {Inject} from "inversify-props";
 
-import { GroupService, ToastService, ToastType } from "@/services";
+import { GroupService, ToastService, ToastType, TYPES } from '@/services'
 import { Group, Student } from '@/shared/models'
 
 @Module
 export class GroupModule extends VuexModule {
 
-    @Inject()
+    @Inject(TYPES.GroupServiceType)
     private groupService!: GroupService
 
-    @Inject()
+    @Inject(TYPES.ToastServiceType)
     private toastService!: ToastService
 
     public _groups: Group[] = []

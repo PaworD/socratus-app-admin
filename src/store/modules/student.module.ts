@@ -2,16 +2,16 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 import { Inject } from "inversify-props";
 
-import { StudentService, ToastService, ToastType } from "@/services";
+import { StudentService, ToastService, ToastType, TYPES } from '@/services'
 import { Id, Student, StudentUpdateIntention } from '@/shared/models'
 
 @Module
 export class StudentModule extends VuexModule {
 
-    @Inject()
+    @Inject(TYPES.StudentServiceType)
     private studentService!: StudentService
 
-    @Inject()
+    @Inject(TYPES.ToastServiceType)
     private toastService!: ToastService
 
     public _students: Student[] = []

@@ -2,16 +2,16 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 import { Inject } from "inversify-props";
 
-import { RoomService, ToastService, ToastType } from "@/services";
+import { RoomService, ToastService, ToastType, TYPES } from '@/services'
 import { Course, Room } from '@/shared/models'
 
 @Module
 export class RoomModule extends VuexModule {
 
-  @Inject()
+  @Inject(TYPES.RoomServiceType)
   private roomService!: RoomService
 
-  @Inject()
+  @Inject(TYPES.ToastServiceType)
   private toastService!: ToastService
 
   public _rooms: Room[] = []

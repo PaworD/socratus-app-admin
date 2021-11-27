@@ -5,9 +5,15 @@ import {
     hasResponseFailed,
     resolveWithError
 } from "@/shared/helpers";
+import { injectable } from 'inversify-props'
 
+@injectable()
 export class GroupService extends AbstractService<Group> {
     protected url = '/groups'
+
+    constructor() {
+        super();
+    }
 
     public async create(payload: Group): Promise<string | Group> {
         try {

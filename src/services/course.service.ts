@@ -22,6 +22,10 @@ export class CourseService extends AbstractService<Course> {
 
     protected url = '/courses'
 
+    constructor() {
+        super();
+    }
+
     async create(payload: Course): Promise<string | Course> {
         try {
             const response = await this.http.post(this.url, decomposeModel(payload))

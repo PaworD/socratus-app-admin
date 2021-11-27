@@ -2,16 +2,16 @@ import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
 import {Inject} from "inversify-props";
 
-import { TeacherService, ToastService, ToastType } from "@/services";
+import { TeacherService, ToastService, ToastType, TYPES } from '@/services'
 import { Teacher } from "@/shared/models";
 
 @Module
 export class TeacherModule extends VuexModule {
 
-    @Inject()
+    @Inject(TYPES.TeacherServiceType)
     private teacherService!: TeacherService
 
-    @Inject()
+    @Inject(TYPES.ToastServiceType)
     private toastService!: ToastService
 
     public _teachers: Teacher[] = []

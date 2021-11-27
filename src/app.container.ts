@@ -8,7 +8,7 @@ import {
     ToastService,
     LocalStorageService,
     TeacherService,
-    RoomService
+    RoomService, TYPES
 } from '@/services'
 
 import {
@@ -25,12 +25,12 @@ import {
  * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
  */
 export default function _buildDependencyContainer(): void {
-    container.addTransient<Student>(StudentService)
-    container.addTransient<Course>(CourseService)
-    container.addTransient<Group>(GroupService)
-    container.addTransient<Teacher>(TeacherService)
-    container.addTransient<Room>(RoomService)
-    container.addTransient<any>(RootService)
-    container.addTransient<any>(LocalStorageService)
-    container.addTransient<any>(ToastService)
+    container.bind<StudentService>(TYPES.StudentServiceType).to(StudentService)
+    container.bind<CourseService>(TYPES.CourseServiceType).to(CourseService)
+    container.bind<GroupService>(TYPES.GroupServiceType).to(GroupService)
+    container.bind<TeacherService>(TYPES.TeacherServiceType).to(TeacherService)
+    container.bind<RoomService>(TYPES.RoomServiceType).to(RoomService)
+    container.bind<RootService>(TYPES.RootServiceType).to(RootService)
+    container.bind<LocalStorageService>(TYPES.StorageServiceType).to(LocalStorageService)
+    container.bind<ToastService>(TYPES.ToastServiceType).to(ToastService)
 }
