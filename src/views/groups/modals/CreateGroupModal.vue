@@ -67,7 +67,7 @@ import { Course, Group, GroupUpdateIntention, Teacher } from '@/shared/models'
         color: this.modalData.group.color,
         teacher: this.modalData.group.teacher,
         name: this.modalData.group.name
-      }
+      } as Group
     }
   },
 

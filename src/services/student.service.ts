@@ -1,7 +1,7 @@
 import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
-import { Student, Id, AnyObject, Pageable } from '@/shared/models'
+import { Student, Id, AnyObject, Pageable, CreateStudentIntention } from '@/shared/models'
 import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
 
 @injectable()
@@ -13,7 +13,7 @@ export class StudentService extends AbstractService<Student> {
 
      protected readonly url ='/students'
 
-     async create(payload: Student): Promise<Student | string> {
+     async create(payload: CreateStudentIntention): Promise<Student | string> {
        try {
          const _response = await this.http.post(this.url, decomposeModel(payload))
 

@@ -3,7 +3,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 
 import { StudentService, ToastService, ToastType, TYPES } from '@/services'
-import { AnyObject, Id, Pageable, Student, StudentUpdateIntention } from '@/shared/models'
+import { AnyObject, CreateStudentIntention, Id, Pageable, Student, StudentUpdateIntention } from '@/shared/models'
 
 @Module
 export class StudentModule extends VuexModule {
@@ -17,7 +17,7 @@ export class StudentModule extends VuexModule {
     public _students: Student[] = []
 
     @Action
-    public async createStudent(student: Student): Promise<void> {
+    public async createStudent(student: CreateStudentIntention): Promise<void> {
         try {
             const message = await this.studentService.create(student)
             this.toastService.show(true, String(message), ToastType.SUCCESS, 200)

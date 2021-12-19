@@ -168,34 +168,34 @@ export class STimetable extends Vue {
     return (((STimetable.toMinutes(moment(session.endTime)) - STimetable.toMinutes(moment(session.startTime))) / ((this.hours[this.hours.length -1].value) - this.hours[0].value)) * 100)
   }
 
-  public get roomHeight (): string {
-    if (this.rooms.length > 0) {
-      for (let i = 0; i < this.rooms.length; i++) {
-        for (let j = 0; j < this.rooms[i].schedule.length; j++) {
-          const res = this.checkIfOverlaps(this.rooms[i].schedule[j], j, this.rooms[i])
-          if (res) {
-            this.overlaps.push(this.rooms[i].schedule[j])
-          }
-        }
-      }
-    }
-    const height = this.overlaps.length > 0 ? (this.overlaps.length + 1) * 3 : 3
-    return `${height}rem`;
-  }
+  // public get roomHeight (): string {
+  //   if (this.rooms.length > 0) {
+  //     for (let i = 0; i < this.rooms.length; i++) {
+  //       for (let j = 0; j < this.rooms[i].schedule.length; j++) {
+  //         const res = this.checkIfOverlaps(this.rooms[i].schedule[j], j, this.rooms[i])
+  //         if (res) {
+  //           this.overlaps.push(this.rooms[i].schedule[j])
+  //         }
+  //       }
+  //     }
+  //   }
+  //   const height = this.overlaps.length > 0 ? (this.overlaps.length + 1) * 3 : 3
+  //   return `${height}rem`;
+  // }
 
   public groupTop (index: number): string {
     const height = (index + 1) * 50
     return `${height}px`;
   }
 
-  public checkIfOverlaps (session: Schedule, index: number, room: Room): boolean {
-    if (room.schedule.length === index + 1) {
-      return false
-    }
-    const isOverlapping = (moment(session.startTime).isSame(room.schedule[index + 1].startTime) || !moment(room.schedule[index + 1].startTime).isAfter(session.endTime))
-
-    return isOverlapping
-  }
+  // public checkIfOverlaps (session: Schedule, index: number, room: Room): boolean {
+  //   if (room.schedule.length === index + 1) {
+  //     return false
+  //   }
+  //   const isOverlapping = (moment(session.startTime).isSame(room.schedule[index + 1].startTime) || !moment(room.schedule[index + 1].startTime).isAfter(session.endTime))
+  //
+  //   return isOverlapping
+  // }
 
   /**
    * On Drop session
@@ -244,13 +244,13 @@ export class STimetable extends Vue {
     /**
      * Update current array with new element and new time
      */
-    this.rooms[roomId].schedule.push({
-      startTime:
-          new Date(2021,9, 20, duration.hours,duration.minutes).toISOString(),
-      endTime:
-          new Date(2021,9, 20, duration.hours+2,duration.minutes).toISOString(),
-      group: {} as Group
-    })
+    // this.rooms[roomId].schedule.push({
+    //   startTime:
+    //       new Date(2021,9, 20, duration.hours,duration.minutes).toISOString(),
+    //   endTime:
+    //       new Date(2021,9, 20, duration.hours+2,duration.minutes).toISOString(),
+    //   group: {} as Group
+    // })
 
     /**
      * Update the current array by removing element that has been moved out

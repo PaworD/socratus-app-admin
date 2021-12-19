@@ -41,7 +41,7 @@
 import { ModalWrapper } from '@/components/_abstract/ModalWrapper.vue'
 import { Component } from 'vue-property-decorator'
 import { SBadge, STextInput, SDropdown, SButton, DropdownItemProps } from '@/shared/components'
-import { Group, Student, StudentUpdateIntention } from '@/shared/models'
+import { CreateStudentIntention, Group, Student, StudentUpdateIntention } from '@/shared/models'
 import { Action, Getter } from 'vuex-class'
 
 @Component<CreateStudentModal>({
@@ -70,7 +70,7 @@ import { Action, Getter } from 'vuex-class'
 export class CreateStudentModal extends ModalWrapper {
 
   @Action
-  private createStudent!: (student: Student) => Promise<void>
+  private createStudent!: (student: CreateStudentIntention) => Promise<void>
 
   @Action
   private updateStudent!: (payload: { student: StudentUpdateIntention, id: number }) => Promise<void>
@@ -82,13 +82,7 @@ export class CreateStudentModal extends ModalWrapper {
   private groups!: Group[]
 
   public isLoading = false
-  public studentData : {
-    email: string
-    firstName: string
-    lastName: string
-    phone: string
-    groups?: number[]
-  } = {
+  public studentData : CreateStudentIntention = {
     email: '',
     firstName: '',
     groups: [],

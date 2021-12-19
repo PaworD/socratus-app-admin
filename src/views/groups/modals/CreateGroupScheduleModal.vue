@@ -154,6 +154,8 @@ export class CreateGroupScheduleModal extends ModalWrapper {
       if (Object.prototype.hasOwnProperty.call(value, 'startTime') &&
           Object.prototype.hasOwnProperty.call(value, 'endTime')) {
         if (value['startTime'] == '' || value['endTime'] == '') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           delete this.payload.days[key]
         }
       }

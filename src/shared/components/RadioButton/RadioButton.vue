@@ -15,14 +15,14 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({name: 'SRadio'})
 export class SRadio extends Vue {
-  @Prop({type: String, required: true})
+  @Prop({ type: String, required: true })
   private readonly label!: string
 
-  @Prop({type: String, required: true})
+  @Prop({ type: String, required: true })
   private readonly value!: string
 
-  @Prop({type: String | Number, required: true})
-  private readonly model!: string | number
+  @Prop({ type: String, required: true })
+  private readonly model!: string
 
   public get radioValue (): string {
     return this.model
