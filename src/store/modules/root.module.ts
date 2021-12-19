@@ -68,7 +68,7 @@ export class RootModule extends VuexModule {
             return response.admin
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
-            return {}
+            throw new Error(e)
         }
     }
 

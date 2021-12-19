@@ -78,11 +78,17 @@ export class AuthCard extends Vue {
     if (!this.payload) {
       return
     }
-    this.errorMessage = null
-    this.isLoading = true
-    await this.signInWith(this.payload)
-    this.isLoading = false
-    await this.init()
+    try {
+      this.errorMessage = null
+      this.isLoading = true
+      await this.signInWith(this.payload)
+      await this.init()
+    } catch (e) {
+      console.warn(e)
+    } finally {
+      this.isLoading = false
+    }
+
   }
 }
 export default AuthCard

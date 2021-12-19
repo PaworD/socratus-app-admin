@@ -70,7 +70,17 @@ export class RootService extends AbstractService<School> {
                 },
                 tenant: _response.data.data.tenant
             }
-        } catch (e: any) {
+        } catch (e) {
+            if ((e as AnyResponse).response) {
+                console.log('isReposne')
+                console.log(e.response.data)
+                if (typeof e.response.data.message !== 'string') {
+                    throw new Error(JSON.stringify(e.response.data.message))
+                } else {
+                    throw new Error(e.response.data.message)
+                }
+            }
+
             throw new Error(e)
         }
     }
@@ -80,3 +90,4 @@ export class RootService extends AbstractService<School> {
     }
 
 }
+export type AnyResponse = { response: AnyObject }
