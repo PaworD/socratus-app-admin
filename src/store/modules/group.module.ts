@@ -94,7 +94,7 @@ export class GroupModule extends VuexModule {
         try {
             const response = await this.groupService.createGroupSchedule(payload)
 
-            this.toastService.show(true, String(response), ToastType.ERROR, 200)
+            this.toastService.show(true, String(response), ToastType.SUCCESS, 200)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
             throw new Error(e)

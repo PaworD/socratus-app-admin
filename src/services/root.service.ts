@@ -71,7 +71,7 @@ export class RootService extends AbstractService<School> {
                 tenant: _response.data.data.tenant
             }
         } catch (e: any) {
-            throw resolveWithError(e.response)
+            throw new Error(e)
         }
     }
 
