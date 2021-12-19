@@ -1,14 +1,6 @@
 <template>
   <aside class="sidebar">
-    <div class="sidebar__organization">
-      <div class="sidebar__organization__logo">
-        <img src="@/assets/courses/math.jpg" alt="LOGO">
-      </div>
-      <div class="sidebar__organization__info">
-          <p>Organization Name</p>
-          <small>ID #000090</small>
-      </div>
-    </div>
+    <OrganizationWidget />
     <ul class="sidebar__list">
       <li>
         <router-link to="/" active-class="sidebar__list__active">
@@ -73,8 +65,14 @@
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Organization } from "@/views/contracts";
+import OrganizationWidget from '@/components/Organization.vue'
 
-@Component({name: 'Sidebar'})
+@Component({
+  name: 'Sidebar',
+  components: {
+    OrganizationWidget
+  }
+})
 export class Sidebar extends Vue {
   @Prop({type: Object, required: false})
   public readonly organization!: Organization

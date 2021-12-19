@@ -30,6 +30,9 @@ export class SModalWrapper extends Vue {
   }
 
   public get canHaveHeader (): boolean {
+    if (!this.setting.hasHeader) {
+      return false
+    }
     return this.setting.hasHeader
   }
 

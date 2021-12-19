@@ -30,6 +30,7 @@ import { SButton, SIconButton, STextInput } from '@/shared/components'
 
 import { CreateRoomModal } from './modals/CreateRoomModal.vue'
 import { ModalSize } from '@/shared/abstract'
+import { DeleteModal } from '@/shared/modals'
 
 @Component<Rooms>({
   name: "RoomsView",
@@ -114,7 +115,17 @@ export class Rooms extends Vue {
    * @param id
    */
   public removeRoom(id: number): void {
-    this.deleteRoom(id).then(() => {
+    this.$modalService.open(DeleteModal,
+        {
+          id: id,
+          module: 'room'
+        },
+        {
+          hasHeader: true,
+          size: ModalSize.ExtraSmall,
+          persistent: false,
+          headerText: 'Are you sure to delete this room?'
+        }).then(() => {
       this.editableRooms.filter(room => room.id !== id)
     })
   }

@@ -1,9 +1,10 @@
-import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
-import {Inject} from "inversify-props";
+import { Inject } from 'inversify-props'
 
 import { GroupService, ToastService, ToastType, TYPES } from '@/services'
-import { Group, Student } from '@/shared/models'
+import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
+import { AttendanceDesk, Event } from '@/shared/components'
 
 @Module
 export class GroupModule extends VuexModule {
@@ -27,10 +28,10 @@ export class GroupModule extends VuexModule {
     }
 
     @Action
-    public async fetchGroups(): Promise<void> {
+    public async fetchGroups(query?: AnyObject): Promise<void> {
         try {
-            const groups = await this.groupService.get()
-            this.context.commit('setGroups', groups)
+            const groups = await this.groupService.get(query) as { results: Group[], meta: Pageable }
+            this.context.commit('setGroups', groups.results)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
@@ -41,6 +42,16 @@ export class GroupModule extends VuexModule {
         try {
             const message = await this.groupService.delete(id)
             this.toastService.show(true, message, ToastType.SUCCESS, 200)
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+        }
+    }
+
+    @Action
+    public async updateGroup(payload: { group: Group, id: number }): Promise<void> {
+        try {
+            const updatedGroup = await this.groupService.update(payload.id, payload.group)
+            this.toastService.show(true, String(updatedGroup), ToastType.SUCCESS, 200)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
@@ -58,12 +69,45 @@ export class GroupModule extends VuexModule {
 
     @Action
     public async addStudentsToGroup (payload: { groupId: number, studentIds: number[] }): Promise<void> {
-        console.log(payload)
         try {
             const message = await this.groupService.addStudentsToGroup(payload)
             this.toastService.show(true, message, ToastType.SUCCESS, 200)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
+        }
+    }
+
+    @Action
+    public async getGroupAttendance (id: number): Promise<AttendanceDesk> {
+        try {
+            const attendanceDesk = await this.groupService.getGroupAttendance(id)
+
+            return attendanceDesk
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
+        }
+    }
+
+    @Action
+    public async createGroupSchedule (payload: {id: number; schedule: ScheduleIntention}): Promise<void> {
+        try {
+            const response = await this.groupService.createGroupSchedule(payload)
+
+            this.toastService.show(true, String(response), ToastType.ERROR, 200)
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
+        }
+    }
+
+    @Action
+    public async getGroupSchedule (query: { group: number, month?: number, year?: number }): Promise<Event[]> {
+        try {
+            return await this.groupService.getGroupSchedule(query)
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
         }
     }
 

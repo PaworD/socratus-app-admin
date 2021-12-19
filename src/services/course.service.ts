@@ -1,7 +1,7 @@
 import { AbstractService } from "@/shared/abstract";
 import { injectable } from "inversify-props";
 
-import {Identifier, Course, AnyObject} from "@/shared/models";
+import { Course, AnyObject, Pageable } from '@/shared/models'
 import {
     composeModel,
     decomposeModel,
@@ -31,7 +31,7 @@ export class CourseService extends AbstractService<Course> {
             const response = await this.http.post(this.url, decomposeModel(payload))
             return response.data.message
         } catch (e) {
-            return e.toString()
+            throw new Error(e.response.data.message)
         }
     }
 
@@ -45,17 +45,26 @@ export class CourseService extends AbstractService<Course> {
         }
     }
 
-    async get(): Promise<string | Course[]> {
+    public async get(query?: AnyObject): Promise<{ results: Course[]; meta: Pageable } | string | { results: Course; meta: Pageable }> {
         try {
-            const response = await this.http.get(this.url)
+            const _response = await this.http.get(this.url, { params: {...query} })
 
-            if (hasResponseFailed(response)) {
-                resolveWithError(response)
+            if (hasResponseFailed(_response)) {
+                resolveWithError(_response)
             }
-            console.log(composeModel<Course>(response.data.data) as Course[])
-            return composeModel<Course>(response.data.data) as Course[]
+
+            const meta: Pageable = {
+                totalCount: _response.data.data.total_count,
+                previous: _response.data.data.previous,
+                next: _response.data.data.next
+            }
+
+            return {
+                results: composeModel<Course>(_response.data.data.results) as Course[],
+                meta
+            }
         } catch (e) {
-            return e.toString()
+            throw new Error(e)
         }
     }
 

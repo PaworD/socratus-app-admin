@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="groupStudents__students_table">
-      <STable :rows="rows" :isLoading="_isLoading" />
+      <STable :rows="rows" :isLoading="_isLoading" :routeName="'GroupStudents'" />
     </div>
   </div>
 </template>

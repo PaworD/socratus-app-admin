@@ -1,6 +1,6 @@
 export interface BadgeProps {
   theme: BadgeTheme,
-  title: string,
+  title: string | number,
   onClose: () => void
 }
 

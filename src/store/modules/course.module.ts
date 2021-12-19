@@ -3,7 +3,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 
 import { CourseService, ToastService, ToastType, TYPES } from '@/services'
-import {Course, CourseData, Identifier} from "@/shared/models";
+import { AnyObject, Course, CourseData, Identifier, Pageable } from '@/shared/models'
 
 @Module
 export class CourseModule extends VuexModule {
@@ -17,11 +17,11 @@ export class CourseModule extends VuexModule {
     public _courses: Course[] = []
 
     @Action
-    public async fetchCourses(): Promise<void> {
+    public async fetchCourses(query?: AnyObject): Promise<void> {
         try {
-            const courses = await this.courseService.get()
-            console.log(courses)
-            this.context.commit('setCourses', courses)
+            const courses = await this.courseService.get(query) as { results: Course[]; meta: Pageable }
+
+            this.context.commit('setCourses', courses.results)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }

@@ -1,22 +1,35 @@
 <template>
   <div class="groups__modals groups__modals__create">
     <form @submit.prevent="onSubmit">
-      <label for="coursesList">Please select appropriate course</label>
-      <SDropdown :list="coursesList" :value="coursesList[0].label" id="coursesList"
-                 @on-select="selectCourse"/>
+      <div v-if="!isUpdateMode" class="input-group">
+        <label for="coursesList">Please select appropriate course</label>
+        <SDropdown :list="coursesList"
+                   :value="coursesList[0].label"
+                   id="coursesList"
+                   @on-select="selectCourse"/>
+      </div>
 
-      <label for="teachersList">Please assign teacher</label>
-      <SDropdown :list="teachersList" :value="teachersList[0].label" id="teachersList"
-                 @on-select="selectTeacher"/>
+      <div class="input-group">
+        <label for="teachersList">Please assign teacher</label>
+        <SDropdown :list="teachersList"
+                   :value="hasTeacher ? selectedTeacher.label : teachersList[0].label"
+                   id="teachersList"
+                   @on-select="selectTeacher"/>
+      </div>
 
-      <label for="courseName">Enter name of the course</label>
-      <STextInput placeholder="Group Name" size="medium" type="text" id="courseName" v-model="groupData.name" flat required/>
+      <div class="input-group">
+        <label for="courseName">Enter name of the course</label>
+        <STextInput placeholder="Group Name" size="medium" type="text" id="courseName" v-model="groupData.name" flat required/>
+      </div>
 
-      <label for="courseColor">Assign color</label>
-      <STextInput placeholder="Color" size="medium" type="text" id="courseColor" v-model="groupData.color" flat required/>
-      <small>Please refer to <a href="https://imagecolorpicker.com/color-code" >this link</a> and copy color code . Ex: #00abdf</small>
+      <div class="input-group">
+        <label for="courseColor">Assign color</label>
+        <STextInput placeholder="Color" size="medium" type="text" id="courseColor" v-model="groupData.color" flat required/>
+        <small>Please refer to <a href="https://imagecolorpicker.com/color-code" >this link</a> and copy color code . Ex: #00abdf</small>
+      </div>
 
-      <SButton label="Create" theme="secondary" :isLoading="isLoading" flat/>
+      <SButton :size="'medium'" :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary"
+               :isLoading="isLoading" flat/>
     </form>
   </div>
 </template>
@@ -33,7 +46,7 @@ import {
   //
   DropdownItemProps
 } from '@/shared/components'
-import {Course, Group, Teacher} from "@/shared/models";
+import { Course, Group, GroupUpdateIntention, Teacher } from '@/shared/models'
 
 /**
  * @author Javlon Khalimjonov <khalimjanov.code@gmil.com>
@@ -47,9 +60,24 @@ import {Course, Group, Teacher} from "@/shared/models";
     SDropdown
   },
 
+  created (): void {
+    if (this.isUpdateMode) {
+      this.groupData = {
+        id: this.modalData.group.color,
+        color: this.modalData.group.color,
+        teacher: this.modalData.group.teacher,
+        name: this.modalData.group.name
+      }
+    }
+  },
+
   mounted (): void {
-    this.fetchCourses()
-    this.fetchTeachers()
+    if (!this.isUpdateMode) {
+      this.fetchCourses()
+      this.fetchTeachers()
+    } else {
+      this.fetchTeachers()
+    }
   }
 })
 export class CreateGroupModal extends ModalWrapper {
@@ -60,6 +88,8 @@ export class CreateGroupModal extends ModalWrapper {
   private fetchCourses!: () => Promise<void>
   @Action
   private fetchTeachers!: () => Promise<void>
+  @Action
+  private updateGroup!: (payload: { group: Group, id: number }) => Promise<void>
 
   @Getter
   private courses!: Course[]
@@ -82,6 +112,27 @@ export class CreateGroupModal extends ModalWrapper {
     })]
   }
 
+  public get hasTeacher (): boolean {
+    if (this.isUpdateMode) {
+     return typeof this.groupData.teacher !== 'undefined'
+    }
+    return false
+  }
+
+  public get selectedTeacher (): DropdownItemProps {
+    if (!Number.isInteger(this.groupData.teacher) && this.hasTeacher) {
+      const teacher = this.teachers.filter((t) => t.id === (this.groupData.teacher as Teacher).id)[0]
+      if (this.isUpdateMode) {
+        return {
+          label: teacher.firstName + ' ' + teacher.lastName,
+          value: String(teacher.id)
+        }
+      }
+
+    }
+    return {} as DropdownItemProps
+  }
+
   public get teachersList (): DropdownItemProps[] {
     return [ {label: 'Select Teacher' , value: null}, ...this.teachers!.map((teacher) => {
       return {
@@ -96,10 +147,17 @@ export class CreateGroupModal extends ModalWrapper {
    */
   public onSubmit (): void {
     this.isLoading = true
-    this.createGroup(this.groupData).finally(() => {
-      this.isLoading = false
-      this.closeModal(null)
-    })
+    if (this.isUpdateMode) {
+      this.updateGroup({ group: this.groupData as Group, id: this.modalData.id }).then(() => {
+        this.isLoading = false
+        this.closeModal(null)
+      })
+    } else {
+      this.createGroup(this.groupData).finally(() => {
+        this.isLoading = false
+        this.closeModal(null)
+      })
+    }
   }
 
   public selectCourse (course: DropdownItemProps): void {

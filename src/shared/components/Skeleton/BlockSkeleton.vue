@@ -1,7 +1,5 @@
 <template>
-  <div>
-    Hello From Block skeleton
-  </div>
+  <div class="skeleton__block"></div>
 </template>
 
 <script lang="ts">

@@ -12,7 +12,7 @@ export const imageFromText = (text: string): string => {
     }
 
     //Fill canvas with random color
-    $context.fillStyle = `hsl(${Math.floor(Math.random() * 360)}, 23%, 78%)`
+    $context.fillStyle = `hsl(${Math.floor(Math.random() * 360)}, 23%,60%)`
     $context.fillRect(0, 0, $el.width, $el.height);
 
     // Draw letter inside Canvas

@@ -1,0 +1,1 @@
+export { default as CreateTeacherModal } from './CreateTeacherModal.vue'

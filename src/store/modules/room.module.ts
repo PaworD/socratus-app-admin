@@ -3,7 +3,8 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 
 import { RoomService, ToastService, ToastType, TYPES } from '@/services'
-import { Course, Room } from '@/shared/models'
+import { Course, Pageable, Room } from '@/shared/models'
+import { Timetable } from '@/shared/components/Timetable'
 
 @Module
 export class RoomModule extends VuexModule {
@@ -15,13 +16,14 @@ export class RoomModule extends VuexModule {
   private toastService!: ToastService
 
   public _rooms: Room[] = []
+  public _timetable: Timetable[] = []
 
   @Action
   public async fetchRooms(): Promise<void> {
     try {
-      const rooms = await this.roomService.get()
+      const rooms = await this.roomService.get() as { results: Room[], meta: Pageable }
 
-      this.context.commit('setRooms', rooms)
+      this.context.commit('setRooms', rooms.results)
     } catch (e) {
       this.toastService.show(true, e, ToastType.ERROR, 200)
     }
@@ -58,13 +60,34 @@ export class RoomModule extends VuexModule {
     }
   }
 
+  @Action
+  public async fetchTimetable(date?: string): Promise<void> {
+    try {
+      const timetable = await this.roomService.getScheduleForTimetable(date)
+
+      this.context.commit('setTimetable', timetable)
+    } catch (e) {
+      this.toastService.show(true, e, ToastType.ERROR, 200)
+      throw new Error(e)
+    }
+  }
+
   @Mutation
   public setRooms (rooms: Room[]): void {
     this._rooms = rooms
   }
 
+  @Mutation
+  public setTimetable (timetable: Timetable[]): void {
+    this._timetable = timetable
+  }
+
   public get rooms(): Room[] {
     return this._rooms
+  }
+
+  public get timetable(): Timetable[] {
+    return this._timetable
   }
 
 }

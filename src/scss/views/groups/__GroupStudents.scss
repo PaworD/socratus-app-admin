@@ -12,4 +12,12 @@
   &__students_table {
 
   }
+
+  &__students {
+    &__modals {
+      &__add_student {
+        padding: 1rem;
+      }
+    }
+  }
 }

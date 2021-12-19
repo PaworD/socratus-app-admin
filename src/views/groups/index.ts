@@ -1,2 +1,2 @@
 export * from './GroupsView.vue'
-export * from './GroupContentView.vue'
+export { default as GroupContentView } from './GroupContentView.vue'

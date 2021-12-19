@@ -7,6 +7,7 @@
 
 @import './shared/ButtonEffects.scss';
 @import './shared/Avatar/_Avatar';
+@import "./shared/Attendance/_Attendance";
 @import './shared/Dropdown/_Dropdown';
 @import './shared/Dropdown/_Accordion';
 @import './shared/Tabs/_Tabs';
@@ -22,6 +23,7 @@
 @import "./shared/Skeleton/_Skeleton";
 @import "./shared/Badge/_Badge";
 @import "./views/auth/_Auth";
+@import "./views/applicants/_Applicants";
 @import "./views/courses/_Courses";
 @import "./views/groups/_Groups";
 @import "./views/groups/_GroupStudents";
@@ -29,6 +31,7 @@
 @import "./components/_Layout";
 @import "./components/_Sidebar";
 @import "./components/_SettingsBar";
+@import "./components/Filters";
 @import "./views/root/_Dashboard";
 @import "./views/root/_Rooms";
 @import "./views/students/_Students";
@@ -47,4 +50,13 @@
 label {
   font-size: .83rem;
   color: darken(#ccc, 45%);
+}
+
+.none {
+  display: none;
+}
+
+.--active {
+  background-color: $secondary !important;
+  color: $white;
 }

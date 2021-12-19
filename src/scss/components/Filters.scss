@@ -1,0 +1,15 @@
+.filter-box {
+  width: 100%;
+  height: auto;
+
+  margin-top: 1rem;
+
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  > .input-group input {
+    height: 100%;
+    padding-left: 1rem;
+  }
+}

@@ -1,4 +1,5 @@
 export * from './Avatar'
+export * from './AttendanceDesk'
 export * from './Accordion'
 export * from './Button'
 export * from './Badge'

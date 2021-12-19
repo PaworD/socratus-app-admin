@@ -12,19 +12,23 @@
       </div>
     </div>
     <div class="students__list">
-      <STable v-if="students.length > 0" :rows="rows" :searchQuery="searchQuery"
-              :isLoading="isLoading"/>
+      <STable :rows="rows"
+              :searchQuery="searchQuery"
+              :isLoading="isLoading"
+              :routeName="'StudentsView'"
+              :paginate="true"
+              :totalCount="totalCount" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { STable, STextInput, SIconButton } from "@/shared/components";
 import { TableRowItem } from "@/shared/components/Table/_";
 import { StudentActions } from "@/views/students/components/actions";
 import { Action, Getter } from "vuex-class";
-import { Student } from "@/shared/models";
+import { AnyObject, Pageable, Student } from '@/shared/models'
 import { CreateStudentModal } from "@/views/students/modals/CreateStudentModal.vue";
 import { ModalSize } from "@/shared/abstract";
 
@@ -38,13 +42,13 @@ import { ModalSize } from "@/shared/abstract";
   },
 
   mounted(): void {
-    this.getStudents()
+    this.getStudents(this.queryParams)
   }
 })
 export class StudentsView extends Vue {
 
   @Action
-  private fetchStudents!: () => Promise<void>
+  private fetchStudents!: (query?: AnyObject) => Promise<Pageable>
 
   @Getter
   private students!: Student[]
@@ -52,6 +56,12 @@ export class StudentsView extends Vue {
   public searchQuery = ''
 
   public isLoading = false
+
+  public totalCount = 0
+
+  public get queryParams (): AnyObject {
+    return this.$route.query
+  }
 
   public get rows(): TableRowItem[] {
     return this.students.map(student => {
@@ -82,11 +92,18 @@ export class StudentsView extends Vue {
     })
   }
 
-  public getStudents (): void {
+  public getStudents (query: AnyObject = {}): void {
     this.isLoading = true
-    this.fetchStudents().then(() => {
+    this.fetchStudents(query).then((meta: Pageable) => {
+      this.totalCount = meta.totalCount
+    }).finally(() => {
       this.isLoading = false
     })
+  }
+
+  @Watch('queryParams')
+  protected onQueryChanged (query: AnyObject): void {
+    this.getStudents(query)
   }
 }
 export default StudentsView

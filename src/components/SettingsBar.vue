@@ -19,6 +19,14 @@
       </SAccordion>
       <SAccordion>
         <template v-slot:header>
+          Resources
+        </template>
+        <template v-slot:default>
+          <Resources/>
+        </template>
+      </SAccordion>
+      <SAccordion>
+        <template v-slot:header>
           General Settings
         </template>
         <template v-slot:default>
@@ -34,13 +42,15 @@
 import { Component, Vue } from "vue-property-decorator"
 import { Rooms } from '@/views/root/Rooms.vue'
 import { SIconButton, SAccordion } from '@/shared/components'
+import { Resources } from '@/views/root'
 
 @Component({
   name: 'SettingsBar',
   components: {
     SAccordion,
     SIconButton,
-    Rooms
+    Rooms,
+    Resources
   }
 })
 export class SettingsBar extends Vue{

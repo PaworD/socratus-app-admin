@@ -4,9 +4,6 @@
       <h1>Information</h1>
       <div class="dashboard__inner__atoms">
         <SCard>
-          <template v-slot:header>
-            <button @click="openModal">OPen</button>
-          </template>
           <template v-slot:body>
             Some body Text
           </template>
@@ -30,7 +27,9 @@
       </div>
       <h1>Timetable</h1>
       <div class="dashboard__inner__timetable">
-        <STimetable/>
+        <STimetable :rooms="timetable"
+                    @onDateChanged="onDateChanged"
+                    @onLessonSelected="onLessonSelected" />
       </div>
     </div>
   </div>
@@ -38,22 +37,39 @@
 
 <script lang="ts">
 
-import {Component, Vue} from "vue-property-decorator";
-import {SCard} from "@/shared/components/Card";
-import {STimetable} from "@/shared/components/Timetable";
-import {Action} from "vuex-class";
-import HelloWorld from "@/components/HelloWorld.vue";
-import {ModalSize} from "@/shared/abstract";
+import { Action, Getter } from 'vuex-class'
+import { Component, Vue } from "vue-property-decorator";
+import moment from 'moment'
+
+
+import { ModalSize } from "@/shared/abstract";
+import { SCard } from "@/shared/components/Card";
+import { Schedule, STimetable, Timetable } from '@/shared/components/Timetable'
 
 @Component<Dashboard>({
   name: 'Dashboard',
   components: { SCard, STimetable },
+
+  mounted(): void {
+    this.fetchTimetable()
+  }
 })
 export class Dashboard extends Vue {
 
-  public async openModal(): Promise<void> {
-    const data = await this.$modalService.open(HelloWorld, {data: '123'}, {size: ModalSize.FullScreen, persistent: false, hasHeader: true, headerText: 'Some title'})
-    console.log(data)
+  @Action
+  public readonly fetchTimetable!: (date?: string) => Promise<void>
+
+  @Getter
+  public readonly timetable!: Timetable[]
+
+  public onDateChanged (date: string): void {
+   const formattedDate = moment(date).format('DD-MM-yyyy')
+    this.fetchTimetable(formattedDate)
+    console.log(this.timetable)
+  }
+
+  public onLessonSelected (lesson: Schedule): void {
+    //
   }
 
 }

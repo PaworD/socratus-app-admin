@@ -26,8 +26,7 @@
         <label for="student_group">Select group to add student in</label>
         <SDropdown :list="groupsList" :value="groupsList[0].label" placeholder="Student group"
                     id="student_group" @on-select="onGroupSelect" multiselect/>
-
-        <SBadge v-for="group in studentData.groups" :key="group" :title="group"
+        <SBadge v-for="group in studentData.groups" :key="group" :title="String(group)"
                 :onClose="() => removeGroup(group)"/>
       </div>
 
@@ -103,7 +102,8 @@ export class CreateStudentModal extends ModalWrapper {
     }
 
     return [
-      { label: 'Choose groups...', value: null },...this.groups.map((group) => {
+      { label: 'Choose groups...', value: '' },
+      ...this.groups.map((group) => {
       return {
         label: String(group.name),
         value: String(group.id)
@@ -115,6 +115,7 @@ export class CreateStudentModal extends ModalWrapper {
     if (typeof this.studentData.groups === 'undefined') {
       return
     }
+
     this.studentData.groups.push(Number(item.value))
   }
 

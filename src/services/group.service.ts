@@ -1,11 +1,12 @@
 import { AbstractService } from "@/shared/abstract";
-import { Group} from "@/shared/models";
+import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
 import {
     composeModel, decomposeModel,
     hasResponseFailed,
     resolveWithError
 } from "@/shared/helpers";
 import { injectable } from 'inversify-props'
+import { Attendance, AttendanceDesk, Event } from '@/shared/components'
 
 @injectable()
 export class GroupService extends AbstractService<Group> {
@@ -40,7 +41,7 @@ export class GroupService extends AbstractService<Group> {
         }
     }
 
-    public async get(): Promise<Group[] | string | Group> {
+    public async get(query?: AnyObject): Promise<{ results: Group[]; meta: Pageable } | string | { results: Group; meta: Pageable }> {
         try {
             const _response = await this.http.get(this.url)
 
@@ -48,21 +49,33 @@ export class GroupService extends AbstractService<Group> {
                 throw resolveWithError(_response)
             }
 
-            console.log(composeModel<Group>(_response.data.data) as Group[])
+            const meta: Pageable = {
+                totalCount: _response.data.data.total_count,
+                previous: _response.data.data.previous,
+                next: _response.data.data.next
+            }
 
-            return composeModel<Group>(_response.data.data) as Group[]
+            return {
+                results: composeModel<Group>(_response.data.data.results) as Group[],
+                meta
+            }
         } catch (e) {
             throw new Error(e)
         }
     }
 
-    public update(id: number, payload: Partial<Group>): Promise<string | Group> {
-        return Promise.resolve('undefined');
+    public async update(id: number, payload: Partial<Group>): Promise<string | Group> {
+        try {
+            const response = await this.http.patch(this.url + `/${id}`, decomposeModel(payload))
+            return response.data
+        } catch (e) {
+            throw new Error(e.toString())
+        }
     }
 
     public async removeStudentFromGroup (data: { groupId: number, studentId: number }): Promise<string> {
         try {
-            const _response = await this.http.post(this.url + `/${data.groupId}/remove_student/${data.studentId}`)
+            const _response = await this.http.delete(this.url + `/${data.groupId}/remove_student/${data.studentId}`)
 
             if(hasResponseFailed(_response)) {
                 throw resolveWithError(_response)
@@ -83,6 +96,36 @@ export class GroupService extends AbstractService<Group> {
             }
 
             return _response.data.message
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async getGroupAttendance (id: number): Promise<AttendanceDesk> {
+        try {
+            const _response = await this.http.get(this.url + `/${id}/get_attendance`)
+
+            return composeModel<AttendanceDesk>(_response.data.data) as AttendanceDesk
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async createGroupSchedule (payload: { id: number; schedule: ScheduleIntention }): Promise<string> {
+        try {
+            const _response = await this.http.post(this.url + `/${payload.id}/set_schedule`, {...decomposeModel<ScheduleIntention>(payload.schedule)})
+
+            return _response.data.message
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async getGroupSchedule (query: { group: number, month?: number, year?: number }): Promise<Event[]> {
+        try {
+            const _response = await this.http.get(this.url + `/${query.group}/get_schedule`, { params: { month: query.month, year: query.year } })
+
+            return composeModel<Event>(_response.data.data) as Event[]
         } catch (e) {
             throw new Error(e)
         }

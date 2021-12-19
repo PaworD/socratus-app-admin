@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <SDropdown :list="filteredStudents" :value="filteredStudents[0].label" multiselect
+  <div class="groupStudents__students__modals__add_student">
+    <SDropdown :list="filteredStudents" value="Select students" multiselect
                @on-select="addToSelectedStudents"/>
 
+    {{ selectedStudents }}
     <SBadge v-for="student in selectedStudents" :key="student.id"
             :title="`${student.firstName} ${student.lastName}`" :onClose="() =>
             removeStudent(student)"/>
 
-    <SButton size="medium" theme="secondary" label="Add Student(s)" flat :isLoading="isLoading"
-             @onClick="submitForm" />
+    <SIconButton @onClick="submitForm" >
+      Add Student(s)
+    </SIconButton>
   </div>
 </template>
 
@@ -17,19 +19,18 @@ import { Component } from 'vue-property-decorator'
 import { ModalWrapper } from '@/components/_abstract/ModalWrapper.vue'
 import { Action, Getter } from 'vuex-class'
 import { Student } from '@/shared/models'
-import { SBadge, SDropdown, DropdownItemProps, SCard, SButton } from '@/shared/components'
+import { SBadge, SIconButton, SDropdown, DropdownItemProps, SCard } from '@/shared/components'
 
 @Component<AddStudentModal>({
   name: 'AddStudentModal',
   components: {
-    SButton,
+    SIconButton,
     SCard,
     SDropdown,
     SBadge
   },
   mounted (): void {
     this.fetchStudents()
-    console.log(this.modalData)
   }
 
 })
@@ -49,8 +50,9 @@ export class AddStudentModal extends ModalWrapper {
 
 
   public get filteredStudents (): DropdownItemProps[] {
+    let filteredStudents: Student[] = []
     if (Array.isArray(this.modalData.students) && this.modalData.students.length > 0 && this.students.length > 0) {
-      const filteredStudents = this.students.filter((student) => {
+      filteredStudents = this.students.filter((student) => {
         return (this.modalData.students as Student[]).some(s => s.id !== student.id)
       })
 
@@ -77,12 +79,11 @@ export class AddStudentModal extends ModalWrapper {
   }
 
   public addToSelectedStudents (item: DropdownItemProps): void {
-    const student =
-        this.students.filter((student) => { return student.id === Number(item.value) })[0]
-
+    const student = this.students.filter((student) => { return student.id === Number(item.value) })[0]
     if (this.selectedStudents.some(st => st.id === student.id)) {
       return
     }
+    console.log(student)
 
     this.selectedStudents.push(student)
   }

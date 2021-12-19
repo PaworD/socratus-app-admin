@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
+
 import { RootState } from "./types";
+
 import { AdminModule } from "@/store/modules/admin.module";
-import { RootModule } from "@/store/modules/root.module";
+import { ApplicantsModule } from '@/store/modules/applicants.module'
 import { CourseModule } from "@/store/modules/course.module";
 import { GroupModule} from "@/store/modules/group.module";
-import { TeacherModule } from "@/store/modules/teacher.module";
-import { StudentModule } from "@/store/modules/student.module";
+import { ResourceModule } from '@/store/modules/resource.module'
+import { RootModule } from "@/store/modules/root.module";
 import { RoomModule } from '@/store/modules/room.module'
+import { StudentModule } from "@/store/modules/student.module";
+import { TeacherModule } from "@/store/modules/teacher.module";
 
 Vue.use(Vuex)
 
@@ -25,13 +29,15 @@ const store: StoreOptions<RootState> = {
     authState : state => state.auth
   },
   modules: {
+    ApplicantsModule,
     CourseModule,
     GroupModule,
     RootModule,
     TeacherModule,
     AdminModule,
     StudentModule,
-    RoomModule
+    RoomModule,
+    ResourceModule
   }
 
 }

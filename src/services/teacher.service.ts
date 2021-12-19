@@ -2,14 +2,16 @@ import { AbstractService } from "@/shared/abstract";
 
 import {
     Teacher,
-    Identifier
-} from "@/shared/models";
+    Identifier, AnyObject, Pageable
+} from '@/shared/models'
 import {
-    composeModel,
+    composeModel, decomposeModel,
     hasResponseFailed,
     resolveWithError
-} from "@/shared/helpers";
+} from '@/shared/helpers'
+import { injectable } from 'inversify-props'
 
+@injectable()
 export class TeacherService extends AbstractService<Teacher> {
 
     protected url = '/teachers'
@@ -18,23 +20,48 @@ export class TeacherService extends AbstractService<Teacher> {
         super();
     }
 
-    public create(payload: Teacher): Promise<string | Teacher> {
-        return Promise.resolve('undefined');
-    }
-
-    public delete(id: number): Promise<string> {
-        return Promise.resolve("");
-    }
-
-    public async get(): Promise<Teacher[] | string | Teacher> {
+    public async create(payload: Teacher): Promise<Teacher | string> {
         try {
-            const _response = await this.http.get(this.url)
+            const _response = await this.http.post(this.url, decomposeModel(payload))
 
             if(hasResponseFailed(_response)) {
                 return resolveWithError(_response)
             }
 
-            return composeModel<Teacher>(_response.data.data) as Teacher[]
+            return _response.data.data.message
+
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async delete(id: number): Promise<string> {
+        try {
+            const response = await this.http.delete(this.url + `/${id}`)
+            return response.data.message
+        } catch (e) {
+            throw new Error(e.toString())
+        }
+    }
+
+    public async get(query?: AnyObject): Promise<{ results: Teacher[]; meta: Pageable } | string | { results: Teacher; meta: Pageable }> {
+        try {
+            const _response = await this.http.get(this.url, { params: {...query} })
+
+            if(hasResponseFailed(_response)) {
+                return resolveWithError(_response)
+            }
+
+            const meta: Pageable = {
+                totalCount: _response.data.data.total_count,
+                previous: _response.data.data.previous,
+                next: _response.data.data.next
+            }
+
+            return {
+               results: composeModel<Teacher>(_response.data.data.results) as Teacher[],
+               meta
+            }
         } catch (e) {
             return e.toString()
         }

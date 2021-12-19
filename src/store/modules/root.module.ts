@@ -1,12 +1,18 @@
-import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
+import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
-import {Inject} from "inversify-props";
+import { Inject } from "inversify-props";
 
-import {Admin, AnyObject, School} from "@/shared/models";
-import {RootService} from "@/services/root.service";
-import {LocalStorageService} from "@/services/storage.service";
-import {ToastService, ToastType} from "@/services/toast.service";
-import { TYPES } from '@/services'
+import { Admin, AnyObject, Pageable, School, Student } from '@/shared/models'
+
+import {
+    LocalStorageService,
+    ToastService,
+    RootService,
+    ToastType,
+    TYPES
+} from '@/services'
+import { Organization } from '@/views/contracts'
+
 
 @Module
 export class RootModule extends VuexModule {
@@ -17,26 +23,32 @@ export class RootModule extends VuexModule {
     @Inject(TYPES.StorageServiceType)
     private localStorageService!: LocalStorageService
 
-    @Inject()
+    @Inject(TYPES.ToastServiceType)
     private toastService!: ToastService
 
+    public _organization: Organization = {} as Organization
     public _schools: School[] = []
 
     @Action({ rawError: true })
     public async init(): Promise<void> {
         try {
-            await this.rootService.init()
+            const response = await this.rootService.init()
             this.context.commit('setAuth', true)
+
+            if (typeof response !== 'string') {
+                this.context.commit('setOrganization', response)
+            }
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
     }
 
     @Action({ rawError: true })
-    public async fetchSchoolSet(): Promise<void> {
+    public async fetchSchoolSet(query?: AnyObject): Promise<void> {
         try {
-            const schools = await this.rootService.get()
-            this.context.commit('setSchools', schools)
+            const schools = await this.rootService.get(query) as { results: School[]; meta: Pageable }
+            console.log(schools)
+            this.context.commit('setSchools', schools.results)
         } catch (e) {
             throw new Error(e)
         }
@@ -55,7 +67,6 @@ export class RootModule extends VuexModule {
 
             return response.admin
         } catch (e) {
-            console.log(e)
             this.toastService.show(true, e, ToastType.ERROR, 200)
             return {}
         }
@@ -69,6 +80,15 @@ export class RootModule extends VuexModule {
                 tenant: `${school.name}_${school.id}`
             }
         })
+    }
+
+    @Mutation
+    public setOrganization (data: Organization): void {
+        this._organization = data
+    }
+
+    public get organization(): Organization {
+        return this._organization
     }
 
     public get schools(): School[] {

@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+
 import store from '../store'
+
+import { ApplicantsView } from '@/views/applicants'
+import { CoursesView } from "@/views/courses";
 import { Dashboard } from "@/views/root";
-import { CoursesView } from "@/views/courses/";
-import { GroupsView, GroupContentView } from "@/views/groups/";
-import { StudentsView } from "@/views/students/";
+import { GroupContentView, GroupsView } from "@/views/groups";
+import { StudentsView } from "@/views/students";
+import { TeachersView } from '@/views/teachers'
+import ApplicantContentView from '@/views/applicants/ApplicantContentView.vue'
 
 Vue.use(VueRouter)
 
@@ -13,6 +18,16 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/applicants',
+    name: 'ApplicantsView',
+    component: ApplicantsView
+  },
+  {
+    path: '/applicants/:id',
+    name: 'ApplicantContentView',
+    component: ApplicantContentView
   },
   {
     path: '/courses',
@@ -42,6 +57,14 @@ const routes: Array<RouteConfig> = [
     path: '/students',
     name: 'StudentsView',
     component: StudentsView,
+    meta: {
+      auth: true
+    }
+  },
+  {
+    path: '/teachers',
+    name: 'TeachersView',
+    component: TeachersView,
     meta: {
       auth: true
     }

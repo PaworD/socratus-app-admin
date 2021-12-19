@@ -1,9 +1,8 @@
 import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
-import { Admin, AnyObject, Identifier, School } from "@/shared/models";
+import { Admin, AnyObject, Identifier, Pageable, Room, School } from '@/shared/models'
 import {composeModel, hasResponseFailed, resolveWithError} from "@/shared/helpers";
-import {AxiosResponse} from "axios";
 
 @injectable()
 export class RootService extends AbstractService<School> {
@@ -22,11 +21,17 @@ export class RootService extends AbstractService<School> {
         return Promise.resolve("");
     }
 
-    async get(): Promise<School | string> {
+    async get(q?: AnyObject): Promise<{ results: School[], meta: Pageable } | string | { results: School, meta: Pageable }> {
         try {
             const _response = await this.http.get(this.url + 'schools')
 
-            return _response.data
+            const meta: Pageable = {} as Pageable
+
+            console.log(_response.data)
+            return {
+                meta: meta,
+                results: composeModel<School>(_response.data) as School[]
+            }
         } catch (e: any) {
             return e.toString()
         }
@@ -37,7 +42,6 @@ export class RootService extends AbstractService<School> {
             const _response = await this.http.get('/admin/init')
 
             if(hasResponseFailed(_response)) {
-                console.log('e')
                 return resolveWithError(_response)
             }
 

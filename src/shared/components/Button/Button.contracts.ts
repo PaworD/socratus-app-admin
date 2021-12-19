@@ -5,6 +5,7 @@ export enum ButtonSize {
 }
 
 export enum ButtonTheme {
+  DANGER = 'danger',
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
   TRANSPARENT = 'transparent'

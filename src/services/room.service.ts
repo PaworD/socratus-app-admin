@@ -1,13 +1,14 @@
 import { AbstractService } from "@/shared/abstract";
 import { injectable } from "inversify-props";
 
-import { Room } from "@/shared/models";
+import { AnyObject, Pageable, Room } from '@/shared/models'
 import {
   composeModel,
   decomposeModel,
   hasResponseFailed,
   resolveWithError
 } from "@/shared/helpers";
+import { Timetable } from '@/shared/components/Timetable'
 
 /**
  *
@@ -45,17 +46,22 @@ export class RoomService extends AbstractService<Room> {
     }
   }
 
-  async get(): Promise<string | Room[]> {
+  async get(q?: AnyObject): Promise<string | { results: Room[], meta: Pageable }> {
     try {
-      const response = await this.http.get(this.url)
+      const _response = await this.http.get(this.url)
 
-      if (hasResponseFailed(response)) {
-        resolveWithError(response)
+      if (hasResponseFailed(_response)) {
+        resolveWithError(_response)
       }
 
-      return composeModel<Room>(response.data.data) as Room[]
+      const meta: Pageable = {} as Pageable
+
+      return {
+        meta,
+        results: composeModel<Room>(_response.data.data) as Room[]
+      }
     } catch (e) {
-      return e.toString()
+      throw new Error(e.toString())
     }
   }
 
@@ -65,6 +71,16 @@ export class RoomService extends AbstractService<Room> {
       return response.data
     } catch (e) {
       return e.toString()
+    }
+  }
+
+  public async getScheduleForTimetable (date?: string): Promise<Timetable[] | Timetable> {
+    try {
+      const _response = await this.http.get(this.url + '/get_schedule', { params: { date } })
+
+      return composeModel<Timetable>(_response.data.data) as Timetable[]
+    } catch (e) {
+      throw new Error(e)
     }
   }
 }

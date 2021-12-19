@@ -1,0 +1,1 @@
+export { default as TeacherActions } from './TeacherActions.vue'

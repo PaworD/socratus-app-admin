@@ -1,5 +1,6 @@
 <template>
-  <button class="icon-button" :class="{'--borderless': borderless}" @click="onClick">
+  <button class="icon-button" :class="[ `--${theme}`,{'--borderless': borderless}]"
+          @click="onClick">
     <slot v-if="$slots.icon" name="icon"></slot>
     <slot></slot>
   </button>
@@ -9,11 +10,15 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from "vue-property-decorator"
+import { ButtonTheme } from '@/shared/components'
 
 @Component<SIconButton>({name: 'SIconButton'})
 export class SIconButton extends Vue {
   @Prop({type: Boolean, required: false, default: false})
   public readonly borderless!: boolean
+
+  @Prop({ type: String, required: false, default: ButtonTheme.TRANSPARENT })
+  public readonly theme!: ButtonTheme
 
   public onClick (): void {
     this.$emit('onClick')
@@ -29,8 +34,6 @@ export default SIconButton
   border: none;
   outline: none;
 
-  background: transparent;
-
   padding: .4rem .6rem;
 
   border-radius: 5px;
@@ -41,12 +44,34 @@ export default SIconButton
 
   cursor: pointer;
 
-  &.--borderless {
-    box-shadow: none;
+  &.--transparent {
+    background-color: transparent;
+
+    &:hover {
+      background: #f1f1f1;
+    }
   }
 
-  &:hover {
-    background: #f1f1f1;
+  &.--secondary {
+    background-color: $secondary;
+    color: $white;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &.--danger {
+    background-color: $danger;
+    color: $white;
+
+    &:focus {
+      box-shadow: 0px 0px 1px 2px rgba(220, 53, 69, 0.51);
+    }
+  }
+
+  &.--borderless {
+    box-shadow: none;
   }
 }
 </style>

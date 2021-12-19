@@ -5,11 +5,11 @@
       {{this.selectedDayAndMonth.month}}
       <SButton flat label="Next Month" :tooltip="nextMonthAsString" @onClick="addMonth"/>
     </div>
-    <span v-if="filteredEventListForSelectedDate !== []">
-          <li v-for="event in filteredEventListForSelectedDate" :key="event.id">
-            {{event.title}}
-          </li>
-        </span>
+<!--    <span v-if="filteredEventListForSelectedDate !== []">-->
+<!--      <li v-for="event in filteredEventListForSelectedDate" :key="event.id">-->
+<!--        {{event.title}}-->
+<!--      </li>-->
+<!--    </span>-->
     <div class="calendar__weekdays">
       <div class="weekday" v-for="(day, index) in days" :key="index">
         <strong>{{day}}</strong>
@@ -17,16 +17,19 @@
     </div>
     <div class="calendar__dates">
       <div class="date" :class="{
-            'selected': dateIsEqualSelectDate(date),
-            'today': date.today,
             'blank': date.blank,
             'no-border-right': date.key % 7 === 0
-        }" v-for="date in dateList" :key="date.key" :data-date="date.date">
-        <span class="day">{{date.dayNumber}}</span>
+        }" v-for="date in dateList" :key="date.key" :data-date="date.date" @click="onDaySelect(date)">
+        <span class="day" :class="{'selected': dateIsEqualSelectDate(date), 'today': date.today,}">
+          {{date.dayNumber }}
+        </span>
         <span v-if="date.events !== 0">
-          <li v-for="event in date.events" :key="event.id">
-            {{event.title}}
-          </li>
+          <div v-for="event in date.events" :key="event.id" class="date__event">
+            <span :style="{ 'background-color': event.room.color }">
+              {{ event.room.name }}
+            </span>
+            <SAvatar :source="[event.teacher.firstName + ' ' + event.teacher.lastName]" />
+          </div>
         </span>
         <span class="weekday">{{date.weekDay}}</span>
       </div>
@@ -39,14 +42,15 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import {Days, filters, VisibilityFilter, Event, DayAndMonth} from "./Calendar.contracts";
 import moment, { Moment } from "moment";
 import { SButton } from "@/shared/components/Button";
+import { SAvatar } from '@/shared/components'
 
-@Component({name: 'SCalendar', components: {SButton}})
+@Component({name: 'SCalendar', components: {SButton, SAvatar}})
 export class SCalendar extends Vue {
   @Prop({type: Boolean, required: false, default: true})
   private readonly controllers!: boolean
 
-  @Prop({type: Array, required: false})
-  private readonly events!: []
+  @Prop({ type: Array, required: false })
+  private readonly events!: Event[]
 
   @Prop({type: Boolean, required: false})
   private readonly preview!: boolean
@@ -122,6 +126,13 @@ export class SCalendar extends Vue {
    */
   public get nextMonthAsString (): string {
     return this.nextMonth.format("MMMM")
+  }
+
+  /**
+   * Triggered when day is selected
+   */
+  public onDaySelect (date: any): void {
+    this.$emit('onDaySelect', date)
   }
 
   /**
@@ -227,6 +238,9 @@ export class SCalendar extends Vue {
       let weekDay = this.getWeekDay(countDayInCurrentMonth);
       let formattedDay = this.formattingDay(day);
 
+      console.log(this.filteredEventListForSelectedDate(moment(formattedCurrentYear +
+          formattedCurrentMonth + formattedDay).format('DD-MM-YYYY')))
+
       dateList[countDayInCurrentMonth] = {
         key: countDayInCurrentMonth,
         dayNumber: formattedDay,
@@ -246,11 +260,11 @@ export class SCalendar extends Vue {
             formattedCurrentYear +
             formattedCurrentMonth +
             formattedDay
-        ).format('DD.MM.YYYY')).length > 0 ? this.filteredEventListForSelectedDate(moment(
+        ).format('DD-MM-YYYY')).length > 0 ? this.filteredEventListForSelectedDate(moment(
             formattedCurrentYear +
             formattedCurrentMonth +
             formattedDay
-        ).format('DD.MM.YYYY')) : [],
+        ).format('DD-MM-YYYY')) : [],
         moment: moment(
             formattedCurrentYear +
             formattedCurrentMonth +

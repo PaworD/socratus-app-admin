@@ -1,0 +1,10 @@
+.applications {
+  &__lead {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__table {
+    margin-top: 1rem;
+  }
+}

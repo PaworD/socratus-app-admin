@@ -1,7 +1,7 @@
 <template>
   <div :class="['badge', `badge__${theme}`]">
     {{ title }}
-    <span @click="onClose">&times;</span>
+    <span v-if="typeof $props.onClose() === 'function'" @click="onClose">&times;</span>
   </div>
 </template>
 

@@ -33,10 +33,6 @@ import { ModalSize } from '@/shared/abstract'
   name: 'StudentActions',
   components: {
     SIconButton
-  },
-
-  mounted (): void {
-    console.log(this.actions)
   }
 })
 export class StudentActions extends Vue {

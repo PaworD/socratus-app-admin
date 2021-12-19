@@ -18,6 +18,7 @@
   }
 
   &__dates {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     position: relative;
@@ -39,6 +40,36 @@
       padding: 0.25rem 0.5rem;
       position: relative;
       width: calc(100% / 7);
+
+      &:hover {
+        background-color: $light;
+        cursor: pointer;
+      }
+
+      &__event {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        right: 0;
+        padding: .2rem;
+
+        display: flex;
+        justify-content: space-between;
+        flex-flow: column;
+
+        > .avatar {
+          align-self: flex-start;
+          justify-self: flex-start;
+        }
+
+        > span {
+          display: block;
+          border-radius: 10px;
+
+          font-size: 13px;
+          padding: .3rem;
+        }
+      }
       &.blank {
         background-color: rgba(0, 0, 0, 0.02);
         color: rgba(0, 0, 0, 0.2);
@@ -47,12 +78,12 @@
         border-right: none;
       }
       &.today {
-        background-color: #ff7979;
-        color: #fff;
+        display: block;
+        background-color: $dark-500;
       }
       &.selected {
-        background-color: #f0932b;
-        color: #fff;
+        display: block;
+        background-color: $dark-500;
       }
       .link {
         cursor: pointer;

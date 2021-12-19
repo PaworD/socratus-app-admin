@@ -1,3 +1,4 @@
+import { Identifier, Room, Teacher } from '@/shared/models'
 
 export const Days = [
     'Mon',
@@ -18,15 +19,16 @@ export interface DayAndMonth {
     month: string | number
 }
 
-export interface Event {
-    id: string | number
-    title: string
-    date: string
+export interface Event extends Identifier{
+    endTime: string
+    room: Room
+    startTime: string
+    teacher: Teacher
 }
 
 export interface Calendar {
     controllers: boolean
-    events: any[]
+    events: Event[]
     preview: boolean
 }
 
@@ -38,7 +40,7 @@ export enum VisibilityFilter {
 export const filters = {
     forDate: (eventList: Event[], selectedDate: string) => {
         return eventList.filter(function(event) {
-            return event.date === selectedDate;
+            return event.startTime.split(' ')[0] === selectedDate;
         });
     },
     all: (eventList: Event[]) => {

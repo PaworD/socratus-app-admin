@@ -10,5 +10,4 @@ export interface IRoom {
   getName(): string
 }
 
-
 export type Room = Partial<IRoom> & RoomData

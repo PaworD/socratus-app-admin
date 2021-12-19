@@ -39,7 +39,43 @@
     }
 
     tr:nth-child(even) {
-      background-color: $light;
+      background-color: #f4f6fb;
+    }
+  }
+
+
+  &__pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem;
+
+    border: 1px solid $light;
+
+
+    &__controllers {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 1rem;
+
+      .counter {
+        font-size: 10px;
+      }
+
+      &__page_size {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        gap: 1rem;
+      }
+    }
+    &__info {
+      font-size: 14px;
     }
   }
 

@@ -7,6 +7,8 @@ export interface IGroup {
     getGroup(): string
 }
 
+export type GroupUpdateIntention = Omit<GroupData, 'course' & 'students'>
+
 export interface GroupData extends Identifier{
     name: string
     color: string
@@ -15,4 +17,4 @@ export interface GroupData extends Identifier{
     students: Student[]
 }
 
-export type Group = GroupData & IGroup
+export type Group = GroupData & Partial<IGroup>

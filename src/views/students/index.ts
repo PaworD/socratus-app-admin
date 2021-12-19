@@ -1,1 +1,1 @@
-export * from './StudentsView.vue'
+export {default as StudentsView} from './StudentsView.vue'

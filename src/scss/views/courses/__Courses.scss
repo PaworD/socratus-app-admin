@@ -3,6 +3,17 @@
   &__lead {
     display: flex;
     justify-content: space-between;
+
+    &__btns {
+      display: flex;
+      flex-flow: row;
+
+      gap: .4rem;
+    }
+  }
+
+  &__filters {
+    display: flex;
   }
 
   &__list {
@@ -15,7 +26,14 @@
     > .card {
 
 
-      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      min-width: 15rem;
+      max-width: calc(12.5rem + 13vw);
+      background: #fff;
+      border-radius: 0.75em;
+      overflow: hidden;
+      transition: transform 270ms ease;
       position: relative;
 
       box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
@@ -23,7 +41,7 @@
       .course__hero {
         margin: 0;
 
-        height: 100%;
+        height: auto;
         width: 100%;
 
         position: relative;
@@ -43,43 +61,41 @@
           transition: all .3s ease-in-out;
         }
 
-        &:hover .action-group {
+        .course-badges {
+          position: absolute;
+          z-index: 1;
+
+          left: 2%;
+          bottom: 2%;
+
+          opacity: 1;
+          gap: .4rem;
+
+          display: flex;
+
+          transition: all .3s ease-in-out;
+        }
+
+        &:hover .action-group,
+        &:hover .course-badges {
           transition: all .3s ease-in-out;
           opacity: 1;
         }
 
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-
-          height: 100%;
-          width: 100%;
-
-          //background:
-          //        linear-gradient(
-          //                        rgba(161, 161, 161, 0.75),
-          //                        rgba(87, 87, 87, 0.45)
-          //        );
-        }
-
         > img  {
-          border-radius: 4px;
+          display: block;
           width: 100%;
+          max-width: 100%;
+          aspect-ratio: 16 / 9;
           object-fit: cover;
-
+          height: auto;
         }
       }
 
       .course__description {
-        height: 35%;
         width: 100%;
 
         padding: 1rem;
-
-        position: absolute;
-
         bottom: 0;
 
         background-color: #fff;

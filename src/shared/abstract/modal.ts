@@ -22,13 +22,13 @@ export interface ModalConfigs {
      * Modal Header visibility
      * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
      */
-    hasHeader: boolean
+    hasHeader?: boolean
 
     /**
      * Modal Header text content
      * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
      */
-    headerText: string
+    headerText?: string
 
     /**
      * Modal Size configuration

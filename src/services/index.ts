@@ -1,19 +1,23 @@
-export * from './student.service'
+export * from './applicants.service'
 export * from './course.service'
-export * from './toast.service'
+export * from './group.service'
+export * from './resource.service'
+export * from './room.service'
 export * from './root.service'
 export * from './storage.service'
-export * from './group.service'
+export * from './student.service'
 export * from './teacher.service'
-export * from './room.service'
+export * from './toast.service'
 
 export const TYPES = {
-  StudentServiceType : Symbol.for('StudentService'),
+  ApplicantsServiceType : Symbol.for('ApplicantsService'),
   CourseServiceType :  Symbol.for('CourseService'),
-  ToastServiceType : Symbol.for('ToastService'),
-  RootServiceType : Symbol.for('RootService'),
-  StorageServiceType : Symbol.for('StorageService'),
   GroupServiceType : Symbol.for('GroupService'),
-  TeacherServiceType : Symbol.for('TeacherService'),
+  RootServiceType : Symbol.for('RootService'),
   RoomServiceType : Symbol.for('RoomService'),
+  ResourceServiceType : Symbol.for('ResourceService'),
+  StudentServiceType : Symbol.for('StudentService'),
+  StorageServiceType : Symbol.for('StorageService'),
+  TeacherServiceType : Symbol.for('TeacherService'),
+  ToastServiceType : Symbol.for('ToastService')
 }

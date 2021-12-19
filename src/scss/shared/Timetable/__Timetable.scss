@@ -4,6 +4,22 @@
   display: flex;
   flex-flow: column;
 
+  &__controllers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:  0 0 1rem 0;
+
+    &__date {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 1rem;
+    }
+  }
+
   &__timeline {
     width: 100%;
     display: flex;
@@ -14,8 +30,12 @@
     span {
       position: relative;
       display: block;
-      width: calc(100% / 12);
+      width: calc(100% / 10);
       border-bottom: 1px solid #3a3a3a;
+
+      &:last-of-type {
+        display: none;
+      }
 
 
       &::after {
@@ -33,17 +53,24 @@
     width: 100%;
     height: auto;
     &__cell {
+      position: relative;
       width: 100%;
-      height: 3rem;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      height: 3rem;
       border-bottom: 1px solid #888888;
       background-color: $light;
+      padding: .2rem;
       &__session {
+        content: "";
+
         position: absolute;
         height: 2.6rem;
-        background-color: #888888;
+        background-color: $dark;
+
+        &.--editing {
+          border: 2px dashed #fff;
+          cursor: move;
+        }
       }
     }
   }

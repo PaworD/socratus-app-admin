@@ -3,7 +3,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import { Inject } from "inversify-props";
 
 import { StudentService, ToastService, ToastType, TYPES } from '@/services'
-import { Id, Student, StudentUpdateIntention } from '@/shared/models'
+import { AnyObject, Id, Pageable, Student, StudentUpdateIntention } from '@/shared/models'
 
 @Module
 export class StudentModule extends VuexModule {
@@ -37,13 +37,15 @@ export class StudentModule extends VuexModule {
     }
 
     @Action
-    public async fetchStudents(): Promise<void> {
+    public async fetchStudents(query?: AnyObject): Promise<Pageable> {
         try {
-            const students = await this.studentService.get()
-            console.log(students)
-            this.context.commit('setStudents', students)
+            const students = await this.studentService.get(query) as { results: Student[]; meta: Pageable }
+            this.context.commit('setStudents', students.results)
+
+            return students.meta
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
         }
     }
 

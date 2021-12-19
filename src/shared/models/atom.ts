@@ -16,3 +16,10 @@ export interface Image extends Identifier{
     alt: string
     url: string
 }
+
+export interface Pageable {
+    next: number
+    previous: number
+    totalCount: number
+    perPage?: number
+}

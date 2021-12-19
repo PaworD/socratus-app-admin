@@ -9,7 +9,13 @@
     display: flex;
     gap: .9rem;
 
-    padding: 2rem;
+    padding: 1.3rem;
+    margin: 2rem 1rem 0rem 1rem;
+
+    border-radius: 10px;
+    box-shadow: 3px 2px 10px 3px $alt;
+
+    background-color: #30475EE6;
 
     &__logo {
 
@@ -23,6 +29,8 @@
         object-fit: cover;
 
         border-radius: 7px;
+
+        box-shadow: 0px 0px 7px -3px $light;
       }
     }
 
@@ -30,13 +38,14 @@
       display: flex;
       flex-flow: column;
       gap: .3rem;
+      color: $white;
 
       p {
         font-weight: bold;
       }
 
       small {
-        color: $ft-light;
+        color: inherit;
       }
     }
   }

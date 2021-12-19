@@ -7,14 +7,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { Action, Getter } from 'vuex-class'
 
 import { STabs, STab } from '@/shared/components'
-import CreateGroupModal from "@/views/groups/modals/CreateGroupModal.vue";
-import GroupStudents from '@/views/groups/components/GroupStudents.vue'
-import { Action, Getter } from 'vuex-class'
 import { Group } from '@/shared/models'
-import GroupSchedule from '@/views/groups/components/GroupSchedule.vue'
+
+import { GroupStudents } from './components/GroupStudents.vue'
+import { GroupSchedule } from './components/GroupSchedule.vue'
+import { GroupAttendance } from './components/GroupAttendance.vue'
 
 @Component<GroupContentView>({
   name: 'GroupContentView',
@@ -65,7 +66,7 @@ export class GroupContentView extends Vue {
       },
       {
         title: 'Attendance',
-        component: CreateGroupModal
+        component: GroupAttendance
       }
     ]
   }

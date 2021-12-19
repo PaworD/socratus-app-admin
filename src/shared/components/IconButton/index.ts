@@ -1,1 +1,2 @@
-export * from './IconButton.vue'
+export { default as SIconButton } from './IconButton.vue'
+export * from './IconButton.contracts'

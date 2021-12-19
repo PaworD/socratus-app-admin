@@ -12,6 +12,11 @@
                 <i class="bi-eye"></i>
               </template>
             </SIconButton>
+            <SIconButton borderless @onClick="openUpdateGroupModal">
+              <template v-slot:icon>
+                <i class="bi-pencil"></i>
+              </template>
+            </SIconButton>
             <SIconButton borderless @onClick="onDelete">
               <template v-slot:icon>
                 <i class="bi-trash"></i>
@@ -30,10 +35,14 @@
 
 <script lang="ts">
 
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { SAvatar, SCard, SIconButton  } from "@/shared/components";
-import { Group } from "@/shared/models";
-import { Action } from 'vuex-class'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+import { Group } from '@/shared/models'
+import { DeleteModal } from '@/shared/modals'
+import { ModalSize } from '@/shared/abstract'
+import { SAvatar, SCard, SIconButton } from '@/shared/components'
+
+import CreateGroupModal from '../modals/CreateGroupModal.vue'
 
 @Component<GroupCard>({
   name: 'GroupCard',
@@ -46,10 +55,6 @@ import { Action } from 'vuex-class'
 export class GroupCard extends Vue {
   @Prop({type: Object, required: true})
   public readonly group!: Group
-
-
-  @Action
-  private deleteGroup!: (id: number) => void
 
   public get students (): string[] {
     return [...this.group.students.map((student) => {
@@ -66,7 +71,36 @@ export class GroupCard extends Vue {
   }
 
   public async onDelete (): Promise<void> {
-    await this.deleteGroup(this.group.id)
+    this.$modalService.open(DeleteModal,
+        {
+          id: this.group.id,
+          module: 'group',
+          message: `Are you sure to delete group: ${this.group.name} `
+        },
+        {
+          hasHeader: true,
+          size: ModalSize.ExtraSmall,
+          persistent: false
+        }).then( async () => {
+            this.$emit('onGroupDelete')
+        })
+  }
+
+  public openUpdateGroupModal (): void {
+    this.$modalService.open(CreateGroupModal,
+        {
+          id: this.group.id,
+          group: this.group
+        },
+        {
+          hasHeader: true,
+          headerText: 'Update Group',
+          persistent: true,
+          size: ModalSize.ExtraSmall
+        }
+    ).then(() => {
+      this.$emit('onGroupUpdate')
+    })
   }
 }
 export default GroupCard

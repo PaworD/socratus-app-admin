@@ -1,5 +1,5 @@
 <template>
-  <div class=" courses__modals__create">
+  <div class="courses__modals__create">
     <form @submit.prevent="submit">
       <div class="input-group">
         <label for="course-name">Write name for the course</label>
@@ -9,15 +9,16 @@
 
       <div class="input-group">
         <label for="course-price">Define price for the course</label>
-        <STextInput placeholder="Price" flat size="medium" v-model="payload.price"
-                    id="course-price" required />
+        <money class="input input--flat input--medium" placeholder="Price" v-model.lazy="payload.price"
+               id="course-price" v-bind="moneyMask" required />
       </div>
 
       <div class="input-group">
         <label for="course-level">
           Define level for the course (Beginner)
         </label>
-        <STextInput placeholder="Price" flat size="medium" v-model="payload.level" id="course-level" />
+        <STextInput placeholder="Level" flat size="medium" v-model="payload.level"
+                    id="course-level" />
       </div>
 
 
@@ -30,20 +31,22 @@
 <script lang="ts">
 
 import { Component } from "vue-property-decorator";
+import { Money } from 'v-money'
+
 import { ModalWrapper } from "@/components/_abstract/ModalWrapper.vue";
 import { SButton } from "@/shared/components/Button";
 import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
 import { Action } from "vuex-class";
 import { Course } from "@/shared/models";
 import { SDropdown } from "@/shared/components/Dropdown";
-import { mask } from 'vue-the-mask'
 
 @Component<CreateCourseModal>({
   name: 'CreateCourseModal',
   components: {
     STextInput,
     SDropdown,
-    SButton
+    SButton,
+    Money
   },
 
   mounted(): void {
@@ -55,10 +58,6 @@ import { mask } from 'vue-the-mask'
       }
     }
   },
-
-  directives: {
-    mask
-  }
 })
 export class CreateCourseModal extends ModalWrapper {
 
@@ -76,6 +75,14 @@ export class CreateCourseModal extends ModalWrapper {
   } = {
     name: "",
     price: 0,
+  }
+
+  public moneyMask = {
+    precision: 0,
+    decimal: ",",
+    thousands: " ",
+    prefix: "UZS ",
+    masked: false
   }
 
   public isLoading = false

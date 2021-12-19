@@ -1,10 +1,10 @@
-import { Identifier } from "@/shared/models/atom";
+import { Identifier, Pageable } from '@/shared/models/atom'
 
 export interface IStudent {
     getName(): string
 }
 
-export interface StudentData extends Identifier{
+export interface StudentData extends Identifier {
     email: string
     firstName: string
     groups: number[]
@@ -12,7 +12,7 @@ export interface StudentData extends Identifier{
     phone: string
 }
 
-export type Student = Partial<StudentData & IStudent>
+export type Student = StudentData & Partial<IStudent>
 
 export type StudentUpdateIntention = Omit<StudentData, 'groups'>
 

@@ -32,10 +32,13 @@ import {Action, Getter} from "vuex-class";
 })
 export class AuthCard extends Vue {
   @Action
-  public fetchSchoolSet!: () => Promise<void>
+  public fetchSchoolSet!: (q?: AnyObject) => Promise<void>
 
   @Action
   public signInWith!: (payload: AnyObject) => Promise<Admin | void>
+
+  @Action
+  public init!: () => Promise<void>
 
   @Getter
   public schools!: School[]
@@ -73,6 +76,7 @@ export class AuthCard extends Vue {
     }
     this.errorMessage = null
     await this.signInWith(this.payload)
+    await this.init()
   }
 }
 export default AuthCard
