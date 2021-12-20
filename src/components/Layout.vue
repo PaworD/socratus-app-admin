@@ -16,6 +16,11 @@
                 <i class="bi-toggles"></i>
               </template>
             </SIconButton>
+          <SIconButton borderless @onClick="openLogoutModal">
+            <template v-slot:icon>
+              <i class="bi-arrow-right-square"></i>
+            </template>
+          </SIconButton>
         </div>
       </div>
       <div class="layout__content__content">
@@ -35,6 +40,9 @@ import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
 import { SButton } from "@/shared/components/Button";
 import { SIconButton } from "@/shared/components/IconButton"
 import { SettingsBar } from '@/components/SettingsBar.vue'
+import LogoutModal from '@/components/LogoutModal.vue'
+import { ModalSize } from '@/shared/abstract'
+import { AnyObject } from '@/shared/models'
 
 @Component({name: 'Layout', components: {STextInput, SButton, SIconButton, SettingsBar}})
 export class Layout extends Vue {
@@ -43,6 +51,20 @@ export class Layout extends Vue {
 
   public toggleSettingsBar (): void {
     this.isSettingsBarOpen = !this.isSettingsBarOpen
+  }
+
+  public openLogoutModal (): void {
+    this.$modalService.open(LogoutModal, {}, {
+          size: ModalSize.ExtraSmall,
+          persistent: false,
+          hasHeader: true,
+          headerText: 'Log out'
+        }
+      ).then((data: AnyObject) => {
+        if (data.success) {
+          window.location.reload()
+        }
+    })
   }
 }
 export default Layout

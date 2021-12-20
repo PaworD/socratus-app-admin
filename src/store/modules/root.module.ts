@@ -72,6 +72,11 @@ export class RootModule extends VuexModule {
         }
     }
 
+    @Action({ rawError: true })
+    public logOut (): void {
+        this.localStorageService.clearKeys()
+    }
+
     @Mutation
     public setSchools (schools: School[]): void {
         this._schools = schools.map((school) => {
