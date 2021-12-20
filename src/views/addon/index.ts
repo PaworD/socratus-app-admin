@@ -1,0 +1,1 @@
+export { default as AddonView } from './AddonView.vue'

@@ -10,6 +10,7 @@ import { GroupContentView, GroupsView } from "@/views/groups";
 import { StudentsView } from "@/views/students";
 import { TeachersView } from '@/views/teachers'
 import ApplicantContentView from '@/views/applicants/ApplicantContentView.vue'
+import { addons } from '@/router/addon'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,9 @@ const routes: Array<RouteConfig> = [
       auth: true
     }
   },
+  {
+    ...addons
+  }
 ]
 
 const router = new VueRouter({
