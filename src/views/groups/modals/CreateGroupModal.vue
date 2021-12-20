@@ -24,10 +24,8 @@
 
       <div class="input-group">
         <label for="courseColor">Assign color</label>
-        <STextInput placeholder="Color" size="medium" type="text" id="courseColor" v-model="groupData.color" flat required/>
-        <small>Please refer to <a href="https://imagecolorpicker.com/color-code" >this link</a> and copy color code . Ex: #00abdf</small>
+        <ColorPicker :value.sync="groupData.color" id="courseColor" />
       </div>
-
       <SButton :size="'medium'" :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary"
                :isLoading="isLoading" flat/>
     </form>
@@ -47,6 +45,7 @@ import {
   DropdownItemProps
 } from '@/shared/components'
 import { Course, Group, GroupUpdateIntention, Teacher } from '@/shared/models'
+import ColorPicker from '@/components/ColorPicker.vue'
 
 /**
  * @author Javlon Khalimjonov <khalimjanov.code@gmil.com>
@@ -57,7 +56,8 @@ import { Course, Group, GroupUpdateIntention, Teacher } from '@/shared/models'
   components: {
     STextInput,
     SButton,
-    SDropdown
+    SDropdown,
+    ColorPicker
   },
 
   created (): void {

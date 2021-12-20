@@ -12,6 +12,42 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        flex-flow: column;
+
+        position: relative;
+
+        &__header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          width: 100%;
+        }
+
+        &__content {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          width: 100%;
+
+          padding: 1rem 0 0 0;
+        }
+
+        &__color {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          width: 6px;
+          height: 100%;
+
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+
+          box-shadow: 0 0 5px 1px $dark-500;
+        }
       }
 
       &__footer {

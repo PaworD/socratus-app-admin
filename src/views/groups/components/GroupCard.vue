@@ -2,9 +2,10 @@
   <div class="groups__cards">
     <SCard :body-class="'groups__cards__card__body'" :footer-class="'groups__cards__card__footer'" borderless>
       <template v-slot:body>
+        <div class="groups__cards__card__body__color" :style="{ 'backgroundColor': group.color }"></div>
+        <div class="groups__cards__card__body__header">
           <div>
             <SAvatar :source="[teacher]"/>
-            <p>{{ group.name }}</p>
           </div>
           <div>
             <SIconButton borderless @onClick="$router.push(`groups/${group.id}`)">
@@ -23,6 +24,10 @@
               </template>
             </SIconButton>
           </div>
+        </div>
+        <div class="groups__cards__card__body__content">
+          <h3>{{ group.name }}</h3>
+        </div>
       </template>
       <template v-slot:footer>
         <span>Students: </span>

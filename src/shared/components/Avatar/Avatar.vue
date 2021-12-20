@@ -1,7 +1,7 @@
 <template>
   <div class="avatars">
-    <span v-for="(name, index) in firstAndLast" :key="index" class="avatar">
-      <span>{{name}}</span>
+    <span v-for="(name, index) in source" :key="index" class="avatar" :title="name">
+      <span>{{ firstAndLast[index] }}</span>
     </span>
     <span class="avatar" v-if="source.length >= 1">
       +{{ source.length }}
@@ -30,6 +30,10 @@ export class SAvatar extends Vue {
       })
     }
     return ['']
+  }
+
+  public fullName (index: number): string {
+    return this.source[index]
   }
 }
 export default SAvatar

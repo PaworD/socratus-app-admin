@@ -8,9 +8,7 @@
 
     <div class="input-group">
       <label for="room-color">Define color for room</label>
-      <STextInput size="medium" flat type="text" v-model="payload.color" id="room-color"
-                  placeholder="Room color"/>
-      <small>Please refer to this link to select color</small>
+      <ColorPicker :value.sync="payload.color" id="room-color" />
     </div>
 
     <SButton flat size="medium" :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary"
@@ -26,12 +24,14 @@ import ModalWrapper from '@/components/_abstract/ModalWrapper.vue'
 import { SButton, STextInput } from '@/shared/components'
 import { Action } from 'vuex-class'
 import { Room } from '@/shared/models'
+import ColorPicker from '@/components/ColorPicker.vue'
 
 @Component<CreateRoomModal>({
   name: "CreateRoomModal",
   components: {
     STextInput,
-    SButton
+    SButton,
+    ColorPicker
   },
 
   mounted (): void {
