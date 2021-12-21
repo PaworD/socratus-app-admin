@@ -62,7 +62,9 @@
             {
               'width': `${getDuration(session)}%`
             }
-            ]"></div>
+            ]">
+          <span class="timetable__table__cell__session__group_info"><strong>{{ session.group.name }}</strong></span>
+        </div>
       </div>
     </div>
     <!-- END | Timetable -->
@@ -156,7 +158,7 @@ export class STimetable extends Vue {
    * Calculates offset from left
    */
   public getBeginning(session: Schedule): number {
-    const startTimeInMinutes = STimetable.toMinutes(moment(session.startTime))
+    const startTimeInMinutes = STimetable.toMinutes(moment(session.startTime, 'DD-MM-YYYY HH:mm'))
     return (((startTimeInMinutes - this.hours[0].value) / ((this.hours[this.hours.length -1].value) - this.hours[0].value)) * 100)
   }
 
@@ -164,8 +166,9 @@ export class STimetable extends Vue {
    * Calculates width of session
    */
   public getDuration(session: Schedule): number {
-    console.log(session)
-    return (((STimetable.toMinutes(moment(session.endTime)) - STimetable.toMinutes(moment(session.startTime))) / ((this.hours[this.hours.length -1].value) - this.hours[0].value)) * 100)
+    return (((STimetable.toMinutes(moment(session.endTime, 'DD-MM-YYYY HH:mm')) -
+        STimetable.toMinutes(moment(session.startTime, 'DD-MM-YYYY HH:mm'))) /
+        ((this.hours[this.hours.length -1].value) - this.hours[0].value)) * 100)
   }
 
   // public get roomHeight (): string {
@@ -356,7 +359,7 @@ export class STimetable extends Vue {
    * @param time
    * @private
    */
-  private static toMinutes(time: Moment) : number {
+  private static toMinutes(time: moment.Moment) : number {
     return time.hour() * 60 + time.minute()
   }
 

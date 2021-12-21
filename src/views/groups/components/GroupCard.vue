@@ -28,6 +28,9 @@
         <div class="groups__cards__card__body__content">
           <h3>{{ group.name }}</h3>
         </div>
+        <div class="groups__cards__card__body__content">
+          <small> <i class="bi-bookmark"></i> {{ group.course.name }}</small>
+        </div>
       </template>
       <template v-slot:footer>
         <span>Students: </span>
