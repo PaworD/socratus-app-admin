@@ -4,7 +4,7 @@
     <ul class="sidebar__list">
       <li>
         <router-link to="/" active-class="sidebar__list__active">
-          <i class="bi-layout-wtf"></i>
+          <i class="bi-speedometer2"></i>
           Dashboard
         </router-link>
       </li>
