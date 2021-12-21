@@ -3,27 +3,8 @@
     <div class="dashboard__inner">
       <h1>Information</h1>
       <div class="dashboard__inner__atoms">
-        <SCard>
-          <template v-slot:body>
-            Some body Text
-          </template>
-        </SCard>
-        <SCard>
-          <template v-slot:header>
-            Some Header
-          </template>
-          <template v-slot:body>
-            Some body Text
-          </template>
-        </SCard>
-        <SCard>
-          <template v-slot:header>
-            Some Header
-          </template>
-          <template v-slot:body>
-            Some body Text
-          </template>
-        </SCard>
+        <DashboardCard v-for="(card, index) in 3" :key="index" :title="'Test'"
+                       :data="String(card)" />
       </div>
       <h1>Timetable</h1>
       <div class="dashboard__inner__timetable">
@@ -41,14 +22,18 @@ import { Action, Getter } from 'vuex-class'
 import { Component, Vue } from "vue-property-decorator";
 import moment from 'moment'
 
+import { SCard } from "@/shared/components";
+import {
+  Schedule,
+  STimetable,
+  Timetable
+} from '@/shared/components/Timetable'
 
-import { ModalSize } from "@/shared/abstract";
-import { SCard } from "@/shared/components/Card";
-import { Schedule, STimetable, Timetable } from '@/shared/components/Timetable'
+import DashboardCard from './components/DashboardCard.vue'
 
 @Component<Dashboard>({
   name: 'Dashboard',
-  components: { SCard, STimetable },
+  components: { SCard, STimetable, DashboardCard },
 
   mounted(): void {
     this.fetchTimetable()

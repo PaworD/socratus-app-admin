@@ -1,10 +1,9 @@
-import { Addon, AddonType } from '@/addons'
-
+import { Addon, Addons, PaymentsAddonView } from '@/addons'
 /**
- * TODO
+ * Main registry of available configs
+ *
+ * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
  */
-export const addonsRegistry = (): Record<AddonType, Addon> => {
-  return {
-    'Payments': 'PaymentAddon'
-  }
+export const addonsRegistry: Record<Addons, Addon> = {
+  [Addons.Payments]: PaymentsAddonView
 }

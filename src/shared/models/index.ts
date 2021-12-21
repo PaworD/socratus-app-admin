@@ -1,4 +1,5 @@
 export * from './atom'
+export * from './addon.model'
 export * from './applicant.model'
 export * from './attendance.model'
 export * from './student.model'

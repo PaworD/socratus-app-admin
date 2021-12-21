@@ -24,9 +24,7 @@
         </div>
       </div>
       <div class="layout__content__content">
-        <slot name="content">
-
-        </slot>
+        <slot name="content"></slot>
       </div>
       <SettingsBar v-if="isSettingsBarOpen" @close="toggleSettingsBar" />
     </div>

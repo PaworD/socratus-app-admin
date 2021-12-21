@@ -9,11 +9,11 @@ export const addons: RouteConfig = {
   path: '/addons/:addonType',
   name: 'AddonView',
   component: AddonView,
+  meta: {
+    auth: true
+  },
+  // TODO
   beforeEnter (to, from, next) {
-    if (to.name === 'DashboardView') {
-      next('/')
-    } else {
-      next()
-    }
+    next()
   }
 }

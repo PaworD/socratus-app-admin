@@ -1,10 +1,14 @@
+import { VueConstructor } from 'vue'
+
+/**
+ * List of available addons
+ */
+export enum Addons {
+  Payments = 'payments'
+}
+
 
 /**
  * TODO
  */
-export type AddonType = string
-
-/**
- * TODO
- */
-export type Addon = string
+export type Addon = VueConstructor
