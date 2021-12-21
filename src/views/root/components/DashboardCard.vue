@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>
-      <h4 v-if="hasTitle">{{ title }}</h4>
+  <div class="dc">
+    <div class="dc__title">
+      <h3 v-if="hasTitle">{{ title }}</h3>
     </div>
     <div>
       {{ data }}
@@ -34,5 +34,23 @@ export default DashboardCard
 </script>
 
 <style lang="scss" scoped>
+.dc {
+  width: 100%;
+  height: 100%;
 
+  border-radius: 10px;
+
+  box-shadow: 0 0 10px 5px $light;
+
+  padding: 1rem;
+
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
+  &__title {
+
+  }
+
+}
 </style>

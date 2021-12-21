@@ -3,7 +3,7 @@
     <div class="dashboard__inner">
       <h1>Information</h1>
       <div class="dashboard__inner__atoms">
-        <DashboardCard v-for="(card, index) in 3" :key="index" :title="'Test'"
+        <DashboardCard v-for="(card, index) in 3" :key="index" :title="'Students'"
                        :data="String(card)" />
       </div>
       <h1>Timetable</h1>

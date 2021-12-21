@@ -20,11 +20,11 @@
             <i class="bi-arrow-right"></i>
           </template>
         </SIconButton>
-<!--        <SIconButton>-->
-<!--          <template v-slot:icon>-->
-<!--            <i class="bi-calendar-date"></i>-->
-<!--          </template>-->
-<!--        </SIconButton>-->
+        <SIconButton>
+          <template v-slot:icon>
+            <i class="bi-pencil-square"></i>
+          </template>
+        </SIconButton>
       </div>
     </div>
     <!-- END | Controllers -->
@@ -63,6 +63,8 @@
               'width': `${getDuration(session)}%`
             }
             ]">
+          <span v-if="isNow(session.startTime, session.endTime)"
+                class="timetable__table__cell__session__group_color"></span>
           <span class="timetable__table__cell__session__group_info"><strong>{{ session.group.name }}</strong></span>
         </div>
       </div>
@@ -152,6 +154,13 @@ export class STimetable extends Vue {
    */
   public get formattedDate (): string {
     return this.date.format('DD MMM')
+  }
+
+  /**
+   * Checks whether event is occuring now
+   */
+  public isNow (start: string, end: string): boolean {
+    return moment().isBetween(moment(start, 'DD-MM-YYYY HH:mm'), moment(end, 'DD-MM-YYYY HH:mm'))
   }
 
   /**
