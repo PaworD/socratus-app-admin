@@ -5,5 +5,7 @@ import { Addon, Addons, PaymentsAddonView } from '@/addons'
  * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
  */
 export const addonsRegistry: Record<Addons, Addon> = {
-  [Addons.Payments]: PaymentsAddonView
+  [Addons.Payments]: PaymentsAddonView,
+  [Addons.Statistics]: PaymentsAddonView,
+  [Addons.Quizzes]: PaymentsAddonView
 }

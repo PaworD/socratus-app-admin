@@ -2,7 +2,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 import { Inject } from "inversify-props";
 
-import { Admin, AnyObject, Pageable, School, Student } from '@/shared/models'
+import { AddonData, Admin, AnyObject, Pageable, School, Student } from '@/shared/models'
 
 import {
     LocalStorageService,
@@ -26,6 +26,7 @@ export class RootModule extends VuexModule {
     @Inject(TYPES.ToastServiceType)
     private toastService!: ToastService
 
+    public _addons: AddonData[] = []
     public _organization: Organization = {} as Organization
     public _schools: School[] = []
 
@@ -34,10 +35,8 @@ export class RootModule extends VuexModule {
         try {
             const response = await this.rootService.init()
             this.context.commit('setAuth', true)
-
-            if (typeof response !== 'string') {
-                this.context.commit('setOrganization', response)
-            }
+            this.context.commit('setOrganization', response)
+            this.context.commit('setAddons', response.addons)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
@@ -92,12 +91,30 @@ export class RootModule extends VuexModule {
         this._organization = data
     }
 
+    @Mutation
+    public setAddons (addons: AddonData[]): void {
+        this._addons = addons
+    }
+
+    /**
+     * Gets information about this organization (school)
+     */
     public get organization(): Organization {
         return this._organization
     }
 
+    /**
+     * Gets the list of registered schools list
+     */
     public get schools(): School[] {
         return this._schools
+    }
+
+    /**
+     * Gets the collection of addons which are in this school
+     */
+    public get myAddons(): AddonData[] {
+        return this._addons
     }
 
 }

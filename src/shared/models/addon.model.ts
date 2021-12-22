@@ -1,7 +1,11 @@
 import { Identifier } from './atom'
 
-export interface AddonData extends Identifier{
-  name: string
+/**
+ * Model of `Addon`
+ */
+export interface AddonData extends Identifier {
+  displayName: string
   isActive: boolean
-  icon: string
+  iconName: string
+  name: string
 }

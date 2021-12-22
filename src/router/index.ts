@@ -79,6 +79,9 @@ const router = new VueRouter({
   routes
 })
 
+/**
+ * Navigation guard
+ */
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.auth)) {
     if( !store.state.auth ) {

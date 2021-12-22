@@ -4,7 +4,9 @@ import { VueConstructor } from 'vue'
  * List of available addons
  */
 export enum Addons {
-  Payments = 'payments'
+  Payments = 'payments',
+  Statistics = 'statistics',
+  Quizzes = 'quizzes'
 }
 
 

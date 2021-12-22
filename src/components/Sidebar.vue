@@ -41,11 +41,10 @@
       <li>
         <hr>
       </li>
-      <!-- TODO: Implement router guard for addon paths -->
-      <li v-for="addon in addonLinks" :key="addon.id">
+      <li v-for="addon in myAddons" :key="addon.id">
         <router-link :to="'/addons/'+ addon.name">
-          <i :class="addon.icon"></i>
-          {{ addon.name }}
+          <i :class="addon.iconName"></i>
+          {{ addon.displayName }}
         </router-link>
       </li>
     </ul>
@@ -61,6 +60,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { Organization } from "@/views/contracts";
 import OrganizationWidget from '@/components/Organization.vue'
 import { AddonData } from '@/shared/models'
+import { Getter } from 'vuex-class'
 
 @Component({
   name: 'Sidebar',
@@ -72,31 +72,8 @@ export class Sidebar extends Vue {
   @Prop({type: Object, required: false})
   public readonly organization!: Organization
 
-  /**
-   * TODO: Fetch from API or get from store.getters
-   */
-  public get addonLinks (): AddonData[] {
-    return [
-      {
-        id: 10000,
-        name: 'payments',
-        isActive: true,
-        icon: 'bi-cash-stack'
-      },
-      {
-        id: 10001,
-        name: 'quizes',
-        isActive: false,
-        icon: 'bi-puzzle'
-      },
-      {
-        id: 10002,
-        name: 'statistics',
-        isActive: true,
-        icon: 'bi-kanban'
-      }
-    ]
-  }
+  @Getter
+  public readonly myAddons!: AddonData[]
 }
 export default Sidebar
 </script>
