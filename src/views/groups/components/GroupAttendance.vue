@@ -1,8 +1,5 @@
 <template>
   <SAttendanceDesk v-if="desk" :data="desk" />
-<!--  <div>-->
-<!--    {{ _group }}-->
-<!--  </div>-->
 </template>
 
 <script lang="ts">

@@ -8,7 +8,7 @@
     <div class="layout__content">
       <div class="layout__content__header">
         <div class="layout__content__header__search">
-          <STextInput placeholder="Search student/teacher/group..." size="small" flat/>
+          <GlobalSearch />
         </div>
         <div class="layout__content__header__actions">
             <SIconButton borderless @onClick="toggleSettingsBar">
@@ -34,15 +34,15 @@
 <script lang="ts">
 
 import { Component, Vue } from "vue-property-decorator";
-import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
+import { GlobalSearch } from '@/components/SearchBar.vue';
 import { SButton } from "@/shared/components/Button";
 import { SIconButton } from "@/shared/components/IconButton"
 import { SettingsBar } from '@/components/SettingsBar.vue'
-import LogoutModal from '@/components/LogoutModal.vue'
 import { ModalSize } from '@/shared/abstract'
 import { AnyObject } from '@/shared/models'
+import LogoutModal from '@/components/LogoutModal.vue'
 
-@Component({name: 'Layout', components: {STextInput, SButton, SIconButton, SettingsBar}})
+@Component({name: 'Layout', components: { GlobalSearch, SButton, SIconButton, SettingsBar }})
 export class Layout extends Vue {
 
   public isSettingsBarOpen = false

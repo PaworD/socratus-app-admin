@@ -17,6 +17,32 @@
     &__modals {
       &__add_student {
         padding: 1rem;
+
+        .form-group {
+          margin: 1rem 0;
+        }
+      }
+
+      &__students {
+        width: 100%;
+
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+
+        gap: 1rem;
+
+        margin: 1rem 0;
+
+        > span {
+          width: 100%;
+          text-align: center;
+          color: $ft-light;
+
+          font-style: italic;
+
+          font-size: 14px;
+        }
       }
     }
   }

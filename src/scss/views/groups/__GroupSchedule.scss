@@ -1,4 +1,11 @@
 .groupSchedule {
+
+  &__lead {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 1rem;
+  }
   &__modals {
     &__create {
       margin: 1rem;

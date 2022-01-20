@@ -1,3 +1,4 @@
+export * from './attendance.service'
 export * from './applicants.service'
 export * from './course.service'
 export * from './group.service'
@@ -10,6 +11,7 @@ export * from './teacher.service'
 export * from './toast.service'
 
 export const TYPES = {
+  AttendanceServiceType : Symbol.for('AttendanceService'),
   ApplicantsServiceType : Symbol.for('ApplicantsService'),
   CourseServiceType :  Symbol.for('CourseService'),
   GroupServiceType : Symbol.for('GroupService'),

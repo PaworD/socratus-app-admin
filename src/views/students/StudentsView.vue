@@ -68,7 +68,7 @@ export class StudentsView extends Vue {
       return {
         id: student.id,
         fullName: `${student.firstName} ${student.lastName}`,
-        phone: student.phone,
+        phone: student.phone ?? '(not set)',
         email: student.email ?? '(not set)',
         actions: [
           {

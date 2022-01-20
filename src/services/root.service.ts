@@ -1,7 +1,7 @@
 import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
-import { Admin, AnyObject, Pageable, School } from '@/shared/models'
+import { Admin, AnyObject, GlobalSearchResults, Pageable, School } from '@/shared/models'
 import { composeModel, resolveWithError } from "@/shared/helpers";
 
 @injectable()
@@ -74,6 +74,17 @@ export class RootService extends AbstractService<School> {
                 }
             }
 
+            throw new Error(e)
+        }
+    }
+
+    public async search (q: string): Promise<GlobalSearchResults> {
+        try {
+            const response = await this.http.get(this.url + 'search', { params: { q } })
+            console.log(response.data)
+
+            return composeModel<GlobalSearchResults>(response.data.data) as GlobalSearchResults
+        } catch (e) {
             throw new Error(e)
         }
     }

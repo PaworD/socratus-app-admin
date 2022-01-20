@@ -1,12 +1,20 @@
 <template>
   <div class="groupStudents__students__modals__add_student">
-    <SDropdown :list="filteredStudents" value="Select students" multiselect
+    <label for="studentsForGroup">Students</label>
+    <SDropdown :list="filteredStudents" value="Select students" multiselect id="studentsForGroup"
                @on-select="addToSelectedStudents"/>
 
-    {{ selectedStudents }}
-    <SBadge v-for="student in selectedStudents" :key="student.id"
-            :title="`${student.firstName} ${student.lastName}`" :onClose="() =>
-            removeStudent(student)"/>
+    <div class="form-group">
+      <p>Selected Students</p>
+    </div>
+    <div class="groupStudents__students__modals__students">
+
+      <span v-if="selectedStudents.length < 1">(No students selected yet)</span>
+
+      <SBadge v-for="student in selectedStudents" theme="alt" :key="student.id"
+              :title="`${student.firstName} ${student.lastName}`" closable
+              @close="removeStudent(student)" />
+    </div>
 
     <SIconButton @onClick="submitForm" >
       Add Student(s)

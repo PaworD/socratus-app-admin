@@ -1,7 +1,7 @@
 <template>
   <div :class="['badge', `badge__${theme}`]">
     {{ title }}
-    <span v-if="typeof $props.onClose() === 'function'" @click="onClose">&times;</span>
+    <span v-if="closable" @click="onClose">&times;</span>
   </div>
 </template>
 
@@ -20,10 +20,14 @@ export class SBadge extends Vue {
   @Prop( { type: String, required: false, default: BadgeTheme.Light })
   public readonly theme!: BadgeTheme
 
-  @Prop( { type: Function, required: false, default: () => ({}) })
-  public onClose!: () => void
+  @Prop({ type: Boolean, required: false, default: () => false })
+  public closable!: boolean
 
   public buttonTheme = BadgeTheme
+
+  public onClose (): void {
+    this.$emit('close')
+  }
 }
 export default SBadge
 </script>

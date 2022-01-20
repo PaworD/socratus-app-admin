@@ -1,10 +1,5 @@
 <template>
   <div>
-    <SIconButton borderless>
-      <template v-slot:icon>
-        <i class="bi-pen"></i>
-      </template>
-    </SIconButton>
     <SIconButton borderless @onClick="removeStudent">
       <template v-slot:icon>
         <i class="bi-trash"></i>

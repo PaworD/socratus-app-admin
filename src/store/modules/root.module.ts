@@ -2,7 +2,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 import { Inject } from "inversify-props";
 
-import { AddonData, Admin, AnyObject, Pageable, School, Student } from '@/shared/models'
+import { AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School, Student } from '@/shared/models'
 
 import {
     LocalStorageService,
@@ -65,6 +65,18 @@ export class RootModule extends VuexModule {
             this.localStorageService.setItem('tenant', response.tenant)
 
             return response.admin
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
+        }
+    }
+
+    @Action({ rawError: true })
+    public async search (q: string): Promise<GlobalSearchResults> {
+        try {
+            const response = await this.rootService.search(q)
+
+            return response
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
             throw new Error(e)

@@ -1,0 +1,89 @@
+.global_search {
+  &__results_container {
+    position: absolute;
+
+    left: .5rem;
+    top: 3rem;
+
+    padding: .6rem 1rem;
+
+    background-color: white;
+
+    z-index: 999;
+
+    width: 30vw;
+    min-width: 39.5%;
+    max-width: 40%;
+
+    height: auto;
+    max-height: 50vh;
+
+    border: 1px solid  #ccc;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    overflow: scroll;
+    
+    &--students {
+      > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        overflow: scroll;
+        
+        li {
+          color: #000;
+
+          padding: .4rem 0;
+
+          display: flex;
+          flex-direction: column;
+          gap: .1rem;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid $dark-500;
+          }
+        }
+      }
+    }
+
+    &--teachers {
+      > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          color: #000;
+
+          padding: .4rem 0;
+        }
+      }
+    }
+
+    &--groups {
+      > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        overflow: scroll;
+
+        li {
+          color: #000;
+
+          padding: .4rem 0;
+
+          display: flex;
+          flex-direction: column;
+          gap: .1rem;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid $dark-500;
+          }
+        }
+      }
+    }
+  }
+}

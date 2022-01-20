@@ -2,9 +2,14 @@ import { injectable } from 'inversify-props'
 
 import { AbstractService } from '@/shared/abstract'
 import { AnyObject, CreateResourceIntention, Id, Pageable, Resource, Room } from '@/shared/models'
+
 import { decomposeModel } from '@/shared/helpers'
 
-
+/**
+ * Resources Service
+ *
+ * @author Javlon Khalimjonov <khalimjanov.code@gmail.com>
+ */
 @injectable()
 export class ResourceService extends AbstractService<Resource> {
 

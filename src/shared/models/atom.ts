@@ -1,3 +1,8 @@
+import { Student } from '@/shared/models/student.model'
+import { Teacher } from '@/shared/models/teacher.model'
+import { Group } from '@/shared/models/group.model'
+import { Course } from '@/shared/models/course.model'
+
 export interface AnyObject {
     [key: string]: any
 }
@@ -22,4 +27,11 @@ export interface Pageable {
     previous: number
     totalCount: number
     perPage?: number
+}
+
+export interface GlobalSearchResults {
+    students: Student[],
+    teachers: Teacher[],
+    groups: Group[],
+    courses: Course[]
 }

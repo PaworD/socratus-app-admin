@@ -1,8 +1,17 @@
 <template>
   <div class="groupSchedule">
-    <div class="lead">
+    <div class="groupSchedule__lead">
+      <div>
+        <SIconButton borderless @onClick="() => { this.$router.go(-1) }">
+          <template v-slot:icon>
+            <i class="bi-arrow-left"></i>
+          </template>
+          Back to <strong>Groups</strong>
+        </SIconButton>
+      </div>
+
       <SIconButton @onClick="openCreateScheduleModal">
-        Create Schedule
+        Create
       </SIconButton>
     </div>
     <SCalendar :events="events" :controllers="false" @onDaySelect="selectDay"/>

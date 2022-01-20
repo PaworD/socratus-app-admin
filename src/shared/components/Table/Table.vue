@@ -35,9 +35,9 @@
       <div class="table__pagination__controllers">
 
         <div class="table__pagination__controllers__page_size">
-          <SRadio label="2"  :model="pageSize" value="2"  @changed="setPageSize" />
-          <SRadio label="5"  :model="pageSize" value="5" @changed="setPageSize" />
-          <SRadio label="10" :model="pageSize" value="10" @changed="setPageSize" />
+          <SRadio label="5"  :model="pageSize" value="5"  @changed="setPageSize" />
+          <SRadio label="10"  :model="pageSize" value="10" @changed="setPageSize" />
+          <SRadio label="15" :model="pageSize" value="15" @changed="setPageSize" />
         </div>
 
         <button :disabled="currentPage === 1" @click="prevPage">

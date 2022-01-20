@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "@titou10/v-money": "^1.0.2",
+    "@types/lodash": "^4.14.178",
     "@types/vue-the-mask": "^0.11.1",
     "axios": "^0.21.4",
     "bootstrap-icons": "^1.5.0",
     "core-js": "^3.6.5",
     "inversify-props": "^2.2.6",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "moment": "^2.29.1",
     "reflect-metadata": "^0.1.13",
     "v-money": "^0.8.1",
@@ -29,6 +32,7 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.5",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",

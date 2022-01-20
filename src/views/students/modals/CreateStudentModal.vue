@@ -21,13 +21,11 @@
         <STextInput placeholder="Email" size="medium" type="email" id="student_email" v-model="studentData.email" flat/>
       </div>
 
-
       <div v-if="!isUpdateMode" class="input-group">
         <label for="student_group">Select group to add student in</label>
         <SDropdown :list="groupsList" :value="groupsList[0].label" placeholder="Student group"
                     id="student_group" @on-select="onGroupSelect" multiselect/>
-        <SBadge v-for="group in studentData.groups" :key="group" :title="String(group)"
-                :onClose="() => removeGroup(group)"/>
+        <SBadge v-for="group in studentData.groups" :key="group" :title="String(group)"/>
       </div>
 
       <SButton :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary" size="medium"
