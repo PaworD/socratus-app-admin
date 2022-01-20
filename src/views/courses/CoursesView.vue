@@ -37,7 +37,7 @@
               <div class="course-badges">
                 <SBadge v-if="course.level" :title="course.level" theme="light" />
               </div>
-              <img :src="courseImg(course.name)" alt="">
+              <img :src="'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Books_HD_%288314929977%29.jpg/1280px-Books_HD_%288314929977%29.jpg'" alt="">
             </div>
             <div class="course__description">
               <p>{{ course.name }}</p>
