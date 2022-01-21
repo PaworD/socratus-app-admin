@@ -75,7 +75,7 @@ export class GroupSchedule  extends Vue {
         {
           hasHeader: true,
           headerText: 'Update Lesson',
-          size: ModalSize.Small,
+          size: ModalSize.ExtraSmall,
           persistent: true
         }
     )

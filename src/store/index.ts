@@ -12,6 +12,7 @@ import { RootModule } from "@/store/modules/root.module";
 import { RoomModule } from '@/store/modules/room.module'
 import { StudentModule } from "@/store/modules/student.module";
 import { TeacherModule } from "@/store/modules/teacher.module";
+import { LessonModule } from "@/store/modules/lesson.module";
 
 Vue.use(Vuex)
 
@@ -32,6 +33,7 @@ const store: StoreOptions<RootState> = {
     ApplicantsModule,
     CourseModule,
     GroupModule,
+    LessonModule,
     RootModule,
     TeacherModule,
     AdminModule,

@@ -2,6 +2,7 @@ export * from './attendance.service'
 export * from './applicants.service'
 export * from './course.service'
 export * from './group.service'
+export * from './lesson.service'
 export * from './resource.service'
 export * from './room.service'
 export * from './root.service'
@@ -15,6 +16,7 @@ export const TYPES = {
   ApplicantsServiceType : Symbol.for('ApplicantsService'),
   CourseServiceType :  Symbol.for('CourseService'),
   GroupServiceType : Symbol.for('GroupService'),
+  LessonServiceType : Symbol.for('LessonService'),
   RootServiceType : Symbol.for('RootService'),
   RoomServiceType : Symbol.for('RoomService'),
   ResourceServiceType : Symbol.for('ResourceService'),

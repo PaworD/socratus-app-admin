@@ -46,6 +46,9 @@ import { DeleteModal } from '@/shared/modals'
 })
 export class Rooms extends Vue {
 
+  /**
+   * Fetches rooms from server
+   */
   @Action
   public fetchRooms!: () => Promise<void>
 

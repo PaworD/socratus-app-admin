@@ -14,6 +14,10 @@ import { AttendanceDesk } from '@/shared/components'
 export class AttendanceService extends AbstractService<AttendanceDesk> {
   protected readonly url = '/attendance'
 
+  constructor () {
+    super()
+  }
+
   public create (payload: AttendanceDesk): Promise<string | AttendanceDesk> {
     return Promise.resolve('undefined');
   }

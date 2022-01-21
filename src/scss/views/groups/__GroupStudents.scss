@@ -4,9 +4,9 @@
 
   &__lead {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 
-    margin-top: 1rem;
+    margin: 1rem 0;
   }
 
   &__students_table {

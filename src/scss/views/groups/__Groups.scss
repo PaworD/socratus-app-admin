@@ -106,5 +106,54 @@
         }
       }
     }
+
+    &__update-lesson {
+      padding: 1rem;
+
+      &__date {
+        margin-bottom: 1rem;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+
+          gap: .3rem
+        }
+      }
+
+      &__time {
+        display: flex;
+        flex-direction: row;
+
+        justify-content: flex-start;
+        align-items: center;
+
+        gap: 1rem;
+
+        margin-bottom: 1rem;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+
+          gap: .3rem;
+        }
+      }
+
+      &__event-room {
+        margin-bottom: 1rem;
+      }
+
+      &__event-teacher {
+        margin-bottom: 1rem;
+      }
+
+      &__actions {
+        display: flex;
+        justify-content: flex-end;
+
+        gap: 1rem;
+      }
+    }
   }
 }
