@@ -1,12 +1,8 @@
-import { AbstractService } from "@/shared/abstract";
+import { AbstractService } from '@/shared/abstract'
 import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
-import {
-    composeModel, decomposeModel,
-    hasResponseFailed,
-    resolveWithError
-} from "@/shared/helpers";
+import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
 import { injectable } from 'inversify-props'
-import { Attendance, AttendanceDesk, Event } from '@/shared/components'
+import { AttendanceDesk, AttendanceInterval, Event } from '@/shared/components'
 
 @injectable()
 export class GroupService extends AbstractService<Group> {
@@ -101,9 +97,9 @@ export class GroupService extends AbstractService<Group> {
         }
     }
 
-    public async getGroupAttendance (id: number): Promise<AttendanceDesk> {
+    public async getGroupAttendance (id: number, interval: AttendanceInterval = AttendanceInterval.WEEK): Promise<AttendanceDesk> {
         try {
-            const _response = await this.http.get(this.url + `/${id}/get_attendance`)
+            const _response = await this.http.get(this.url + `/${id}/get_attendance?interval_format=${interval}`)
 
             return composeModel<AttendanceDesk>(_response.data.data) as AttendanceDesk
         } catch (e) {

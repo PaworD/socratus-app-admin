@@ -32,7 +32,7 @@ export default SDropdownItem
 
 <style scoped lang="scss">
 
-  li{
+  li {
     list-style: none;
     padding: 12px;
     color: #666;

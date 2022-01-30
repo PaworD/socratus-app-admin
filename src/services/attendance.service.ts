@@ -4,6 +4,7 @@ import { AbstractService } from '@/shared/abstract'
 
 import { AnyObject, Id, Pageable } from '@/shared/models'
 import { AttendanceDesk } from '@/shared/components'
+import { decomposeModel } from '@/shared/helpers'
 
 /**
  * Attendance Service
@@ -12,7 +13,7 @@ import { AttendanceDesk } from '@/shared/components'
  */
 @injectable()
 export class AttendanceService extends AbstractService<AttendanceDesk> {
-  protected readonly url = '/attendance'
+  protected readonly url = '/attendances'
 
   constructor () {
     super()
@@ -31,6 +32,22 @@ export class AttendanceService extends AbstractService<AttendanceDesk> {
   }
 
   public update (id: Id, payload: Partial<AttendanceDesk>): Promise<string | AttendanceDesk> {
-    return Promise.resolve('undefined');
+    return Promise.resolve('')
+  }
+
+  /**
+   * Updates attendance
+   *
+   * @param id
+   * @param payload
+   */
+  public async updateAttendance (id: Id, payload: Partial<AnyObject>): Promise<string | AttendanceDesk> {
+    try {
+      const response = await this.http.patch(this.url + `/${id}`, decomposeModel(payload))
+
+      return response.data.message
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 }

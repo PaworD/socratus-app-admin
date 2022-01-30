@@ -25,7 +25,10 @@
         <label for="student_group">Select group to add student in</label>
         <SDropdown :list="groupsList" :value="groupsList[0].label" placeholder="Student group"
                     id="student_group" @on-select="onGroupSelect" multiselect/>
-        <SBadge v-for="group in studentData.groups" :key="group" :title="String(group)"/>
+        <div class="students__modals__create__groups">
+          <SBadge v-for="group in selectedGroups" :key="group" :title="String(group.label)"
+                  theme="light" @close="removeGroup(group)" closable/>
+        </div>
       </div>
 
       <SButton :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary" size="medium"
@@ -80,6 +83,7 @@ export class CreateStudentModal extends ModalWrapper {
   private groups!: Group[]
 
   public isLoading = false
+  public selectedGroups: DropdownItemProps[] = []
   public studentData : CreateStudentIntention = {
     email: '',
     firstName: '',
@@ -109,6 +113,7 @@ export class CreateStudentModal extends ModalWrapper {
     }
 
     this.studentData.groups.push(Number(item.value))
+    this.selectedGroups.push(item)
   }
 
   public onSubmit (): void {
@@ -129,14 +134,17 @@ export class CreateStudentModal extends ModalWrapper {
     }
   }
 
-  public removeGroup (group: number): void {
+  public removeGroup (group: DropdownItemProps): void {
+    console.log(group)
     if (typeof this.studentData.groups === 'undefined') {
       return
     }
 
-    const removableGroup = this.studentData.groups.indexOf(group)
+    const removableGroup = this.studentData.groups.indexOf((Number(group.value)))
+    const removableSelected = this.selectedGroups.indexOf(group)
 
     this.studentData.groups.splice(removableGroup, 1)
+    this.selectedGroups.splice(removableSelected, 1)
 
   }
 

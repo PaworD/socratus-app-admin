@@ -4,7 +4,7 @@ import { Inject } from 'inversify-props'
 
 import { GroupService, ToastService, ToastType, TYPES } from '@/services'
 import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
-import { AttendanceDesk, Event } from '@/shared/components'
+import { AttendanceDesk, AttendanceInterval, Event } from '@/shared/components'
 
 @Module
 export class GroupModule extends VuexModule {
@@ -78,9 +78,9 @@ export class GroupModule extends VuexModule {
     }
 
     @Action
-    public async getGroupAttendance (id: number): Promise<AttendanceDesk> {
+    public async getGroupAttendance (payload: { id: number, interval: AttendanceInterval }): Promise<AttendanceDesk> {
         try {
-            const attendanceDesk = await this.groupService.getGroupAttendance(id)
+            const attendanceDesk = await this.groupService.getGroupAttendance(payload.id, payload.interval)
 
             return attendanceDesk
         } catch (e) {

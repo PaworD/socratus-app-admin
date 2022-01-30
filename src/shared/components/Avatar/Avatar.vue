@@ -1,16 +1,16 @@
 <template>
   <div class="avatars">
-    <span v-for="(name, index) in source" :key="index" class="avatar" :title="name">
+    <span v-for="(name, index) in someAvatars" :key="index" class="avatar" :title="name">
       <span>{{ firstAndLast[index] }}</span>
     </span>
-    <span class="avatar" v-if="source.length >= 1">
+    <span class="avatar" v-if="source.length >= 2">
       +{{ source.length }}
     </span>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component({
   name: 'SAvatar',
@@ -24,12 +24,18 @@ export class SAvatar extends Vue {
    */
   public get firstAndLast (): string[] {
     if (this.source.length > 0) {
-      const some = [...this.source.splice(0, 3)]
-      return some.map((src: string) => {
+      return this.someAvatars.map((src: string) => {
         return `${String(src).split(' ')[0][0]}${String(src).split(' ')[1][0]}`
       })
     }
     return ['']
+  }
+
+  public get someAvatars (): string[] {
+    if (this.source.length > 3) {
+      return this.source.splice(0, 3)
+    }
+    return this.source
   }
 
   public fullName (index: number): string {

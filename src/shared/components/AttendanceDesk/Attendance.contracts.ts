@@ -14,6 +14,9 @@ export interface AttendanceTableHead {
   date: string
 }
 
+/**
+ * **DEPRECATED**
+ */
 export enum AttendanceState {
   DIDNT_EXIST,
   ATTENDED,
@@ -32,4 +35,12 @@ interface Student {
   firstName: string
   lastName: string
   attendances: Attendance[]
+}
+
+/**
+ * @author Javlon Khalimjonov <khalimjanov.code@gmail.com>
+ */
+export enum AttendanceInterval {
+  MONTH = 'month',
+  WEEK = 'week'
 }

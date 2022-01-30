@@ -4,6 +4,7 @@ import Vuex, { StoreOptions } from 'vuex'
 import { RootState } from "./types";
 
 import { AdminModule } from "@/store/modules/admin.module";
+import { AttendanceModule } from '@/store/modules/attendance.module'
 import { ApplicantsModule } from '@/store/modules/applicants.module'
 import { CourseModule } from "@/store/modules/course.module";
 import { GroupModule} from "@/store/modules/group.module";
@@ -31,6 +32,7 @@ const store: StoreOptions<RootState> = {
   },
   modules: {
     ApplicantsModule,
+    AttendanceModule,
     CourseModule,
     GroupModule,
     LessonModule,

@@ -1,4 +1,5 @@
 <template>
+  <div class="attendance__wrapper">
   <table class="attendance__table">
     <thead class="attendance__table__head">
     <tr>
@@ -9,25 +10,22 @@
     </thead>
     <tbody>
     <tr v-for="(row, rIndex) in rows" :key="JSON.stringify(row)">
-      <td>
+      <td class="sticky-col">
         {{row.firstName}} {{ row.lastName }}
       </td>
       <td v-for="(date) in data.dates" :key="JSON.stringify(date)"
           @click="onAttendanceDateSelected(currentAttendanceCell(rIndex, date).id)">
         <div class="attendance__table__data_managers">
-          <button :class="{ '--checked' : currentAttendanceCell(rIndex, date).attended === attendanceState.ATTENDED }"
+          <button :class="{ '--checked' : currentAttendanceCell(rIndex, date).attended}"
                   @click="onCheckForTrue(currentAttendanceCell(rIndex, date).id)">
             <i class="bi-check"></i>
           </button>
-          <button :class="{ '--checked' : currentAttendanceCell(rIndex, date).attended === attendanceState.NOT_ATTENDED }"
+          <button :class="{ '--checked' : !currentAttendanceCell(rIndex, date).attended }"
                   @click="onCheckForFalse(currentAttendanceCell(rIndex, date).id)">
             <i class="bi-x"></i>
           </button>
-          <button :class="{ '--checked' : currentAttendanceCell(rIndex, date).attended === attendanceState.DIDNT_EXIST }">
-            <i class="bi-question"></i>
-          </button>
-          <button :class="{'--checked' : hasReason(currentAttendanceCell(rIndex, date))}"
-                  @click="onCheckForReason(currentAttendanceCell(rIndex, date).id)">
+          <button v-if="!currentAttendanceCell(rIndex, date).attended" :class="{'--checked' : hasReason(currentAttendanceCell(rIndex, date))}"
+                  @click="onCheckForReason(currentAttendanceCell(rIndex, date).id, currentAttendanceCell(rIndex, date).absenceReason)">
             <i class="bi-pencil"></i>
           </button>
         </div>
@@ -35,6 +33,7 @@
     </tr>
     </tbody>
   </table>
+  </div>
 </template>
 
 <script lang="ts">
@@ -84,8 +83,8 @@ export class AttendanceTable extends Vue {
   }
 
   public hasReason (attendance: AnyObject): boolean {
-    if (attendance.attended === AttendanceState.NOT_ATTENDED) {
-      return attendance.absenceReason !== ''
+    if (!attendance.attended) {
+      return attendance.absenceReason !== '' && attendance.absenceReason !== null
     } else {
       return false
     }
@@ -95,16 +94,30 @@ export class AttendanceTable extends Vue {
     this.$emit('onCellSelected', id)
   }
 
+  /**
+   * Marks student as attended
+   * @param id
+   */
   public onCheckForTrue (id: number): void {
     this.$emit('onCheckForTrue', id)
   }
 
+  /**
+   * Marks students as unattended
+   * @param id
+   */
   public onCheckForFalse (id: number): void {
     this.$emit('onCheckForFalse', id)
   }
 
-  public onCheckForReason (id: number): void {
-    this.$emit('onCheckForReason', id)
+  /**
+   * Creates reason for absence (if unattended)
+   *
+   * @param id
+   * @param reason
+   */
+  public onCheckForReason (id: number, reason = ''): void {
+    this.$emit('onCheckForReason', { id , reason })
   }
 }
 export default AttendanceTable

@@ -1,61 +1,136 @@
 .select {
     width: auto;
-
     &--selector {
-     border: 1px solid gainsboro;
-     background: #F8F8F8;
-     position: relative;
+
+      &--light {
+        padding: .3rem .6rem;
+
+        border-radius: 5px;
+
+        box-shadow: 0 0 1px .4px #acabab;
+
+        position: relative;
+
+        ul {
+          width: 100%;
+          list-style-type: none;
+
+          padding: 0;
+          margin: 7px 0 0;
+
+          font-size: 16px;
+
+          border-radius: 5px;
+
+          box-shadow: 0 0 1px .4px #acabab;
+
+          position: absolute;
+
+          z-index: 1;
+
+          background: #fff;
+
+          transition: all .15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity .1s linear;
+          transform-origin: 50% 0;
+
+          max-height: 250px;
+          overflow: auto;
+
+          li {
+            padding: 7px;
+            color: $dark;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #fafafa;
+            }
+          }
+        }
+
+        &--arrow {
+          position: absolute;
+          right: 10px;
+          top: 38%;
+          width: 0;
+          height: 0;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          border-top: 8px solid $dark;
+          transform: rotateZ(0deg) translateY(0px);
+          transition-duration: 0.3s;
+          transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
+        }
+
+        .--expanded {
+          transform: rotateZ(180deg) translateY(2px);
+        }
+      }
+
+      &--default {
+        border: 1px solid gainsboro;
+        background: #F8F8F8;
+
+        position: relative;
+
+        ul {
+          width: 100%;
+          list-style-type: none;
+          padding: 0;
+          margin: 5px 0 0;
+          font-size: 16px;
+          border: 1px solid gainsboro;
+          position: absolute;
+          z-index: 1;
+          background: #fff;
+          transition: all .15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity .1s linear;
+          transform-origin: 50% 0;
+
+          max-height: 250px;
+          overflow: auto;
+
+          li {
+            padding: 12px;
+            color: #666;
+            cursor: pointer;
+
+            &:hover {
+              background-color: darken(#f1f1f1, 1%);
+            }
+          }
+        }
+
+        &--arrow {
+          position: absolute;
+          right: 10px;
+          top: 40%;
+          width: 0;
+          height: 0;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          border-top: 10px solid #888;
+          transform: rotateZ(0deg) translateY(0px);
+          transition-duration: 0.3s;
+          transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
+        }
+
+        .--expanded {
+          transform: rotateZ(180deg) translateY(2px);
+        }
+      }
 
       &--label {
+
+        &--light {
+          display: block;
+          font-size: 16px;
+          color: $dark;
+        }
+
+        &--default {
           display: block;
           padding: 12px;
           font-size: 16px;
           color: #888;
-      }
-
-      &--arrow {
-        position: absolute;
-        right: 10px;
-        top: 40%;
-        width: 0;
-        height: 0;
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-top: 10px solid #888;
-        transform: rotateZ(0deg) translateY(0px);
-        transition-duration: 0.3s;
-        transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
-      }
-
-      &--expanded {
-          transform: rotateZ(180deg) translateY(2px);
-      }
-
-      ul {
-        width: 100%;
-        list-style-type: none;
-        padding: 0;
-        margin: 5px 0 0;
-        font-size: 16px;
-        border: 1px solid gainsboro;
-        position: absolute;
-        z-index: 1;
-        background: #fff;
-        transition: all .15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity .1s linear;
-        transform-origin: 50% 0;
-
-        max-height: 250px;
-        overflow: auto;
-
-        li {
-          padding: 12px;
-          color: #666;
-          color: #666;
-          cursor: pointer;
-
-          &:hover {
-            background-color: darken(#f1f1f1, 1%);
-          }
         }
       }
      }

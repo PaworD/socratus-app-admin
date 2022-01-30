@@ -67,6 +67,10 @@ export class GroupSchedule  extends Vue {
   }
 
   public selectDay (date: any): void {
+    if (date.events.length === 0) {
+      return
+    }
+
     this.$modalService.open(
         UpdateLessonModal,
         {

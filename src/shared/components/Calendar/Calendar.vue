@@ -44,15 +44,15 @@ import moment, { Moment } from "moment";
 import { SButton } from "@/shared/components/Button";
 import { SAvatar } from '@/shared/components'
 
-@Component({name: 'SCalendar', components: {SButton, SAvatar}})
+@Component({ name: 'SCalendar', components: { SButton, SAvatar } })
 export class SCalendar extends Vue {
-  @Prop({type: Boolean, required: false, default: true})
+  @Prop({ type: Boolean, required: false, default: true })
   private readonly controllers!: boolean
 
   @Prop({ type: Array, required: false })
   private readonly events!: Event[]
 
-  @Prop({type: Boolean, required: false})
+  @Prop({ type: Boolean, required: false })
   private readonly preview!: boolean
 
   public today = moment()
