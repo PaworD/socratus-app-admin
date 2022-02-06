@@ -5,6 +5,14 @@
 @import './__variables.scss';
 @import "_Icons";
 
+// Addons
+@import "addons/index";
+
+
+//Prints & PDFs
+@import "_print";
+
+//View, Components & Shared
 @import './shared/ButtonEffects.scss';
 @import './shared/Avatar/_Avatar';
 @import "./shared/Attendance/_Attendance";

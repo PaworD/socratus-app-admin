@@ -1,4 +1,5 @@
 import { Addon, Addons, PaymentsAddonView, StatisticsAddonView } from '@/addons'
+
 /**
  * Main registry of available addons
  *

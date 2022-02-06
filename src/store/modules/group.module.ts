@@ -3,7 +3,7 @@ import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { Inject } from 'inversify-props'
 
 import { GroupService, ToastService, ToastType, TYPES } from '@/services'
-import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
+import { AnyObject, Group, Pageable, Payment, ScheduleIntention } from '@/shared/models'
 import { AttendanceDesk, AttendanceInterval, Event } from '@/shared/components'
 
 @Module
@@ -105,6 +105,16 @@ export class GroupModule extends VuexModule {
     public async getGroupSchedule (query: { group: number, month?: number, year?: number }): Promise<Event[]> {
         try {
             return await this.groupService.getGroupSchedule(query)
+        } catch (e) {
+            this.toastService.show(true, e, ToastType.ERROR, 200)
+            throw new Error(e)
+        }
+    }
+
+    @Action
+    public async getGroupPayments (query: AnyObject): Promise<Payment[]> {
+        try {
+            return await this.groupService.getGroupPayments(query)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
             throw new Error(e)

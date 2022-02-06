@@ -3,7 +3,6 @@
     &--selector {
 
       &--light {
-        padding: .3rem .6rem;
 
         border-radius: 5px;
 
@@ -122,6 +121,7 @@
 
         &--light {
           display: block;
+          padding: .5rem;
           font-size: 16px;
           color: $dark;
         }

@@ -1,0 +1,81 @@
+.payments {
+  &__controllers {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 1rem .3rem;
+    &__groups {
+      width: 25%;
+    }
+  }
+
+  &__table {
+    color: #99a5bd;
+    width: 100%;
+    height: auto;
+
+    th, td {
+      padding:15px 20px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    td {
+      &.status {
+        text-align: center;
+        > span {
+          padding: .4rem 1rem .4rem 1.4rem;
+
+          border-radius: 20px;
+
+          font-size: 10px;
+
+          &.pending {
+            background: lighten($danger, 20%);
+            color: $white;
+            position: relative;
+
+            &::before {
+              position: absolute;
+
+              content: "";
+
+              left: 15%;
+              top: 52%;
+
+              transform: translate(-50%, -50%);
+
+              width: 7px;
+              height: 7px;
+
+              border-radius: 50%;
+
+              background: lighten($danger, 10%);
+            }
+          }
+
+          &.payed {
+            background: $alt;
+          }
+        }
+      }
+    }
+
+    th {
+      text-transform: uppercase;
+    }
+
+    tr {
+      background-color: $light;
+
+      .actions-row {
+        width: 14%;
+
+      }
+
+      &:hover {
+        background-color: darken($light, 1%);
+      }
+    }
+  }
+}

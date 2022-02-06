@@ -1,0 +1,42 @@
+.printable {
+  width: 100%;
+  height: 100%;
+
+  padding: 3rem 4rem;
+
+  display: flex;
+  flex-direction: column;
+
+  &__organization {
+    display: flex;
+    justify-content: flex-start;
+
+    margin: 1rem 0;
+    flex: 1;
+  }
+
+  &__content {
+    margin: 2rem 0;
+    flex: 1;
+    .leading {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+
+      padding: 1rem 0;
+    }
+
+    .info-box {
+      span {
+        display: block;
+      }
+    }
+  }
+
+  &__footer {
+    flex: 2;
+
+    display: flex;
+    justify-content: space-between;
+  }
+}

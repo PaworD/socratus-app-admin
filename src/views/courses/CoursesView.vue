@@ -84,7 +84,7 @@ import CoursesFilters from './filters/CourseFilters.vue'
 
   mounted (): void {
     this.isLoading = true
-    this.fetchCourses(this.queryParams).then(() => {
+    this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
       this.allCourses = this.courses
       this.isLoading = false
     })

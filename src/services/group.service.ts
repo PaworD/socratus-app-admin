@@ -1,7 +1,7 @@
 import { AbstractService } from '@/shared/abstract'
-import { AnyObject, Group, Pageable, ScheduleIntention } from '@/shared/models'
+import { AnyObject, Group, Pageable, Payment, ScheduleIntention } from '@/shared/models'
 import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
-import { injectable } from 'inversify-props'
+import { cleanParameter, injectable } from 'inversify-props'
 import { AttendanceDesk, AttendanceInterval, Event } from '@/shared/components'
 
 @injectable()
@@ -39,10 +39,10 @@ export class GroupService extends AbstractService<Group> {
 
     public async get(query?: AnyObject): Promise<{ results: Group[]; meta: Pageable } | string | { results: Group; meta: Pageable }> {
         try {
-            const _response = await this.http.get(this.url)
+            const _response = await this.http.get(this.url, { ...query })
 
             if(hasResponseFailed(_response)) {
-                throw resolveWithError(_response)
+                return resolveWithError(_response)
             }
 
             const meta: Pageable = {
@@ -122,6 +122,16 @@ export class GroupService extends AbstractService<Group> {
             const _response = await this.http.get(this.url + `/${query.group}/get_schedule`, { params: { month: query.month, year: query.year } })
 
             return composeModel<Event>(_response.data.data) as Event[]
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    public async getGroupPayments (query: AnyObject): Promise<Payment[]> {
+        try {
+            const _response = await this.http.get(this.url + `/${query.group}/get_payments`, { params: { month: query.month, year: query.year } })
+
+            return composeModel<Payment>(_response.data) as Payment[]
         } catch (e) {
             throw new Error(e)
         }

@@ -26,7 +26,7 @@
 import { Component } from 'vue-property-decorator'
 import { ModalWrapper } from '@/components/_abstract/ModalWrapper.vue'
 import { Action, Getter } from 'vuex-class'
-import { Student } from '@/shared/models'
+import { AnyObject, Student } from '@/shared/models'
 import { SBadge, SIconButton, SDropdown, DropdownItemProps, SCard } from '@/shared/components'
 
 @Component<AddStudentModal>({
@@ -38,14 +38,14 @@ import { SBadge, SIconButton, SDropdown, DropdownItemProps, SCard } from '@/shar
     SBadge
   },
   mounted (): void {
-    this.fetchStudents()
+    this.fetchStudents({ page_size: '100' })
   }
 
 })
 export class AddStudentModal extends ModalWrapper {
 
   @Action
-  private fetchStudents!: () => Promise<void>
+  private fetchStudents!: (query?: AnyObject) => Promise<void>
 
   @Action
   public addStudentsToGroup!: (data: { groupId: number, studentIds: number[]}) => Promise<void>

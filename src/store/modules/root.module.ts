@@ -2,7 +2,7 @@ import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 import { Inject } from "inversify-props";
 
-import { AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School, Student } from '@/shared/models'
+import { AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School } from '@/shared/models'
 
 import {
     LocalStorageService,
@@ -126,7 +126,7 @@ export class RootModule extends VuexModule {
      * Gets the collection of addons which are in this school
      */
     public get myAddons(): AddonData[] {
-        return this._addons
+        return this._addons.filter(addon => addon.isActive)
     }
 
 }
