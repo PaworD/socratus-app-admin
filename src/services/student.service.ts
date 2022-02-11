@@ -3,6 +3,7 @@ import { injectable } from "inversify-props";
 import { AbstractService } from "@/shared/abstract";
 import { Student, Id, AnyObject, Pageable, CreateStudentIntention } from '@/shared/models'
 import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
+import { AnyResponse } from '@/services/root.service'
 
 @injectable()
 export class StudentService extends AbstractService<Student> {
@@ -21,9 +22,19 @@ export class StudentService extends AbstractService<Student> {
            return resolveWithError(_response)
          }
 
-         return _response.data.data.message
+         console.log(_response.data)
+
+         return _response.data.message
 
        } catch (e) {
+         if ((e as AnyResponse).response) {
+           if (typeof e.response.data.message !== 'string') {
+             throw new Error(JSON.stringify(e.response.data.message))
+           } else {
+             throw new Error(e.response.data.message)
+           }
+         }
+
          throw new Error(e)
        }
      }

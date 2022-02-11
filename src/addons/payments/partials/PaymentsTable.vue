@@ -54,7 +54,7 @@ import { ModalSize } from '@/shared/abstract'
 /**
  * @author Javlon Khalimjonov <khalimjanov.code@gmail.com>
  */
-@Component({
+@Component<PaymentsTable>({
   name: 'PaymentsTable',
   components: {
     SIconButton
