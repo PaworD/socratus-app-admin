@@ -2,7 +2,7 @@ import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
 import { Admin, AnyObject, GlobalSearchResults, Pageable, School } from '@/shared/models'
-import { composeModel, resolveWithError } from "@/shared/helpers";
+import { composeModel, obsKeysToString, resolveWithError } from '@/shared/helpers'
 
 @injectable()
 export class RootService extends AbstractService<School> {
@@ -68,7 +68,8 @@ export class RootService extends AbstractService<School> {
         } catch (e) {
             if ((e as AnyResponse).response) {
                 if (typeof e.response.data.message !== 'string') {
-                    throw new Error(JSON.stringify(e.response.data.message))
+                    const message = obsKeysToString(e.response.data.message, ['tenant', 'email', 'password'])
+                    throw message
                 } else {
                     throw new Error(e.response.data.message)
                 }

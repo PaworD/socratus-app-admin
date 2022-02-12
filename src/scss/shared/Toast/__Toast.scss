@@ -7,7 +7,7 @@
   height: auto;
 
   bottom: 3%;
-  right: 3%;
+  right: 2%;
 
   display: flex;
   align-items: center;
@@ -16,6 +16,12 @@
 
   color: #fff;
 
+  border-radius: 6px;
+
+  > i {
+    margin-right: .5rem;
+  }
+
   // Modifiers
   &__toast_theme {
     &__success {
@@ -23,7 +29,7 @@
     }
 
     &__error {
-      background-color: #cc3300;
+      background-color: $danger;
     }
   }
 }

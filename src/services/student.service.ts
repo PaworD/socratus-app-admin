@@ -22,8 +22,6 @@ export class StudentService extends AbstractService<Student> {
            return resolveWithError(_response)
          }
 
-         console.log(_response.data)
-
          return _response.data.message
 
        } catch (e) {
@@ -75,9 +73,17 @@ export class StudentService extends AbstractService<Student> {
      async update(id: number, payload: Partial<Student>): Promise<Student> {
        try {
          const response = await this.http.patch(this.url + `/${id}`, decomposeModel(payload))
-         return response.data
+         return response.data.message
        } catch (e) {
-         throw new Error(e.toString())
+         if ((e as AnyResponse).response) {
+           if (typeof e.response.data.message !== 'string') {
+             throw new Error(JSON.stringify(e.response.data.message))
+           } else {
+             throw new Error(e.response.data.message)
+           }
+         }
+
+         throw new Error(e)
        }
      }
 

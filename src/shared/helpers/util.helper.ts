@@ -159,3 +159,16 @@ export function decomposeModel<T>(data: any) {
         // )
         // return _desanitizedObj as unknown as T
 }
+
+/**
+ *
+ * Translates object key/values to single string
+ *
+ * @param o - Object in which key and values will be joined with applicable `k`
+ * @param k - Array of keys to map
+ */
+export const obsKeysToString = (o: AnyObject, k: string[]): string => {
+  return Object.keys(o).map((k) => {
+    return `${k} : ${o[k]}`
+  }).join('\n')
+}
