@@ -1,8 +1,9 @@
+import { injectable } from 'inversify-props'
+
 import { AbstractService } from '@/shared/abstract'
 import { AnyObject, Group, Pageable, Payment, ScheduleIntention } from '@/shared/models'
-import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
-import { cleanParameter, injectable } from 'inversify-props'
 import { AttendanceDesk, AttendanceInterval, Event } from '@/shared/components'
+import { composeModel, decomposeModel, hasResponseFailed, resolveWithError } from '@/shared/helpers'
 
 @injectable()
 export class GroupService extends AbstractService<Group> {

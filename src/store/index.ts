@@ -15,6 +15,9 @@ import { StudentModule } from "@/store/modules/student.module";
 import { TeacherModule } from "@/store/modules/teacher.module";
 import { LessonModule } from "@/store/modules/lesson.module";
 
+// Addons Modules
+import { PaymentsModule } from '@/addons/payments/module'
+
 Vue.use(Vuex)
 
 const store: StoreOptions<RootState> = {
@@ -41,7 +44,8 @@ const store: StoreOptions<RootState> = {
     AdminModule,
     StudentModule,
     RoomModule,
-    ResourceModule
+    ResourceModule,
+    PaymentsModule
   }
 
 }

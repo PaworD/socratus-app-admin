@@ -5,12 +5,12 @@
         <SDropdown theme="default" :list="groupsOptions"
                    value="Select Group" @on-select="selectGroup" />
       </div>
-      <div>
+      <div class="payments__controllers__date">
         <Datepicker input-class="input input--medium input--flat" v-model="date"
                     format="MMMM, yyyy" id="monthAndYear" placeholder="Select month and year" />
       </div>
     </div>
-    <PaymentsTable v-if="isSetGroup" :list="paymentsRows" withActions/>
+    <PaymentsTable v-if="isSetGroup" :list="paymentsRows" @onPay="getPayments" withActions/>
     <p v-else> Please select a group</p>
   </div>
 </template>
@@ -21,7 +21,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import Datepicker from 'vuejs-datepicker'
 
 import { DropdownItemProps, SDropdown } from '@/shared/components'
-import { PaymentsTable } from '@/addons/payments/partials/PaymentsTable.vue'
+import { PaymentsTable } from './partials/PaymentsTable.vue'
 import { Action, Getter } from 'vuex-class'
 import { AnyObject, Group, Pageable, Payment } from '@/shared/models'
 import { TableRowItem } from '@/shared/components/Table/_'
@@ -49,7 +49,7 @@ import { TableRowItem } from '@/shared/components/Table/_'
     this.fetchGroups()
 
     if (this.isSetGroup) {
-      this.fetchGroups(this.queryParams)
+      this.getPayments()
     }
   }
 })
@@ -129,6 +129,12 @@ export class PaymentsAddonView extends Vue{
     }
   }
 
+  public getPayments (): void {
+    this.getGroupPayments(this.queryParams).then((payments: Payment[]) => {
+      this.payments = payments
+    })
+  }
+
   @Watch('date')
   protected onDateChanged (date: number):void {
     this.queryParams = {
@@ -137,6 +143,7 @@ export class PaymentsAddonView extends Vue{
       year: new Date(date).getFullYear()
     }
   }
+
 
   @Watch('queryParams')
   protected onQueryChange (query: AnyObject):void {

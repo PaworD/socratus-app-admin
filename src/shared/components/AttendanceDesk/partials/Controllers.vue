@@ -13,6 +13,7 @@
         </template>
       </SIconButton>
     </div>
+
     <div class="attendance__controllers__intervals">
       <SDropdown :list="intervals" value="Select interval" theme="light" @on-select="onIntervalChange" />
     </div>
