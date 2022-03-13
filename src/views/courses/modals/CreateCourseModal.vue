@@ -17,8 +17,7 @@
         <label for="course-level">
           Define level for the course (Beginner)
         </label>
-        <STextInput placeholder="Level" flat size="medium" v-model="payload.level"
-                    id="course-level" />
+        <SDropdown value="Select level" :list="levels" @on-select="selectLevel" id="course-level" />
       </div>
 
 
@@ -38,7 +37,8 @@ import { SButton } from "@/shared/components/Button";
 import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
 import { Action } from "vuex-class";
 import { Course } from "@/shared/models";
-import { SDropdown } from "@/shared/components/Dropdown";
+import { DropdownItemProps, SDropdown } from '@/shared/components/Dropdown'
+import { Levels } from '@/views/courses/contracts/levels'
 
 @Component<CreateCourseModal>({
   name: 'CreateCourseModal',
@@ -86,6 +86,23 @@ export class CreateCourseModal extends ModalWrapper {
   }
 
   public isLoading = false
+
+  public get levels (): DropdownItemProps[] {
+    return Object.entries(Levels).map(([label, value]) => {
+      return {
+        label,
+        value
+      }
+    })
+  }
+
+  /**
+   * Sets appropriate level on selection
+   * @param level
+   */
+  public selectLevel (level : DropdownItemProps): void {
+    this.payload.level = String(level.value)
+  }
 
   public submit (): void {
     if (this.isUpdateMode) {

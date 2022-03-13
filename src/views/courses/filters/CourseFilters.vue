@@ -66,7 +66,7 @@ export class CoursesFilters extends Filters<Course> {
 
   public get sortByLevelOptions (): DropdownItemProps[] {
     return [
-      { label: 'Select level' ,value: 'none' },
+      { label: 'Select level' , value: 'none' },
       ...Object.entries(sortByLevelOptions).map(([label, value]) => {
         return {
           label,

@@ -41,7 +41,11 @@
             </div>
             <div class="course__description">
               <p>{{ course.name }}</p>
-              <span>{{ course.price }} {{ course.priceCurrency.toUpperCase() }}</span>
+              <money v-model.lazy="course.price" id="course-price"
+                     v-bind="{
+                       ...moneyMask,
+                       prefix:`${course.priceCurrency.toUpperCase()} `
+                     }" disabled aria-readonly="true" />
             </div>
           </template>
         </SCard>
@@ -55,17 +59,17 @@
 
 <script lang="ts">
 
-import {Component, Vue, Watch} from "vue-property-decorator";
-import {SCard} from "@/shared/components/Card";
-import {SButton} from "@/shared/components/Button";
-import {CreateCourseModal} from "@/views/courses/modals/CreateCourseModal.vue";
-import {DeleteCourseModal} from "@/views/courses/modals/DeleteCourseModal.vue";
-import {ModalSize} from "@/shared/abstract";
+import {Component, Vue} from "vue-property-decorator";
 import {Action, Getter} from "vuex-class";
+import { Money } from 'v-money'
+
 import { AnyObject, Course } from '@/shared/models'
-import {SIconButton} from "@/shared/components/IconButton";
+import {ModalSize} from "@/shared/abstract";
 import { imageFromText } from "@/shared/helpers"
-import { SSkeleton, SBadge } from '@/shared/components'
+import { SSkeleton, SBadge, SIconButton, SCard, SButton } from '@/shared/components'
+
+import { CreateCourseModal } from "./modals/CreateCourseModal.vue";
+import { DeleteCourseModal } from "./modals/DeleteCourseModal.vue";
 import CoursesFilters from './filters/CourseFilters.vue'
 
 /**
@@ -79,7 +83,8 @@ import CoursesFilters from './filters/CourseFilters.vue'
     SIconButton,
     SBadge,
     CoursesFilters,
-    SSkeleton
+    SSkeleton,
+    Money
   },
 
   mounted (): void {
@@ -103,6 +108,13 @@ export class CoursesView extends Vue {
 
   public isLoading = false
 
+  public moneyMask = {
+    precision: 0,
+    decimal: ",",
+    thousands: " ",
+    masked: false
+  }
+
   public get queryParams (): AnyObject {
     return this.$route.query
   }
@@ -110,6 +122,7 @@ export class CoursesView extends Vue {
   public courseImg(courseName: string): string {
     return imageFromText(courseName)
   }
+
 
   public async openCreateCourseModal (): Promise<void> {
     await this.$modalService.open(CreateCourseModal,

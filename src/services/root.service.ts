@@ -52,7 +52,9 @@ export class RootService extends AbstractService<School> {
             const _response = await this.http.post('login', {
                 phone: payload.phone,
                 password: payload.password,
-                tenant: payload.tenant
+                tenant: payload.tenant,
+                // TODO: Make enum of apps , then reference with it
+                app: 'admin'
             })
 
             console.log(_response.data.data.tenant)

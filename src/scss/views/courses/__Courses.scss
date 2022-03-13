@@ -107,6 +107,16 @@
           font-weight: bold;
         }
 
+        input {
+          background: none;
+          outline: none;
+          border: none;
+
+          font-size: 1rem;
+
+          color: $black;
+        }
+
       }
     }
   }

@@ -11,11 +11,12 @@
     <tbody>
     <tr v-for="(row, rIndex) in rows" :key="JSON.stringify(row)">
       <td class="sticky-col">
-        {{row.firstName}} {{ row.lastName }}
+        {{ row.firstName }} {{ row.lastName }}
       </td>
       <td v-for="(date) in data.dates" :key="JSON.stringify(date)"
           @click="onAttendanceDateSelected(currentAttendanceCell(rIndex, date).id)">
-        <div class="attendance__table__data_managers">
+        <div v-if="Object.prototype.hasOwnProperty.call(currentAttendanceCell(rIndex, date), 'id')"
+             class="attendance__table__data_managers">
           <button :class="{ '--checked' : currentAttendanceCell(rIndex, date).attended}"
                   @click="onCheckForTrue(currentAttendanceCell(rIndex, date).id)">
             <i class="bi-check"></i>
