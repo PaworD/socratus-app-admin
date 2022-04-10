@@ -1,12 +1,13 @@
 import 'reflect-metadata'
-
 import Vue from 'vue'
+
+import { ServicesPlugin } from '@/plugins/services.plugin'
+
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
 import _buildDependencyContainer from './app.container'
-import { ServicesPlugin } from "@/plugins/services.plugin";
 
 // Import Directives
 import './shared/directives/ripple'

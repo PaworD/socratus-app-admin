@@ -27,10 +27,10 @@
       </SAccordion>
       <SAccordion>
         <template v-slot:header>
-          General Settings
+          Settings
         </template>
         <template v-slot:default>
-          Hello
+          <Settings/>
         </template>
       </SAccordion>
     </div>
@@ -38,23 +38,26 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Vue } from "vue-property-decorator"
-import { Rooms } from '@/views/root/Rooms.vue'
-import { SIconButton, SAccordion } from '@/shared/components'
-import { Resources } from '@/views/root'
 
+import { SIconButton, SAccordion } from '@/shared/components'
+
+import { Resources, Rooms, Settings } from '@/views/root'
+
+/**
+ * @author Javlon Khalimjonov <khalimjanov2000@gmail.com>
+ */
 @Component({
   name: 'SettingsBar',
   components: {
     SAccordion,
     SIconButton,
     Rooms,
-    Resources
+    Resources,
+    Settings
   }
 })
 export class SettingsBar extends Vue{
-
   public close (): void {
     this.$emit('close')
   }
@@ -62,7 +65,3 @@ export class SettingsBar extends Vue{
 }
 export default SettingsBar
 </script>
-
-<style lang="scss" scoped>
-
-</style>

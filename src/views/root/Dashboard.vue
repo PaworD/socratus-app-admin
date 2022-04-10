@@ -50,7 +50,6 @@ export class Dashboard extends Vue {
   public onDateChanged (date: string): void {
    const formattedDate = moment(date).format('DD-MM-yyyy')
     this.fetchTimetable(formattedDate)
-    console.log(this.timetable)
   }
 
   public onLessonSelected (lesson: Schedule): void {

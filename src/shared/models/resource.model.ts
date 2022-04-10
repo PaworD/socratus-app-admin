@@ -14,7 +14,6 @@ export interface CreateResourceIntention extends Omit<ResourceData, 'id'> {
   name: string
 }
 
-
 export class Resource implements ResourceModel {
 
   public id: number

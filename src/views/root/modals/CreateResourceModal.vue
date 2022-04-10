@@ -1,81 +1,83 @@
 <template>
   <div class="rooms__modals__create">
     <div class="input-group">
-      <label for="room-name">Write down name for the room</label>
+      <label for="room-name">Write down name for the resource</label>
       <STextInput size="medium" flat type="text" v-model="payload.name" id="room-name"
-                  placeholder="Room name"/>
-    </div>
-
-    <div class="input-group">
-      <label for="room-color">Define color for room</label>
-      <ColorPicker :value.sync="payload.color" id="room-color" />
+                  placeholder="Resource name"/>
     </div>
 
     <SButton flat size="medium" :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary"
              :isLoading="isLoading"
-             @onClick="onSubmitRoom" />
+             @onClick="onSubmit" />
   </div>
 </template>
 
 <script lang="ts">
 
 import { Component } from 'vue-property-decorator'
-import ModalWrapper from '@/components/_abstract/ModalWrapper.vue'
-import { SButton, STextInput } from '@/shared/components'
 import { Action } from 'vuex-class'
-import { Room } from '@/shared/models'
-import ColorPicker from '@/components/ColorPicker.vue'
 
-@Component<CreateRoomModal>({
-  name: "CreateRoomModal",
+import ModalWrapper from '@/components/_abstract/ModalWrapper.vue'
+
+import { SButton, STextInput } from '@/shared/components'
+
+@Component<CreateResourceModal>({
+  name: "CreateResourceModal",
   components: {
     STextInput,
-    SButton,
-    ColorPicker
+    SButton
   },
-
   mounted (): void {
     if (this.isUpdateMode) {
       this.payload = {
-        name: this.modalData.room.name,
-        color: this.modalData.room.color
+        name: this.modalData.room.name
       }
     }
   }
 })
-export class CreateRoomModal extends ModalWrapper {
+export class CreateResourceModal extends ModalWrapper {
+  @Action
+  public createResource!: (payload: { name: string }) => Promise<void>
 
   @Action
-  public createRoom!: (payload: { name: string, color: string }) => Promise<void>
+  public updateResource!: (id: number, payload: { name: string }) => Promise<void>
 
-  @Action
-  public updateRoom!: (payload: { room: { name: string, color: string }; id: number }) => Promise<void>
-
+  /**
+   * Determines the state of loading.
+   */
   public isLoading = false
 
   /**
-   * Payload of room
+   * Payload of resource.
    */
-  public payload: { name: string, color: string } = {
-    name: '',
-    color: ''
+  public payload: { name: string } = {
+    name: ''
   }
 
-  public onSubmitRoom () {
+  /**
+   * Submits the form.
+   */
+  public onSubmit (): void {
+    if (!this.payload.name || !this.payload.name.length) {
+      return
+    }
+
     this.isLoading = true
     if (this.isUpdateMode) {
-      this.updateRoom({room: this.payload, id: this.modalData.id}).then(() => {
-        this.isLoading = false
+      this.updateResource(this.modalData.id, { name: this.payload.name }).then(() => {
         this.closeModal(null)
+      }).finally(() => {
+        this.isLoading = false
       })
     } else {
-      this.createRoom(this.payload).finally(() => {
-        this.isLoading = false
+      this.createResource(this.payload).finally(() => {
         this.closeModal(null)
+      }).finally(() => {
+        this.isLoading = false
       })
     }
   }
 
 }
-export default CreateRoomModal
+export default CreateResourceModal
 </script>

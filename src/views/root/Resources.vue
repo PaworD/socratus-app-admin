@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SIconButton borderless>
+    <SIconButton borderless @onClick="openModal">
       <template v-slot:icon>
         <i class="bi-plus-circle"></i>
         Create
@@ -21,6 +21,8 @@ import { Action, Getter } from 'vuex-class'
 
 import { Resource } from '@/shared/models'
 import { SIconButton } from '@/shared/components'
+import CreateResourceModal from '@/views/root/modals/CreateResourceModal.vue'
+import { ModalSize } from '@/shared/abstract'
 
 @Component<Resources>({
   name: "Resources",
@@ -33,12 +35,27 @@ import { SIconButton } from '@/shared/components'
   }
 })
 export class Resources extends Vue {
-
   @Action
   public fetchResources!: () => Promise<void>
 
   @Getter
   public resources!: Resource[]
+
+  /**
+   * Opens modal to create resource.
+   */
+  public openModal (): void {
+    this.$modalService.open(CreateResourceModal,
+      {},
+      {
+      size: ModalSize.ExtraSmall,
+      persistent: false,
+      hasHeader: true,
+      headerText: 'Create Resource'
+    }).then(async () => {
+     await this.fetchResources()
+    })
+  }
 }
 export default Resources
 </script>

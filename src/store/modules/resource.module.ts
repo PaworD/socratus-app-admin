@@ -29,7 +29,7 @@ export class ResourceModule extends VuexModule {
   public async createResource (payload: CreateResourceIntention): Promise<void> {
     try {
      const message = await this.resourceService.create(payload)
-      this.toastService.show(true, String(message), ToastType.ERROR, 200)
+      this.toastService.show(true, String(message), ToastType.SUCCESS, 200)
     } catch (e) {
       this.toastService.show(true, e, ToastType.ERROR, 200)
     }

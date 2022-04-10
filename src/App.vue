@@ -45,7 +45,6 @@ import {SLoader} from "@/shared/components/Loader";
   }
 })
 export class App extends Vue {
-
   @Action
   public init!: () => Promise<void>
 
