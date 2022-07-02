@@ -8,6 +8,11 @@ export interface TextInputProps {
   flat: boolean
 
   /**
+   * Label for input.
+   */
+  label: string
+
+  /**
    * Placeholder text for current input.
    */
   placeholder: string

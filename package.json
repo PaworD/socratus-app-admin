@@ -10,6 +10,7 @@
   "dependencies": {
     "@titou10/v-money": "^1.0.2",
     "@types/lodash": "^4.14.178",
+    "@types/uuid": "^8.3.4",
     "@types/vue-the-mask": "^0.11.1",
     "axios": "^0.21.4",
     "bootstrap-icons": "^1.5.0",
@@ -19,6 +20,7 @@
     "lodash-es": "^4.17.21",
     "moment": "^2.29.1",
     "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2",
     "v-money": "^0.8.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
