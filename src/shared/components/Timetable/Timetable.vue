@@ -101,7 +101,6 @@ import {
 
   mounted (): void {
     this.generateTimeline()
-    console.log(this.rooms)
   },
 })
 export class STimetable extends Vue {

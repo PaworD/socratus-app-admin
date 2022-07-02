@@ -1,44 +1,62 @@
 <template>
-  <input :type="type" :class="['input', {
-    'input--flat' : flat
-  }, {
+  <input :type="type" :class="['input', { 'input--flat' : flat }, {
     'input--small' : size == sizes.SMALL,
     'input--medium' : size == sizes.MEDIUM,
     'input--normal' : size == sizes.NORMAL
-  },
-  {'--with-radius' : withRadius }
-  ]" :placeholder="placeholder" :value="value" @input="updateSelf">
+  }, {'--with-radius' : withRadius } ]" :placeholder="placeholder" :value="value" @input="updateSelf">
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-import {InputSize, InputType} from './TextInput.contracts'
+import { InputSize, TextInputProps } from './TextInput.contracts'
 
 /**
  * @author Javlon Khalimjonov <khalimajonov.code@gmail.com>
  */
-
 @Component<STextInput>({name: 'STextInput'})
 export class STextInput extends Vue {
-
-  @Prop({type: String, required: false})
-  private readonly placeholder!: string
-
-  @Prop({type: String, required: false})
-  private readonly value!: string
-
+  /**
+   * @see TextInputProps.flat
+   */
   @Prop({type: Boolean, required: false, default: false})
-  private readonly flat!: boolean
+  private readonly flat!: TextInputProps['flat']
 
+  /**
+   * @see TextInputProps.placeholder
+   */
+  @Prop({type: String, required: false})
+  private readonly placeholder!: TextInputProps['placeholder']
+
+  /**
+   * @see TextInputProps.value
+   */
+  @Prop({type: String, required: false})
+  private readonly value!: TextInputProps['value']
+
+  /**
+   * @see TextInputProps.size
+   */
   @Prop({type: String, required: false, default: InputSize.NORMAL})
-  private readonly size!: InputSize
+  private readonly size!: TextInputProps['size']
 
+  /**
+   * @see TextInputProps.type
+   */
   @Prop({type: String, required: false})
-  private readonly type!: InputType
+  private readonly type!: TextInputProps['type']
 
+  /**
+   * @see TextInputProps.required
+   */
+  @Prop({ type: Boolean, required: false, default: false })
+  public readonly required!: TextInputProps['required']
+
+  /**
+   * @see TextInputProps.withRadius
+   */
   @Prop({type: Boolean, required: false, default: false})
-  private readonly withRadius!: boolean
+  private readonly withRadius!: TextInputProps['withRadius']
 
   private readonly sizes = InputSize
 
@@ -47,7 +65,6 @@ export class STextInput extends Vue {
   }
 
 }
-
 export default STextInput
 </script>
 
