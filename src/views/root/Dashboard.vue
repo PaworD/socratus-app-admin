@@ -41,7 +41,6 @@ import DashboardCard from './components/DashboardCard.vue'
   }
 })
 export class Dashboard extends Vue {
-
   @Action
   public readonly fetchTimetable!: (date?: string) => Promise<void>
 

@@ -6,7 +6,7 @@
                    value="Select Group" @on-select="selectGroup" />
       </div>
       <div class="payments__controllers__date">
-        <Datepicker input-class="input input--medium input--flat" v-model="date"
+        <Datepicker input-class="Input__input --medium --flat" v-model="date"
                     format="MMMM, yyyy" id="monthAndYear" placeholder="Select month and year" />
       </div>
     </div>

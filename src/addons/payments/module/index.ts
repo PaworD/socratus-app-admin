@@ -8,7 +8,6 @@ import { ADDON_TYPES, PaymentsService } from '../services'
 
 @Module
 export class PaymentsModule extends VuexModule {
-
   @Inject(ADDON_TYPES.PaymentsServiceType)
   public paymentsService!: PaymentsService
 

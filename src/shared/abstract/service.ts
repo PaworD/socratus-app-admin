@@ -5,10 +5,28 @@ import { Axios } from "@/config";
 import { AnyObject, Id, Pageable } from '@/shared/models'
 
 
+/**
+ * @author Javlon Khalimjonov <javlon.khalimjonov@movecloser.pl>
+ */
 export interface IService<T> {
+    /**
+     * Create data with payload of <T>
+     */
     create(payload: T): Promise<T | string>
+
+    /**
+     * Handles delete request with optional identifier.
+     */
     delete(id: Id): Promise<string>
+
+    /**
+     * Fetch data of <T> from server
+     */
     get(query?: AnyObject): Promise< { results: T; meta: Pageable } | { results: T[]; meta: Pageable } | string>
+
+    /**
+     * Update data of <T>
+     */
     update(id: Id, payload: T): Promise<T | string>
 }
 
@@ -35,30 +53,22 @@ export abstract class AbstractService<T> implements IService<T>{
     protected readonly url: string = ''
 
     /**
-     * Create data with payload of <T>
-     *
-     * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
+     * @inheritDoc
      */
     public abstract create(payload: T ): Promise<T | string>
 
     /**
-     * Create data with payload of <T>
-     *
-     * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
+     * @inheritDoc
      */
     public abstract delete(id: Id): Promise<string>
 
     /**
-     * Fetch data of <T> from server
-     *
-     * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
+     * @inheritDoc
      */
     public abstract get(query?: AnyObject): Promise< { results: T; meta: Pageable } | { results: T[]; meta: Pageable } |string>
 
     /**
-     * Update data of <T>
-     *
-     * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
+     * @inheritDoc
      */
     public abstract update(id: Id, payload: Partial<T>): Promise<T | string>
 }
