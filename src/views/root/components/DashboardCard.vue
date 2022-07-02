@@ -1,27 +1,39 @@
 <template>
-  <div class="dc">
-    <div class="dc__title">
-      <h3 v-if="hasTitle">{{ title }}</h3>
+  <div class="Dashboard__Cart">
+    <div class="Dashboard__Cart__image">
+      <img src="@/assets/quiz-builder-icon.jpeg" alt="Dashboard cart item image.">
     </div>
-    <div>
-      {{ data }}
+    <div class="Dashboard__Cart__info">
+      <h4> {{ title }}</h4>
+      <small> {{ description }} </small>
+
+      <SIconButton>
+        Learn More
+      </SIconButton>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
+import { SIconButton } from '@/shared/components'
+
+/**
+ * @author Javlon Khalimjonov <javlon.khalimjonov@movecloser.pl>
+ */
 @Component({
-  name: 'DashboardCard'
+  name: 'DashboardCard',
+  components: {
+    SIconButton
+  }
 })
 export class DashboardCard extends Vue {
   @Prop({ type: String, required: false, default: undefined })
   public readonly title!: string | undefined
 
   @Prop({ type: String, required: true })
-  public readonly data!: string
+  public readonly description!: string
 
   /**
    * Checks whether card has title
@@ -34,9 +46,11 @@ export default DashboardCard
 </script>
 
 <style lang="scss" scoped>
-.dc {
+.Dashboard__Cart {
   width: 100%;
   height: 100%;
+
+  max-width: 400px;
 
   border-radius: 10px;
 
@@ -45,12 +59,36 @@ export default DashboardCard
   padding: 1rem;
 
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
   justify-content: space-between;
+  align-items: center;
 
-  &__title {
+  &__image {
+    width: 100px;
+    height: 100%;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    border-right: 1px solid gray;
   }
 
+  &__info {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    gap: .6rem;
+    padding: 0 1rem;
+
+    small {
+      color: gray;
+    }
+  }
 }
 </style>
