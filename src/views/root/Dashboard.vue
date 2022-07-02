@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <div class="dashboard__inner">
-      <h1>Information</h1>
+      <h1>Recommended links</h1>
       <div class="dashboard__inner__atoms">
         <DashboardCard title="Quiz Builder v1.0"
                        description="Now try for free brand new quiz creator "
