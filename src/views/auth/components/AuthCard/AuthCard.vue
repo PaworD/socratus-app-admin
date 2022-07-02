@@ -1,24 +1,24 @@
 <template>
   <div class="authorization__card">
-    <h1>Socratus</h1>
-    <STextInput placeholder="Email" size="normal" v-model="payload.phone"/>
+    <form @submit.prevent="signIn">
+      <p class="title">Socratus</p>
+      <STextInput placeholder="Email" size="normal" v-model="payload.phone" />
+      <STextInput placeholder="Password" type="password" size="normal" v-model="payload.password" />
 
-    <STextInput placeholder="Password" type="password" size="normal" v-model="payload.password"/>
-    <SDropdown :list="schoolsList" :value="selectedSchool" type="simple" @on-select="selectSchool"/>
+      <SDropdown :list="schoolsList" :value="selectedSchool" type="simple" @on-select="selectSchool" />
 
-    <SButton label="Sign In" flat theme="secondary" @onClick="signIn" :isLoading="isLoading"/>
+      <SButton label="Sign In" theme="secondary" type="submit" :isLoading="isLoading" />
+    </form>
   </div>
 </template>
 
 <script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { Action, Getter } from 'vuex-class'
 
-import {Component, Prop, Vue} from "vue-property-decorator";
-import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
-import { SButton } from "@/shared/components/Button";
-import {SDropdown} from "@/shared/components/Dropdown";
-import {DropdownItemProps} from "@/shared/components/Dropdown/DropdownItem";
-import {Admin, AnyObject, School} from "@/shared/models";
-import {Action, Getter} from "vuex-class";
+import { Admin, AnyObject, School } from '@/shared/models'
+
+import { DropdownItemProps, SButton, SDropdown, STextInput } from '@/shared/components'
 
 @Component<AuthCard>({
   name: 'AuthCard',
@@ -27,8 +27,7 @@ import {Action, Getter} from "vuex-class";
     SButton,
     SDropdown
   },
-
-  mounted(): void {
+  mounted (): void {
     this.fetchSchoolSet()
   }
 })
@@ -51,13 +50,13 @@ export class AuthCard extends Vue {
 
   public isLoading = false
 
-  public payload : { phone: string; password: string, tenant: string } = {
+  public payload: { phone: string; password: string, tenant: string } = {
     phone: '+998903001105',
     password: 'Hello0909',
     tenant: ''
   }
 
-  public get schoolsList(): DropdownItemProps[] {
+  public get schoolsList (): DropdownItemProps[] {
     if (this.schools) {
       return [...this.schools].map((school) => {
         return {
@@ -93,7 +92,3 @@ export class AuthCard extends Vue {
 }
 export default AuthCard
 </script>
-
-<style lang="scss" scoped>
-
-</style>

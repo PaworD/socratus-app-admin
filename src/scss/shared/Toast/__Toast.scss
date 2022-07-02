@@ -22,6 +22,16 @@
     margin-right: .5rem;
   }
 
+  @media (max-width: 992px) {
+    & {
+      width: 80%;
+
+      right: 50%;
+
+      transform: translateX(50%);
+    }
+  }
+
   // Modifiers
   &__toast_theme {
     &__success {
