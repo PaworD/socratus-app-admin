@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import Vue from 'vue'
+import VueLazyload from 'vue-lazyload'
 
 import { ServicesPlugin } from '@/plugins/services.plugin'
 
@@ -22,6 +23,10 @@ class AppBootstrap {
 
   private applyPlugins(): void {
     Vue.use(ServicesPlugin)
+    Vue.use(VueLazyload, {
+      attempt: 2,
+      preLoad: 1.3
+    })
   }
 
   private loadDependencyContainer (): void {

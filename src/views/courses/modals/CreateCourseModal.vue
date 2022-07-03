@@ -9,7 +9,8 @@
 
       <div class="input-group">
         <label for="course-price">Define price for the course</label>
-        <money class="input input--flat input--medium" placeholder="Price" v-model.lazy="payload.price"
+        <money class="Input__input --flat --medium" placeholder="Price"
+               v-model.lazy="payload.price"
                id="course-price" v-bind="moneyMask" required />
       </div>
 
@@ -60,7 +61,6 @@ import { Levels } from '@/views/courses/contracts/levels'
   },
 })
 export class CreateCourseModal extends ModalWrapper {
-
   @Action
   public createCourse!: (payload: Course) => Promise<void>
 

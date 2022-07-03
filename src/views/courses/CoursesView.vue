@@ -16,41 +16,14 @@
         </SIconButton>
       </div>
     </div>
-    <CoursesFilters v-if="isFiltersActive" :items.sync="allCourses"/>
-<!--    <div v-if="allCourses && !isLoading" class="courses__list">-->
-      <transition-group name="flip-complete" tag="div" class="courses__list" v-if="allCourses && !isLoading" appear>
-        <SCard v-for="course in allCourses" :key="course.id" body-class="course__card__body" borderless>
-          <template v-slot:body>
-            <div class="course__hero">
-              <div class="action-group">
-                <SIconButton @onClick="openUpdateCourseModal(course)">
-                  <template v-slot:icon>
-                    <i class="bi-pen-fill"></i>
-                  </template>
-                </SIconButton>
-                <SIconButton @onClick="openDeleteCourseModal(course)">
-                  <template v-slot:icon>
-                    <i class="bi-trash-fill" style="color: #9a381a"></i>
-                  </template>
-                </SIconButton>
-              </div>
-              <div class="course-badges">
-                <SBadge v-if="course.level" :title="course.level" theme="light" />
-              </div>
-              <img :src="'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Books_HD_%288314929977%29.jpg/1280px-Books_HD_%288314929977%29.jpg'" alt="">
-            </div>
-            <div class="course__description">
-              <p>{{ course.name }}</p>
-              <money v-model.lazy="course.price" id="course-price"
-                     v-bind="{
-                       ...moneyMask,
-                       prefix:`${course.priceCurrency.toUpperCase()} `
-                     }" disabled aria-readonly="true" />
-            </div>
-          </template>
-        </SCard>
-      </transition-group>
-<!--    </div>-->
+    <CoursesFilters v-if="isFiltersActive" :items.sync="allCourses" />
+    <!--    <div v-if="allCourses && !isLoading" class="courses__list">-->
+    <transition-group name="flip-complete" tag="div" class="courses__list"
+                      v-if="allCourses && !isLoading" appear>
+      <SingleCourse v-for="course in courses" :key="course.id" :course="course"
+                    @updateCourse="openUpdateCourseModal" @deleteCourse="openDeleteCourseModal" />
+    </transition-group>
+    <!--    </div>-->
     <div class="courses__list" v-else>
       <SSkeleton v-for="i in 10" :key="i" type="block" />
     </div>
@@ -59,17 +32,16 @@
 
 <script lang="ts">
 
-import {Component, Vue} from "vue-property-decorator";
-import {Action, Getter} from "vuex-class";
-import { Money } from 'v-money'
+import { Component, Vue } from 'vue-property-decorator'
+import { Action, Getter } from 'vuex-class'
 
 import { AnyObject, Course } from '@/shared/models'
-import {ModalSize} from "@/shared/abstract";
-import { imageFromText } from "@/shared/helpers"
-import { SSkeleton, SBadge, SIconButton, SCard, SButton } from '@/shared/components'
+import { ModalSize } from '@/shared/abstract'
+import { SBadge, SButton, SCard, SIconButton, SImage, SSkeleton } from '@/shared/components'
 
-import { CreateCourseModal } from "./modals/CreateCourseModal.vue";
-import { DeleteCourseModal } from "./modals/DeleteCourseModal.vue";
+import { SingleCourse } from './components/Course.vue'
+import { CreateCourseModal } from './modals/CreateCourseModal.vue'
+import { DeleteCourseModal } from './modals/DeleteCourseModal.vue'
 import CoursesFilters from './filters/CourseFilters.vue'
 
 /**
@@ -84,7 +56,8 @@ import CoursesFilters from './filters/CourseFilters.vue'
     SBadge,
     CoursesFilters,
     SSkeleton,
-    Money
+    SImage,
+    SingleCourse
   },
 
   mounted (): void {
@@ -96,7 +69,6 @@ import CoursesFilters from './filters/CourseFilters.vue'
   }
 })
 export class CoursesView extends Vue {
-
   @Action
   public fetchCourses!: (query?: AnyObject) => Promise<void>
 
@@ -108,60 +80,54 @@ export class CoursesView extends Vue {
 
   public isLoading = false
 
-  public moneyMask = {
-    precision: 0,
-    decimal: ",",
-    thousands: " ",
-    masked: false
-  }
-
   public get queryParams (): AnyObject {
     return this.$route.query
   }
 
-  public courseImg(courseName: string): string {
-    return imageFromText(courseName)
-  }
-
-
   public async openCreateCourseModal (): Promise<void> {
-    await this.$modalService.open(CreateCourseModal,
-        {payload: 'Create Course Payload'},
-        {
-          size: ModalSize.ExtraSmall,
-          persistent: false,
-          hasHeader: true,
-          headerText: 'Create Course'
-        })
+    await this.$modalService.open(
+      CreateCourseModal,
+      { payload: 'Create Course Payload' },
+      {
+        size: ModalSize.ExtraSmall,
+        persistent: false,
+        hasHeader: true,
+        headerText: 'Create Course'
+      }
+    )
   }
 
   public async openUpdateCourseModal (course: Course): Promise<void> {
-    await this.$modalService.open(CreateCourseModal,
-        {
-          id: course.id,
-          course: course
-        },
-        {
-          size: ModalSize.ExtraSmall,
-          persistent: false,
-          hasHeader: true,
-          headerText: 'Update Course'
-        })
+    await this.$modalService.open(
+      CreateCourseModal,
+      {
+        id: course.id,
+        course: course
+      },
+      {
+        size: ModalSize.ExtraSmall,
+        persistent: false,
+        hasHeader: true,
+        headerText: 'Update Course'
+      }
+    )
   }
 
   public async openDeleteCourseModal (course: Course): Promise<void> {
-    const modalResponse = await this.$modalService.open(DeleteCourseModal,
-        {
-          id: course.id,
-          name: course.name
-        },
-        {
-          size: ModalSize.ExtraSmall,
-          persistent: false,
-          hasHeader: true,
-          headerText: 'Delete Course'
-        })
-    if(typeof modalResponse !== 'undefined') {
+    const modalResponse = await this.$modalService.open(
+      DeleteCourseModal,
+      {
+        id: course.id,
+        name: course.name
+      },
+      {
+        size: ModalSize.ExtraSmall,
+        persistent: false,
+        hasHeader: true,
+        headerText: 'Delete Course'
+      }
+    )
+    if (typeof modalResponse !== 'undefined') {
       this.courses.splice(this.courses.indexOf(course), 1)
     }
   }
@@ -169,8 +135,8 @@ export class CoursesView extends Vue {
   public toggleFiltersBar (): void {
     this.isFiltersActive = !this.isFiltersActive
   }
-
 }
+
 export default CoursesView
 </script>
 
@@ -180,11 +146,14 @@ export default CoursesView
   display: inline-block;
   margin-right: 10px;
 }
+
 .list-complete-enter, .list-complete-leave-to
-  /* .list-complete-leave-active below version 2.1.8 */ {
+  /* .list-complete-leave-active below version 2.1.8 */
+{
   opacity: 0;
   transform: translateY(30px);
 }
+
 .list-complete-leave-active {
   position: absolute;
 }

@@ -1,0 +1,1 @@
+export { default as SImage } from './Image.vue'
