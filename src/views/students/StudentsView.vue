@@ -46,7 +46,6 @@ import { ModalSize } from "@/shared/abstract";
   }
 })
 export class StudentsView extends Vue {
-
   @Action
   private fetchStudents!: (query?: AnyObject) => Promise<Pageable>
 
@@ -73,8 +72,8 @@ export class StudentsView extends Vue {
         actions: [
           {
             component: StudentActions,
-            onDelete: this.fetchStudents,
-            onUpdate: this.fetchStudents
+            onDelete: this.getStudents,
+            onUpdate: this.getStudents
           }
         ]
       }
@@ -88,7 +87,7 @@ export class StudentsView extends Vue {
       persistent: false,
       headerText: 'Create Student'
     }).then(() => {
-      this.fetchStudents()
+      this.getStudents()
     })
   }
 
