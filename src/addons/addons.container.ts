@@ -1,4 +1,5 @@
 import { container } from 'inversify-props'
+
 import { ADDON_TYPES, PaymentsService } from '@/addons/payments/services'
 
 /**

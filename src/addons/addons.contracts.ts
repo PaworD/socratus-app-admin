@@ -11,6 +11,6 @@ export enum Addons {
 
 
 /**
- * TODO
+ * @author Javlon Khalimjonov <javlon.khalimjonov@movecloser.pl>
  */
 export type Addon = VueConstructor

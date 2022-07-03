@@ -7,9 +7,7 @@
       <h4> {{ title }}</h4>
       <small> {{ description }} </small>
 
-      <SIconButton>
-        Learn More
-      </SIconButton>
+      <router-link to="addons/quizzes" class="Dashboard__Cart__info__link">Learn More</router-link>
     </div>
   </div>
 </template>
@@ -85,6 +83,21 @@ export default DashboardCard
     flex-flow: column;
     gap: .6rem;
     padding: 0 1rem;
+
+    &__link {
+      text-decoration: none;
+      color: $dark;
+      font-size: .8rem;
+
+      border: 1px solid $dark-500;
+      border-radius: 6px;
+
+      padding: .3rem;
+
+      width: auto;
+
+      text-align: center;
+    }
 
     small {
       color: gray;

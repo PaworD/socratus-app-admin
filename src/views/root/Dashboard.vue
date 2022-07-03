@@ -20,15 +20,11 @@
 <script lang="ts">
 
 import { Action, Getter } from 'vuex-class'
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator'
 import moment from 'moment'
 
-import { SCard } from "@/shared/components";
-import {
-  Schedule,
-  STimetable,
-  Timetable
-} from '@/shared/components/Timetable'
+import { SCard } from '@/shared/components'
+import { Schedule, STimetable, Timetable } from '@/shared/components/Timetable'
 
 import DashboardCard from './components/DashboardCard.vue'
 
@@ -36,7 +32,7 @@ import DashboardCard from './components/DashboardCard.vue'
   name: 'Dashboard',
   components: { SCard, STimetable, DashboardCard },
 
-  mounted(): void {
+  mounted (): void {
     this.fetchTimetable()
   }
 })
@@ -48,15 +44,15 @@ export class Dashboard extends Vue {
   public readonly timetable!: Timetable[]
 
   public onDateChanged (date: string): void {
-   const formattedDate = moment(date).format('DD-MM-yyyy')
+    const formattedDate = moment(date).format('DD-MM-yyyy')
     this.fetchTimetable(formattedDate)
   }
 
   public onLessonSelected (lesson: Schedule): void {
     //
   }
-
 }
+
 export default Dashboard
 </script>
 

@@ -1,4 +1,4 @@
-import { Addon, Addons, PaymentsAddonView, StatisticsAddonView } from '@/addons'
+import { Addon, Addons, PaymentsAddonView, StatisticsAddonView, QuizAddonView } from '@/addons'
 
 /**
  * Main registry of available addons
@@ -8,5 +8,5 @@ import { Addon, Addons, PaymentsAddonView, StatisticsAddonView } from '@/addons'
 export const addonsRegistry: Record<Addons, Addon> = {
   [Addons.Payments]: PaymentsAddonView,
   [Addons.Statistics]: StatisticsAddonView,
-  [Addons.Quizzes]: PaymentsAddonView
+  [Addons.Quizzes]: QuizAddonView
 }
