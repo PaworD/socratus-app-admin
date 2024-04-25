@@ -19,10 +19,9 @@
       </div>
     </div>
 
+    <label for="days">Select days in which lessons will take place</label>
     <div class="groupSchedule__modals__create__days">
-      <label for="days">Select days in which lessons will take place</label>
-      <div v-for="weekday in weekdays" :key="JSON.stringify(weekday)"
-           class="groupSchedule__modals__create__days" id="days">
+      <div v-for="weekday in weekdays" :key="JSON.stringify(weekday)" class="groupSchedule__modals__create__days__day" id="days">
         <SCheck :id="weekday.label" v-model="days[weekday.label]" >{{weekday.label}}</SCheck>
 
         <div v-show="days[weekday.label]" class="groupSchedule__modals__create__days__time">

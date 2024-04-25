@@ -1,9 +1,13 @@
 <template>
   <div class="rooms">
     <div class="rooms__room" v-for="room in editableRooms" :key="room.id">
-      <span v-if="!room.isEditing">{{ room.name }}</span>
+      <span v-if="!room.isEditing">
+        {{ room.name }}
+      </span>
       <STextInput v-else flat size="small" type="text" v-model="room.name" />
       <div class="actions">
+        <small>({{ room.id }})</small>
+
         <SIconButton @onClick="() => openUpdateRoomModal(room)" borderless>
           <template v-slot:icon>
             <i class="bi-pencil"></i>

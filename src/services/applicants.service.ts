@@ -6,7 +6,7 @@ import { injectable } from 'inversify-props'
 
 @injectable()
 export class ApplicantsService extends AbstractService<Applicant> {
-  protected url = '/applications'
+  protected url = '/applications/'
 
   constructor () {
     super();

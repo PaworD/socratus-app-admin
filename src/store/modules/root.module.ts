@@ -36,7 +36,14 @@ export class RootModule extends VuexModule {
             const response = await this.rootService.init()
             this.context.commit('setAuth', true)
             this.context.commit('setOrganization', response)
-            this.context.commit('setAddons', response.addons)
+            this.context.commit('setAddons', [
+                {
+                    displayName: 'Payments',
+                    isActive: true,
+                    iconName: 'bi-cash',
+                    name: 'payments',
+                }
+            ])
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
