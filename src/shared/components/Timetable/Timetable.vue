@@ -2,9 +2,9 @@
   <div class="timetable">
     <!-- Controllers -->
     <div class="timetable__controllers">
-      <SIconButton @onClick="switchMode">
-        {{ currentMode }}
-      </SIconButton>
+<!--      <SIconButton @onClick="switchMode">-->
+<!--        {{ currentMode }}-->
+<!--      </SIconButton>-->
 
       <div class="timetable__controllers__date">
         <SIconButton @onClick="prevDay" :disabled="loading">

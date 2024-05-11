@@ -7,7 +7,7 @@
       <h4> {{ title }}</h4>
       <small> {{ description }} </small>
 
-      <router-link to="addons/quizzes" class="Dashboard__Cart__info__link">Learn More</router-link>
+      <a href="https://dainty-seahorse-bd496b.netlify.app/#/quizes" target="_blank" class="Dashboard__Cart__info__link">Open editor</a>
     </div>
   </div>
 </template>
