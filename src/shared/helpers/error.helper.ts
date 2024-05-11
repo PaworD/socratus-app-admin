@@ -1,4 +1,5 @@
 import {AxiosResponse} from "axios";
+import {AnyObject} from "@/shared/models";
 
 export enum ResponseCode {
     NOTFOUND = 404,
@@ -19,7 +20,7 @@ export const hasResponseFailed = (response: AxiosResponse): boolean => {
 
 export const resolveWithError = (response: AxiosResponse) : string => {
     if(process.env.VUE_APP_ENV == 'local') {
-        return response.data.message
+        return response.data
     } else {
         switch (response.status) {
             case 404:
@@ -30,4 +31,15 @@ export const resolveWithError = (response: AxiosResponse) : string => {
                 return 'Unexpected Error'
         }
     }
+}
+
+export class ValidationError extends Error {
+    protected payload: AnyObject
+    constructor(payload: AnyObject) {
+        super('[Validation Error]')
+        this.payload = payload.response.data.message
+
+        Object.setPrototypeOf(this, ValidationError.prototype);
+    }
+
 }

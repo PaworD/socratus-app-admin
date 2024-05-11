@@ -86,8 +86,9 @@ export class StudentsView extends Vue {
       size: ModalSize.ExtraSmall,
       persistent: false,
       headerText: 'Create Student'
-    }).then(() => {
-      this.getStudents()
+    }).then((shouldUpdate) => {
+      if (shouldUpdate)
+        this.getStudents()
     })
   }
 

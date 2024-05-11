@@ -17,7 +17,7 @@ export type Student = StudentData & Partial<IStudent>
 export type StudentUpdateIntention = Omit<StudentData, 'groups'>
 
 export interface CreateStudentIntention {
-    email: string
+    email: string | null
     firstName: string
     lastName: string
     phone: string

@@ -19,6 +19,10 @@
         </ul>
       </div>
     </div>
+
+    <div v-if="hasErrors" class="Input__errors">
+      <span v-for="error in errors" :key="error">{{ error }}</span>
+    </div>
   </div>
 </template>
 
@@ -38,11 +42,18 @@ export class SDropdown extends Vue {
   @Prop( { type: Boolean, required: false, default: false })
   public multiselect!: boolean
 
+  @Prop( { type: Array, required: false, default: () => ([]) })
+  public errors!: string[]
+
   @Prop({ type: String, required: false, default: DropdownTheme.DEFAULT })
   public readonly theme!: DropdownTheme
 
   public visible: boolean | null = false
   public val: string = this.value
+
+  public get hasErrors (): boolean {
+    return this.errors.length > 0
+  }
 
   public toggle(): void {
     this.visible = !this.visible

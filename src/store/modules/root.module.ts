@@ -1,8 +1,8 @@
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
-import { Inject } from "inversify-props";
+import {Inject} from "inversify-props";
 
-import { AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School } from '@/shared/models'
+import {AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School} from '@/shared/models'
 
 import {
     LocalStorageService,
@@ -11,7 +11,8 @@ import {
     ToastType,
     TYPES
 } from '@/services'
-import { Organization } from '@/views/contracts'
+import {Organization} from '@/views/contracts'
+import {ValidationError} from "@/shared/helpers";
 
 
 @Module
@@ -30,7 +31,7 @@ export class RootModule extends VuexModule {
     public _organization: Organization = {} as Organization
     public _schools: School[] = []
 
-    @Action({ rawError: true })
+    @Action({rawError: true})
     public async init(): Promise<void> {
         try {
             const response = await this.rootService.init()
@@ -49,7 +50,7 @@ export class RootModule extends VuexModule {
         }
     }
 
-    @Action({ rawError: true })
+    @Action({rawError: true})
     public async fetchSchoolSet(query?: AnyObject): Promise<void> {
         try {
             const schools = await this.rootService.get(query) as { results: School[]; meta: Pageable }
@@ -60,7 +61,7 @@ export class RootModule extends VuexModule {
         }
     }
 
-    @Action({ rawError: true })
+    @Action({rawError: true})
     public async signInWith(payload: AnyObject): Promise<Admin> {
         try {
             const response = await this.rootService.signIn(payload)
@@ -73,13 +74,17 @@ export class RootModule extends VuexModule {
 
             return response.admin
         } catch (e) {
-            this.toastService.show(true, e, ToastType.ERROR, 200)
-            throw new Error(e)
+            if (e instanceof ValidationError) {
+                throw e
+            } else {
+                this.toastService.show(true, e, ToastType.ERROR, 200)
+                throw new Error()
+            }
         }
     }
 
-    @Action({ rawError: true })
-    public async search (q: string): Promise<GlobalSearchResults> {
+    @Action({rawError: true})
+    public async search(q: string): Promise<GlobalSearchResults> {
         try {
             const response = await this.rootService.search(q)
 
@@ -90,13 +95,13 @@ export class RootModule extends VuexModule {
         }
     }
 
-    @Action({ rawError: true })
-    public logOut (): void {
+    @Action({rawError: true})
+    public logOut(): void {
         this.localStorageService.clearKeys()
     }
 
     @Mutation
-    public setSchools (schools: School[]): void {
+    public setSchools(schools: School[]): void {
         this._schools = schools.map((school) => {
             return {
                 ...school,
@@ -106,12 +111,12 @@ export class RootModule extends VuexModule {
     }
 
     @Mutation
-    public setOrganization (data: Organization): void {
+    public setOrganization(data: Organization): void {
         this._organization = data
     }
 
     @Mutation
-    public setAddons (addons: AddonData[]): void {
+    public setAddons(addons: AddonData[]): void {
         this._addons = addons
     }
 

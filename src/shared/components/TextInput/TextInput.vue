@@ -3,6 +3,10 @@
     <label :for="id" class="sr-only">{{ hasLabel ? label : placeholder }}</label>
     <input v-bind="{ type, required, placeholder, value, id }" @input="updateSelf"
            :class="['Input__input', { '--flat' : flat, '--with-radius' : withRadius }, `--${size}` ]">
+
+    <div v-if="hasErrors" class="Input__errors">
+      <span v-for="error in errors" :key="error">{{ error }}</span>
+    </div>
   </div>
 </template>
 
@@ -65,6 +69,9 @@ export class STextInput extends Vue {
   @Prop({ type: Boolean, required: false, default: false })
   private readonly withRadius!: TextInputProps['withRadius']
 
+  @Prop( { type: Array, required: false, default: () => ([]) })
+  public errors!: string[]
+
   private readonly sizes = InputSize
 
   /**
@@ -81,6 +88,10 @@ export class STextInput extends Vue {
     return typeof this.label !== 'undefined' && this.label.length > 0
   }
 
+  public get hasErrors (): boolean {
+    return this.errors.length > 0
+  }
+
   /**
    * Handles event`@input`.
    */
@@ -90,56 +101,3 @@ export class STextInput extends Vue {
 }
 export default STextInput
 </script>
-
-<style lang="scss">
-.Input {
-  &__input {
-    width: 100%;
-    background: #fff;
-    font: inherit;
-    outline: none;
-    border: 2px solid $dark;
-    transition: all .3s ease;
-
-    padding-left: .7rem;
-
-    &::placeholder {
-      color: $ft-light;
-    }
-
-    &:focus {
-      border: 2px solid #3a3a3a;
-    }
-
-    &.--with-radius {
-      border-radius: 5px;
-    }
-
-    &.--flat {
-      box-shadow: none;
-      border: none;
-
-      color: $ft-light;
-      background: $gray-10;
-
-      &:focus {
-        border: none;
-      }
-    }
-
-    //Sizes
-    &.--normal {
-      padding: 18px 14px;
-    }
-
-    &.--medium {
-      padding: 12px 8px;
-    }
-
-    &.--small {
-      padding: 8px 4px;
-      font-size: .8rem;
-    }
-  }
-}
-</style>

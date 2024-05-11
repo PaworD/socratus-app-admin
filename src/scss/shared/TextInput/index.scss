@@ -1,0 +1,62 @@
+.Input {
+  &__input {
+    width: 100%;
+    background: #fff;
+    font: inherit;
+    outline: none;
+    border: 2px solid $dark;
+    transition: all .3s ease;
+
+    padding-left: .7rem;
+
+    &::placeholder {
+      color: $ft-light;
+    }
+
+    &:focus {
+      border: 2px solid #3a3a3a;
+    }
+
+    &.--with-radius {
+      border-radius: 5px;
+    }
+
+    &.--flat {
+      box-shadow: none;
+      border: none;
+
+      color: $ft-light;
+      background: $gray-10;
+
+      &:focus {
+        border: none;
+      }
+    }
+
+    //Sizes
+    &.--normal {
+      padding: 18px 14px;
+    }
+
+    &.--medium {
+      padding: 12px 8px;
+    }
+
+    &.--small {
+      padding: 8px 4px;
+      font-size: .8rem;
+    }
+  }
+
+  &__errors {
+    display: flex;
+    flex-flow: column;
+    gap: 6px;
+    margin-top: 4px;
+    > span {
+      color: $danger;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}

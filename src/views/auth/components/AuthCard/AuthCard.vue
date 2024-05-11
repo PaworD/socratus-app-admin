@@ -2,10 +2,26 @@
   <div class="authorization__card">
     <form @submit.prevent="signIn">
       <p class="title">Socratus</p>
-      <STextInput placeholder="Email" size="normal" v-model="payload.phone" />
-      <STextInput placeholder="Password" type="password" size="normal" v-model="payload.password" />
+      <STextInput
+          placeholder="Email"
+          size="normal"
+          :errors="errors && errors['phone'] ? errors['phone'] : []"
+          v-model="payload.phone"
+      />
+      <STextInput
+          placeholder="Password"
+          type="password"
+          size="normal"
+          :errors="errors && errors['password'] ? errors['password'] : []"
+          v-model="payload.password"
+      />
 
-      <SDropdown :list="schoolsList" :value="selectedSchool" type="simple" @on-select="selectSchool" />
+      <SDropdown
+          :list="schoolsList"
+          :value="selectedSchool"
+          type="simple"
+          :errors="errors && errors['tenant'] ? errors['tenant'] : []"
+          @on-select="selectSchool" />
 
       <SButton label="Sign In" theme="secondary" type="submit" :isLoading="isLoading" />
     </form>
@@ -19,6 +35,7 @@ import { Action, Getter } from 'vuex-class'
 import { Admin, AnyObject, School } from '@/shared/models'
 
 import { DropdownItemProps, SButton, SDropdown, STextInput } from '@/shared/components'
+import {AnyResponse} from "@/services";
 
 @Component<AuthCard>({
   name: 'AuthCard',
@@ -45,10 +62,9 @@ export class AuthCard extends Vue {
   public schools!: School[]
 
   public errorMessage: string | null = null
-
   public selectedSchool = 'Select school'
-
   public isLoading = false
+  public errors: Record<string, string>[] = []
 
   public payload: { phone: string; password: string, tenant: string } = {
     phone: '+998903001105',
@@ -83,7 +99,7 @@ export class AuthCard extends Vue {
       await this.signInWith(this.payload)
       await this.init()
     } catch (e) {
-      console.warn(e)
+      this.errors = e.payload
     } finally {
       this.isLoading = false
     }

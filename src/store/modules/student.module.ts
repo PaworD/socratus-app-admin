@@ -1,9 +1,10 @@
-import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
-import { Inject } from "inversify-props";
+import {Inject} from "inversify-props";
 
-import { StudentService, ToastService, ToastType, TYPES } from '@/services'
-import { AnyObject, CreateStudentIntention, Id, Pageable, Student, StudentUpdateIntention } from '@/shared/models'
+import {StudentService, ToastService, ToastType, TYPES} from '@/services'
+import {AnyObject, CreateStudentIntention, Id, Pageable, Student, StudentUpdateIntention} from '@/shared/models'
+import {ValidationError} from "@/shared/helpers";
 
 @Module
 export class StudentModule extends VuexModule {
@@ -16,13 +17,17 @@ export class StudentModule extends VuexModule {
 
     public _students: Student[] = []
 
-    @Action
+    @Action({rawError: true})
     public async createStudent(student: CreateStudentIntention): Promise<void> {
         try {
             const message = await this.studentService.create(student)
             this.toastService.show(true, String(message), ToastType.SUCCESS, 200)
         } catch (e) {
-            this.toastService.show(true, e, ToastType.ERROR, 200)
+            if (e instanceof ValidationError) {
+                throw e
+            } else {
+                this.toastService.show(true, e, ToastType.ERROR, 200)
+            }
         }
     }
 
@@ -60,7 +65,7 @@ export class StudentModule extends VuexModule {
     }
 
     @Mutation
-    public setStudents (students: Student[]): void {
+    public setStudents(students: Student[]): void {
         this._students = students
     }
 

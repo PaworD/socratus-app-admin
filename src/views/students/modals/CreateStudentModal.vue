@@ -13,7 +13,15 @@
 
       <div class="input-group">
         <label for="student_phone">Enter phone of the student</label>
-        <STextInput placeholder="Phone" size="medium" type="phone" id="student_phone" v-model="studentData.phone" flat required/>
+        <STextInput
+            placeholder="Phone"
+            size="medium"
+            type="phone"
+            :errors="errors && errors['phone'] ? errors['phone'] : []"
+            id="student_phone"
+            v-model="studentData.phone"
+            flat
+            required/>
       </div>
 
       <div class="input-group">
@@ -84,6 +92,7 @@ export class CreateStudentModal extends ModalWrapper {
 
   public isLoading = false
   public selectedGroups: DropdownItemProps[] = []
+  public errors: Record<string, string[]> | null = null
   public studentData : CreateStudentIntention = {
     email: '',
     firstName: '',
@@ -116,26 +125,32 @@ export class CreateStudentModal extends ModalWrapper {
     this.selectedGroups.push(item)
   }
 
-  public onSubmit (): void {
-    this.isLoading = true
-    if (this.isUpdateMode) {
-      this.updateStudent({
-        student: this.studentData as StudentUpdateIntention,
-        id: this.modalData.id
-      }).then(() => {
-        this.isLoading = true
-        this.closeModal(null)
-      })
-    } else {
-      this.createStudent(this.studentData).then(() => {
-        this.isLoading = true
-        this.closeModal(null)
-      })
+  public async onSubmit (): Promise<void> {
+    try {
+      this.isLoading = true
+
+      if (this.isUpdateMode) {
+        await this.updateStudent({
+          student: this.studentData as StudentUpdateIntention,
+          id: this.modalData.id
+        })
+      } else {
+        await this.createStudent({
+          ...this.studentData,
+          email: this.studentData.email || null
+        })
+      }
+
+      this.closeModal(true)
+
+    } catch (e) {
+      this.errors = e.payload
+    } finally {
+      this.isLoading = false
     }
   }
 
   public removeGroup (group: DropdownItemProps): void {
-    console.log(group)
     if (typeof this.studentData.groups === 'undefined') {
       return
     }

@@ -74,9 +74,6 @@ export class ModalService extends AbstractModalService {
                         modalOptions: configs,
                     }
                 },
-                mounted(): void {
-                    //
-                },
                 methods: {
                     closeModal (data: AnyObject) {
                         this.showDialog = false

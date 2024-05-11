@@ -25,9 +25,9 @@ import {Component, Prop, Vue} from "vue-property-decorator";
 import {SIconButton} from "@/shared/components";
 import {TableRowItem} from "@/shared/components/Table/_";
 import {Action} from "vuex-class";
-import { AnyObject, Identifier, Student } from '@/shared/models'
-import { CreateStudentModal } from '@/views/students/modals/CreateStudentModal.vue'
-import { ModalSize } from '@/shared/abstract'
+import {AnyObject, Identifier, Student} from '@/shared/models'
+import {CreateStudentModal} from '@/views/students/modals/CreateStudentModal.vue'
+import {ModalSize} from '@/shared/abstract'
 
 @Component<StudentActions>({
   name: 'StudentActions',
@@ -45,13 +45,13 @@ export class StudentActions extends Vue {
   @Action
   public deleteStudent!: (id: number) => Promise<string>
 
-  public removeStudent (id: number): void {
+  public removeStudent(id: number): void {
     this.deleteStudent(id).then(() => {
       this.actions.onDelete()
     })
   }
 
-  public async openUpdateStudentModal (student: Student): Promise<void> {
+  public async openUpdateStudentModal(student: Student): Promise<void> {
     await this.$modalService.open(CreateStudentModal,
         {
           id: student.id,
@@ -62,11 +62,13 @@ export class StudentActions extends Vue {
           size: ModalSize.ExtraSmall,
           persistent: false,
           headerText: 'Update Student'
-        }).then(() => {
-      this.actions.onUpdate()
+        }).then((shouldUpdate) => {
+      if (shouldUpdate)
+        this.actions.onUpdate()
     })
   }
 
 }
+
 export default StudentActions
 </script>

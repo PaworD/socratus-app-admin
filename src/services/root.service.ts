@@ -2,7 +2,7 @@ import { injectable } from "inversify-props";
 
 import { AbstractService } from "@/shared/abstract";
 import { Admin, AnyObject, GlobalSearchResults, Pageable, School } from '@/shared/models'
-import { composeModel, obsKeysToString, resolveWithError } from '@/shared/helpers'
+import {composeModel, obsKeysToString, resolveWithError, ValidationError} from '@/shared/helpers'
 
 @injectable()
 export class RootService extends AbstractService<School> {
@@ -40,9 +40,8 @@ export class RootService extends AbstractService<School> {
         try {
             const _response = await this.http.get('/admin/init')
 
-            return  composeModel<AnyObject>(_response.data.data)
+            return composeModel<AnyObject>(_response.data.data)
         } catch (e: any) {
-            console.log(e)
             throw resolveWithError(e.response)
         }
     }
@@ -57,8 +56,6 @@ export class RootService extends AbstractService<School> {
                 app: 'admin'
             })
 
-            console.log(_response.data.data.tenant)
-
             return  {
                 admin: composeModel<Admin>(_response.data.data.me) as Admin,
                 tokens: {
@@ -68,16 +65,11 @@ export class RootService extends AbstractService<School> {
                 tenant: _response.data.data.tenant
             }
         } catch (e) {
-            if ((e as AnyResponse).response) {
-                if (typeof e.response.data.message !== 'string') {
-                    const message = obsKeysToString(e.response.data.message, ['tenant', 'email', 'password'])
-                    throw message
-                } else {
-                    throw new Error(e.response.data.message)
-                }
+            if (typeof e.response.data.message === 'string') {
+                throw new Error(e.response.data.message)
             }
 
-            throw new Error(e)
+            throw new ValidationError(e)
         }
     }
 
