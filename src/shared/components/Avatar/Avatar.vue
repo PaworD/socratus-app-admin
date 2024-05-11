@@ -3,7 +3,7 @@
     <span v-for="(name, index) in someAvatars" :key="index" class="avatar" :title="name">
       <span>{{ firstAndLast[index] }}</span>
     </span>
-    <span class="avatar" v-if="source.length >= 2">
+    <span class="avatar" v-if="source.length > 2">
       +{{ source.length }}
     </span>
   </div>

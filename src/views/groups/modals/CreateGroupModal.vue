@@ -63,7 +63,7 @@ import ColorPicker from '@/components/ColorPicker.vue'
   created (): void {
     if (this.isUpdateMode) {
       this.groupData = {
-        id: this.modalData.group.color,
+        id: this.modalData.group.id,
         color: this.modalData.group.color,
         teacher: this.modalData.group.teacher,
         name: this.modalData.group.name
@@ -128,7 +128,6 @@ export class CreateGroupModal extends ModalWrapper {
           value: String(teacher.id)
         }
       }
-
     }
     return {} as DropdownItemProps
   }
@@ -153,9 +152,10 @@ export class CreateGroupModal extends ModalWrapper {
         await this.updateGroup({
           group: {
             ...this.groupData,
-            teacher: (this.groupData.teacher as Teacher).id
+            teacher: this.groupData.teacher
           },
-          id: this.modalData.id })
+          id: this.modalData.id
+        })
       } else {
         await this.createGroup(this.groupData)
       }

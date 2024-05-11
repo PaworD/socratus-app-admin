@@ -8,9 +8,13 @@
         </template>
       </SIconButton>
     </div>
-    <div class="groups__list">
+    <div v-if="!isLoading" class="groups__list">
       <GroupCard v-for="group in groups" :key="group.id" :group="group"
                  @onGroupDelete="fetchGroups" @onGroupUpdate="fetchGroups" />
+    </div>
+
+    <div v-else class="groups__list">
+      <SSkeleton v-for="i in 5" :key="i" type="block" />
     </div>
   </div>
 </template>
@@ -25,17 +29,19 @@ import { AnyObject, Group, Pageable } from '@/shared/models'
 import { SIconButton } from "@/shared/components/IconButton";
 import { CreateGroupModal } from "@/views/groups/modals/CreateGroupModal.vue";
 import { ModalSize } from "@/shared/abstract";
+import { SSkeleton } from "@/shared/components";
 
 @Component<GroupsView>({
   name: 'CoursesView',
 
   components: {
+    SSkeleton,
     GroupCard,
     SIconButton
   },
 
   mounted (): void {
-    this.fetchGroups(this.queryParams)
+    this.load()
   }
 
 })
@@ -48,6 +54,7 @@ export class GroupsView extends Vue {
   public groups!: Group[]
 
   public totalCount = 0
+  public isLoading = false
 
   public get queryParams (): AnyObject {
     return this.$route.query
@@ -62,6 +69,15 @@ export class GroupsView extends Vue {
         this.totalCount = meta.totalCount
       })
     })
+  }
+
+  public async load (): Promise<void> {
+    try {
+      this.isLoading = true
+      await this.fetchGroups(this.queryParams)
+    } finally {
+      this.isLoading = false
+    }
   }
 
 }
