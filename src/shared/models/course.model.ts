@@ -4,7 +4,7 @@ export interface ICourse {
     getCourseName(): string
 }
 
-export interface CourseData extends Identifier{
+export interface CourseData extends Identifier {
     name: string
     price: number
     priceCurrency: string

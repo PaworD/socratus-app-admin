@@ -61,7 +61,6 @@ import CoursesFilters from './filters/CourseFilters.vue'
   },
 
   mounted (): void {
-    this.isLoading = true
     this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
       this.allCourses = this.courses
       this.isLoading = false
@@ -85,7 +84,7 @@ export class CoursesView extends Vue {
   }
 
   public async openCreateCourseModal (): Promise<void> {
-    await this.$modalService.open(
+    const shouldUpdate = await this.$modalService.open(
       CreateCourseModal,
       { payload: 'Create Course Payload' },
       {
@@ -95,10 +94,16 @@ export class CoursesView extends Vue {
         headerText: 'Create Course'
       }
     )
+
+    if (shouldUpdate)
+      this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
+        this.allCourses = this.courses
+        this.isLoading = false
+      })
   }
 
   public async openUpdateCourseModal (course: Course): Promise<void> {
-    await this.$modalService.open(
+    const shouldUpdate = await this.$modalService.open(
       CreateCourseModal,
       {
         id: course.id,
@@ -111,6 +116,13 @@ export class CoursesView extends Vue {
         headerText: 'Update Course'
       }
     )
+
+
+    if (shouldUpdate)
+      this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
+        this.allCourses = this.courses
+        this.isLoading = false
+      })
   }
 
   public async openDeleteCourseModal (course: Course): Promise<void> {

@@ -145,18 +145,26 @@ export class CreateGroupModal extends ModalWrapper {
   /**
    * Handles submitting of form
    */
-  public onSubmit (): void {
+  public async onSubmit (): Promise<void> {
     this.isLoading = true
-    if (this.isUpdateMode) {
-      this.updateGroup({ group: this.groupData as Group, id: this.modalData.id }).then(() => {
-        this.isLoading = false
-        this.closeModal(null)
-      })
-    } else {
-      this.createGroup(this.groupData).finally(() => {
-        this.isLoading = false
-        this.closeModal(null)
-      })
+
+    try {
+      if (this.isUpdateMode) {
+        await this.updateGroup({
+          group: {
+            ...this.groupData,
+            teacher: (this.groupData.teacher as Teacher).id
+          },
+          id: this.modalData.id })
+      } else {
+        await this.createGroup(this.groupData)
+      }
+
+      this.closeModal(true)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      this.isLoading = false
     }
   }
 

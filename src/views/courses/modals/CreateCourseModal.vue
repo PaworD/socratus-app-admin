@@ -4,21 +4,21 @@
       <div class="input-group">
         <label for="course-name">Write name for the course</label>
         <STextInput placeholder="Course name" flat size="medium" v-model="payload.name"
-                    id="course-name" required />
+                    id="course-name" required/>
       </div>
 
       <div class="input-group">
         <label for="course-price">Define price for the course</label>
         <money class="Input__input --flat --medium" placeholder="Price"
                v-model.lazy="payload.price"
-               id="course-price" v-bind="moneyMask" required />
+               id="course-price" v-bind="moneyMask" required/>
       </div>
 
       <div class="input-group">
         <label for="course-level">
           Define level for the course (Beginner)
         </label>
-        <SDropdown value="Select level" :list="levels" @on-select="selectLevel" id="course-level" />
+        <SDropdown value="Select level" :list="levels" @on-select="selectLevel" id="course-level"/>
       </div>
 
 
@@ -30,16 +30,16 @@
 
 <script lang="ts">
 
-import { Component } from "vue-property-decorator";
-import { Money } from 'v-money'
+import {Component} from "vue-property-decorator";
+import {Money} from 'v-money'
 
-import { ModalWrapper } from "@/components/_abstract/ModalWrapper.vue";
-import { SButton } from "@/shared/components/Button";
-import { STextInput } from "@/shared/components/TextInput/TextInput.vue";
-import { Action } from "vuex-class";
-import { Course } from "@/shared/models";
-import { DropdownItemProps, SDropdown } from '@/shared/components/Dropdown'
-import { Levels } from '@/views/courses/contracts/levels'
+import {ModalWrapper} from "@/components/_abstract/ModalWrapper.vue";
+import {SButton} from "@/shared/components/Button";
+import {STextInput} from "@/shared/components/TextInput/TextInput.vue";
+import {Action} from "vuex-class";
+import {Course} from "@/shared/models";
+import {DropdownItemProps, SDropdown} from '@/shared/components/Dropdown'
+import {Levels} from '@/views/courses/contracts/levels'
 
 @Component<CreateCourseModal>({
   name: 'CreateCourseModal',
@@ -87,7 +87,7 @@ export class CreateCourseModal extends ModalWrapper {
 
   public isLoading = false
 
-  public get levels (): DropdownItemProps[] {
+  public get levels(): DropdownItemProps[] {
     return Object.entries(Levels).map(([label, value]) => {
       return {
         label,
@@ -100,26 +100,32 @@ export class CreateCourseModal extends ModalWrapper {
    * Sets appropriate level on selection
    * @param level
    */
-  public selectLevel (level : DropdownItemProps): void {
+  public selectLevel(level: DropdownItemProps): void {
     this.payload.level = String(level.value)
   }
 
-  public submit (): void {
-    if (this.isUpdateMode) {
-      this.isLoading = true
-      this.updateCourse({course: this.payload as Course, id: this.modalData.id}).then(() => {
-        this.isLoading = false
-        this.closeModal(null)
-      })
-    } else {
-      this.createCourse({...this.payload as Course, price: Number(this.payload.price)}).then(() => {
-        this.isLoading = false
-        this.closeModal(null)
-      })
-    }
+  public async submit(): Promise<void> {
+    this.isLoading = true
 
+    try {
+      if (this.isUpdateMode) {
+        await this.updateCourse({
+          course: this.payload as Course,
+          id: this.modalData.id
+        })
+      } else {
+        await this.createCourse({...this.payload as Course, price: Number(this.payload.price)})
+      }
+
+      this.closeModal(true)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      this.isLoading = false
+    }
   }
 
 }
+
 export default CreateCourseModal
 </script>
