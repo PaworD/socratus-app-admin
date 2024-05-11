@@ -7,7 +7,7 @@
       </SIconButton>
 
       <div class="timetable__controllers__date">
-        <SIconButton @onClick="prevDay">
+        <SIconButton @onClick="prevDay" :disabled="loading">
           <template v-slot:icon>
             <i class="bi-arrow-left"></i>
           </template>
@@ -15,7 +15,7 @@
 
         <span>{{ date.format('DD MMM') }}</span>
 
-        <SIconButton @onClick="nextDay">
+        <SIconButton @onClick="nextDay" :disabled="loading">
           <template v-slot:icon>
             <i class="bi-arrow-right"></i>
           </template>
@@ -38,7 +38,7 @@
     <!-- END | Timeline -->
 
     <!-- Timetable -->
-    <div class="timetable__table">
+    <div v-if="!loading" class="timetable__table">
       <div class="timetable__table__cell"
            v-for="(room, i) in rooms" :key="JSON.stringify(room)"
            @drop="(e) => onElementDrop(e, i)"
@@ -68,6 +68,10 @@
           <span class="timetable__table__cell__session__group_info"><strong>{{ session.group.name }}</strong></span>
         </div>
       </div>
+    </div>
+
+    <div v-else class="timetable__loading">
+      <div class="loader"></div>
     </div>
     <!-- END | Timetable -->
   </div>
@@ -109,6 +113,9 @@ export class STimetable extends Vue {
    */
   @Prop({ type: Array, required: false, default: () => [] })
   public rooms!: Timetable[]
+
+  @Prop({ type: Boolean, required: true })
+  public readonly loading!: boolean
 
   /**
    * Reference to timeline HTMLElement

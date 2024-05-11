@@ -1,7 +1,7 @@
 <template>
   <div class="groupStudents">
     <div class="groupStudents__lead">
-      <h4>{{ _group.name }}</h4>
+      <small>Student list of: {{ _group.name }}</small>
       <div class="students__lead__options">
         <SIconButton @onClick="openAddStudentModal">
           <template v-slot:icon>

@@ -1,5 +1,5 @@
 <template>
-  <div class="attendance__controllers">
+  <div v-if="booted" class="attendance__controllers">
     <div class="attendance__controllers__btns">
       <SIconButton>
         <template>
@@ -15,7 +15,11 @@
     </div>
 
     <div class="attendance__controllers__intervals">
-      <SDropdown :list="intervals" value="Select interval" theme="light" @on-select="onIntervalChange" />
+      <SDropdown
+          :list="[]"
+          :value="interval"
+          id="intervals-controller"
+      />
     </div>
   </div>
 </template>
@@ -35,12 +39,15 @@ import {
 /**
  * @author Javlon Khalimjonov <khalimjnaov.code@gmail.com>
  */
-@Component({
+@Component<AttendanceControllers>({
   name: 'Controllers',
   components: {
     STextInput,
     SDropdown,
     SIconButton
+  },
+  mounted() {
+    this.booted = true
   }
 })
 export class AttendanceControllers extends Vue {
@@ -49,14 +56,16 @@ export class AttendanceControllers extends Vue {
    */
   public interval = AttendanceInterval.WEEK
 
+  public booted = false
+
   /**
    * Intervals
    */
   public get intervals (): DropdownItemProps[] {
     return [...Object.entries(AttendanceInterval).map(([key, value]) => {
       return {
-        label: String(key),
-        value: String(value)
+        label: key,
+        value: value
       }
     })]
   }

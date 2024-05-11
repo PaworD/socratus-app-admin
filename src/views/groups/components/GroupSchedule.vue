@@ -1,16 +1,19 @@
 <template>
   <div class="groupSchedule">
     <div class="groupSchedule__lead">
-      <div>
-        <SIconButton borderless @onClick="() => { this.$router.go(-1) }">
-          <template v-slot:icon>
-            <i class="bi-arrow-left"></i>
-          </template>
-          Back to <strong>Groups</strong>
-        </SIconButton>
-      </div>
+<!--      <div>-->
+<!--        <SIconButton borderless @onClick="() => { this.$router.go(-1) }">-->
+<!--          <template v-slot:icon>-->
+<!--            <i class="bi-arrow-left"></i>-->
+<!--          </template>-->
+<!--          Back to <strong>Groups</strong>-->
+<!--        </SIconButton>-->
+<!--      </div>-->
 
       <SIconButton @onClick="openCreateScheduleModal">
+        <template v-slot:icon>
+          <i class="bi-plus"></i>
+        </template>
         Create
       </SIconButton>
     </div>

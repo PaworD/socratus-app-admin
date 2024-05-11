@@ -1,6 +1,6 @@
 <template>
   <button class="icon-button" :class="[ `--${theme}`,{'--borderless': borderless}]"
-          @click="onClick">
+          @click="onClick" v-bind="{ disabled }">
     <slot v-if="$slots.icon" name="icon"></slot>
     <slot></slot>
   </button>
@@ -19,6 +19,9 @@ export class SIconButton extends Vue {
 
   @Prop({ type: String, required: false, default: ButtonTheme.TRANSPARENT })
   public readonly theme!: ButtonTheme
+
+  @Prop({ type: Boolean, required: false })
+  public readonly disabled!: boolean
 
   public onClick (): void {
     this.$emit('onClick')
@@ -43,6 +46,11 @@ export default SIconButton
   will-change: background;
 
   cursor: pointer;
+
+  &:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 
   &.--transparent {
     background-color: transparent;

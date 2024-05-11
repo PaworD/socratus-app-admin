@@ -10,6 +10,7 @@
       <h1>Timetable</h1>
       <div class="dashboard__inner__timetable">
         <STimetable :rooms="timetable"
+                    :loading="isLoading"
                     @onDateChanged="onDateChanged"
                     @onLessonSelected="onLessonSelected" />
       </div>
@@ -33,7 +34,7 @@ import DashboardCard from './components/DashboardCard.vue'
   components: { SCard, STimetable, DashboardCard },
 
   mounted (): void {
-    this.fetchTimetable()
+    this.load()
   }
 })
 export class Dashboard extends Vue {
@@ -43,13 +44,24 @@ export class Dashboard extends Vue {
   @Getter
   public readonly timetable!: Timetable[]
 
+  public isLoading = false
+
   public onDateChanged (date: string): void {
     const formattedDate = moment(date).format('DD-MM-yyyy')
-    this.fetchTimetable(formattedDate)
+    this.load(formattedDate)
   }
 
   public onLessonSelected (lesson: Schedule): void {
     //
+  }
+
+  public async load (date?: string): Promise<void> {
+    try {
+      this.isLoading = true
+      await this.fetchTimetable(date)
+    } finally {
+      this.isLoading = false
+    }
   }
 }
 

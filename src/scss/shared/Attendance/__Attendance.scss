@@ -1,8 +1,10 @@
 .attendance {
+
   &__wrapper {
-    width: 1300px;
+    width: 100%;
     overflow-x: scroll;
   }
+
   &__controllers {
     padding: 1rem 0;
 
@@ -29,8 +31,9 @@
     }
 
     &__intervals {
-      width: 15%;
+      min-width: 180px;
     }
+
   }
   &__table {
     border-collapse: collapse;
@@ -65,10 +68,10 @@
     }
 
     th {
-      padding: 1rem 2rem;
+      padding: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.1rem;
-      font-size: 0.7rem;
+      font-size: 12px;
       font-weight: 900;
 
       position: sticky;
@@ -87,14 +90,13 @@
     }
 
     td {
-      //background-color: #f4f6fb;
-      width: 100px;
+      width: 30px;
 
       &:first-of-type {
         width: auto;
         min-width: 219px;
-
-        padding: 1rem;
+        padding: .7rem 1rem;
+        font-size: 12px;
       }
 
       &:not(:first-of-type) {
@@ -116,8 +118,6 @@
     &__data_managers {
       margin: .2rem;
 
-      //opacity: 0;
-
       display: flex;
       justify-content: center;
 
@@ -125,9 +125,9 @@
       height: auto;
 
       gap: 0;
-      border-radius: 20px;
-
-      box-shadow: 0 5px 10px #e1e5ee;
+      //
+      //border-right: 1px solid #ccc;
+      //border-left: 1px solid #ccc;
 
       transition: all .3s ease-in-out;
       will-change: box-shadow;
@@ -139,12 +139,12 @@
         outline: none;
 
         margin: 0;
-        padding: .2rem .5rem;
+        padding: .1rem .3rem;
         background-color: transparent;
 
         border-radius: 20px;
 
-        font-size: 1.1rem;
+        font-size: 1rem;
 
         transition: all .3s ease-in-out;
         will-change: display;
