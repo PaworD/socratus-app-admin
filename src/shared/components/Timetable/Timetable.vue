@@ -7,19 +7,30 @@
 <!--      </SIconButton>-->
 
       <div class="timetable__controllers__date">
-        <SIconButton @onClick="prevDay" :disabled="loading">
-          <template v-slot:icon>
-            <i class="bi-arrow-left"></i>
-          </template>
-        </SIconButton>
+        <div class="timetable__controllers__date__btns">
+          <SIconButton @onClick="prevDay" :disabled="loading">
+            <template v-slot:icon>
+              <i class="bi-arrow-left"></i>
+            </template>
+          </SIconButton>
 
-        <span>{{ date.format('DD MMM') }}</span>
+          <Datepicker
+              input-class="Input__input --small --with-radius"
+              format="dd MMMM yyyy"
+              :disabled="true"
+              :placeholder="date.format('DD MMMM')"
+              @selected="pickDay"
+          >
 
-        <SIconButton @onClick="nextDay" :disabled="loading">
-          <template v-slot:icon>
-            <i class="bi-arrow-right"></i>
-          </template>
-        </SIconButton>
+          </Datepicker>
+
+          <SIconButton @onClick="nextDay" :disabled="loading">
+            <template v-slot:icon>
+              <i class="bi-arrow-right"></i>
+            </template>
+          </SIconButton>
+        </div>
+
         <SIconButton>
           <template v-slot:icon>
             <i class="bi-pencil-square"></i>
@@ -324,6 +335,11 @@ export class STimetable extends Vue {
    */
   public nextDay (): void {
     this.date.add(1, 'day')
+    this.onDateChanged()
+  }
+
+  public pickDay (date: Date): void {
+    this.date = moment(date)
     this.onDateChanged()
   }
 

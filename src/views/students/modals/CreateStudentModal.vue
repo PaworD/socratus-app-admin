@@ -1,38 +1,53 @@
 <template>
   <div class="students__modals__create">
     <form @submit.prevent="onSubmit">
-      <div class="input-group">
-        <label for="student_name">Enter first name of the student</label>
-        <STextInput placeholder="First name" size="medium" type="text" id="student_name" v-model="studentData.firstName" flat required/>
-      </div>
+      <STextInput
+          placeholder="First name"
+          size="medium"
+          type="text"
+          label="First name"
+          id="student_name"
+          v-model="studentData.firstName"
+          flat
+          required
+      />
 
-      <div class="input-group">
-        <label for="student_surname">Enter last name of the student</label>
-        <STextInput placeholder="Last name" size="medium" type="text" id="student_surname" v-model="studentData.lastName" flat required/>
-      </div>
+      <STextInput
+          placeholder="Last name"
+          label="Last name"
+          size="medium"
+          type="text"
+          id="student_surname"
+          v-model="studentData.lastName"
+          flat
+          required
+      />
 
-      <div class="input-group">
-        <label for="student_phone">Enter phone of the student</label>
-        <STextInput
-            placeholder="Phone"
-            size="medium"
-            type="phone"
-            :errors="errors && errors['phone'] ? errors['phone'] : []"
-            id="student_phone"
-            v-model="studentData.phone"
-            flat
-            required/>
-      </div>
+      <STextInput
+          placeholder="Phone"
+          size="medium"
+          type="phone"
+          label="Phone number"
+          :errors="errors && errors.phone ? errors.phone : []"
+          id="student_phone"
+          v-model="studentData.phone"
+          flat
+          required/>
 
-      <div class="input-group">
-        <label for="student_email">Enter email of the student</label>
-        <STextInput placeholder="Email" size="medium" type="email" id="student_email" v-model="studentData.email" flat/>
-      </div>
+      <STextInput
+          placeholder="Email"
+          label="Enter email of the student"
+          size="medium"
+          type="email"
+          id="student_email"
+          v-model="studentData.email"
+          flat
+      />
 
       <div v-if="!isUpdateMode" class="input-group">
         <label for="student_group">Select group to add student in</label>
         <SDropdown :list="groupsList" :value="groupsList[0].label" placeholder="Student group"
-                    id="student_group" @on-select="onGroupSelect" multiselect/>
+                   id="student_group" @on-select="onGroupSelect" multiselect/>
         <div class="students__modals__create__groups">
           <SBadge v-for="group in selectedGroups" :key="group" :title="String(group.label)"
                   theme="light" @close="removeGroup(group)" closable/>
@@ -47,11 +62,11 @@
 
 <script lang="ts">
 
-import { ModalWrapper } from '@/components/_abstract/ModalWrapper.vue'
-import { Component } from 'vue-property-decorator'
-import { SBadge, STextInput, SDropdown, SButton, DropdownItemProps } from '@/shared/components'
-import { CreateStudentIntention, Group, Student, StudentUpdateIntention } from '@/shared/models'
-import { Action, Getter } from 'vuex-class'
+import {ModalWrapper} from '@/components/_abstract/ModalWrapper.vue'
+import {Component} from 'vue-property-decorator'
+import {SBadge, STextInput, SDropdown, SButton, DropdownItemProps} from '@/shared/components'
+import {CreateStudentIntention, Group, Student, StudentData, StudentUpdateIntention} from '@/shared/models'
+import {Action, Getter} from 'vuex-class'
 
 @Component<CreateStudentModal>({
   name: 'CreateStudentModal',
@@ -62,7 +77,7 @@ import { Action, Getter } from 'vuex-class'
     SBadge
   },
 
-  mounted (): void {
+  mounted(): void {
     this.fetchGroups()
 
     if (this.isUpdateMode) {
@@ -74,7 +89,7 @@ import { Action, Getter } from 'vuex-class'
         groups: []
       }
     }
-}
+  }
 })
 export class CreateStudentModal extends ModalWrapper {
 
@@ -92,8 +107,8 @@ export class CreateStudentModal extends ModalWrapper {
 
   public isLoading = false
   public selectedGroups: DropdownItemProps[] = []
-  public errors: Record<string, string[]> | null = null
-  public studentData : CreateStudentIntention = {
+  public errors: Record<keyof StudentData, string[]> | null = null
+  public studentData: CreateStudentIntention = {
     email: '',
     firstName: '',
     groups: [],
@@ -101,22 +116,22 @@ export class CreateStudentModal extends ModalWrapper {
     phone: ''
   }
 
-  public get groupsList (): DropdownItemProps[] {
+  public get groupsList(): DropdownItemProps[] {
     if (!this.groups) {
       return []
     }
 
     return [
-      { label: 'Choose groups...', value: '' },
+      {label: 'Choose groups...', value: ''},
       ...this.groups.map((group) => {
-      return {
-        label: String(group.name),
-        value: String(group.id)
-      }
-    })]
+        return {
+          label: String(group.name),
+          value: String(group.id)
+        }
+      })]
   }
 
-  public onGroupSelect (item: DropdownItemProps): void {
+  public onGroupSelect(item: DropdownItemProps): void {
     if (typeof this.studentData.groups === 'undefined') {
       return
     }
@@ -125,8 +140,9 @@ export class CreateStudentModal extends ModalWrapper {
     this.selectedGroups.push(item)
   }
 
-  public async onSubmit (): Promise<void> {
+  public async onSubmit(): Promise<void> {
     try {
+      this.errors = null
       this.isLoading = true
 
       if (this.isUpdateMode) {
@@ -150,7 +166,7 @@ export class CreateStudentModal extends ModalWrapper {
     }
   }
 
-  public removeGroup (group: DropdownItemProps): void {
+  public removeGroup(group: DropdownItemProps): void {
     if (typeof this.studentData.groups === 'undefined') {
       return
     }
@@ -164,5 +180,6 @@ export class CreateStudentModal extends ModalWrapper {
   }
 
 }
+
 export default CreateStudentModal
 </script>

@@ -32,7 +32,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Action, Getter } from 'vuex-class'
 
-import { Admin, AnyObject, School } from '@/shared/models'
+import {Admin, AnyObject, School, SchoolData} from '@/shared/models'
 
 import { DropdownItemProps, SButton, SDropdown, STextInput } from '@/shared/components'
 import {AnyResponse} from "@/services";
@@ -64,7 +64,7 @@ export class AuthCard extends Vue {
   public errorMessage: string | null = null
   public selectedSchool = 'Select school'
   public isLoading = false
-  public errors: Record<string, string>[] = []
+  public errors: Record<string, string> | null = null
 
   public payload: { phone: string; password: string, tenant: string } = {
     phone: '',
@@ -93,8 +93,10 @@ export class AuthCard extends Vue {
     if (!this.payload) {
       return
     }
+
     try {
       this.errorMessage = null
+      this.errors = null
       this.isLoading = true
       await this.signInWith(this.payload)
       await this.init()

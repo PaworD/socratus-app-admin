@@ -1,8 +1,11 @@
 <template>
   <div class="Input">
-    <label :for="id" class="sr-only">{{ hasLabel ? label : placeholder }}</label>
+    <label v-if="hasLabel" :for="id">
+      {{ label }}
+      <span v-if="required" class="asterisk">*</span>
+    </label>
     <input v-bind="{ type, required, placeholder, value, id }" @input="updateSelf"
-           :class="['Input__input', { '--flat' : flat, '--with-radius' : withRadius }, `--${size}` ]">
+           :class="['Input__input', { '--flat' : flat, '--with-radius' : withRadius, '--hasErrors': hasErrors }, `--${size}` ]">
 
     <div v-if="hasErrors" class="Input__errors">
       <span v-for="error in errors" :key="error">{{ error }}</span>
@@ -30,7 +33,7 @@ export class STextInput extends Vue {
   /**
    * @see TextInputProps.label
    */
-  @Prop({ type: Boolean, required: false })
+  @Prop({ type: String, required: false })
   private readonly label?: TextInputProps['label']
 
   /**

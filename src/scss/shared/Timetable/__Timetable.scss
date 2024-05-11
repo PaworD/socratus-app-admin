@@ -11,12 +11,47 @@
 
     padding:  0 0 1rem 0;
 
+    .Input__input {
+      border-width: 1px;
+      border-color: $dark-500;
+      font-size: 14px !important;
+      padding: .4rem !important;
+      cursor: pointer;
+
+      &:focus {
+        border-width: 1px !important;
+      }
+
+      &:hover {
+        background: lighten($dark-500, 11%);
+      }
+
+      &::placeholder {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .vdp-datepicker__calendar {
+      right: 0;
+      top: 45px;
+    }
+
     &__date {
       display: flex;
       align-items: center;
       justify-content: center;
 
       gap: 1rem;
+
+      &__btns {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: .4rem;
+      }
     }
   }
 
