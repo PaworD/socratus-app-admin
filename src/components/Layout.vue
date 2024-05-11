@@ -1,10 +1,9 @@
 <template>
   <div class="layout">
     <div class="layout__sidebar">
-      <slot name="sidebar">
-
-      </slot>
+      <slot name="sidebar" />
     </div>
+
     <div class="layout__content">
       <div class="layout__content__header">
         <div class="layout__content__header__search">
@@ -23,10 +22,12 @@
           </SIconButton>
         </div>
       </div>
+
       <div class="layout__content__content">
         <slot name="content"></slot>
       </div>
-      <SettingsBar v-if="isSettingsBarOpen" @close="toggleSettingsBar" />
+
+      <SettingsBar :open="isSettingsBarOpen" @close="toggleSettingsBar"/>
     </div>
   </div>
 </template>

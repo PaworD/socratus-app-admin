@@ -1,3 +1,14 @@
+
+.SettingsBar {
+  &.--open {
+    .overlay {
+      display: block;
+    }
+    .settings {
+      transform: translateX(0);
+    }
+  }
+}
 .settings {
   width: 400px;
   height: 100vh;
@@ -13,6 +24,10 @@
   right: 0;
 
   box-shadow: 0 7px 30px 10px rgba(156, 165, 168, 0.5);
+
+  transform: translateX(100%);
+
+  transition: .2s ease-out;
 }
 
 .overlay {
@@ -29,4 +44,5 @@
   opacity: .5;
 
   z-index: 9;
+  display: none;
 }

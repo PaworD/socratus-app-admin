@@ -67,8 +67,8 @@ export class AuthCard extends Vue {
   public errors: Record<string, string>[] = []
 
   public payload: { phone: string; password: string, tenant: string } = {
-    phone: '+998903001105',
-    password: 'Hello0909',
+    phone: '',
+    password: '',
     tenant: ''
   }
 

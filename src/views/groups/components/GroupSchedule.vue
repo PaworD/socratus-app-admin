@@ -20,7 +20,7 @@
 
 <script lang="ts">
 
-import { Component, PropSync, Vue } from 'vue-property-decorator'
+import {Component, PropSync, Vue, Watch} from 'vue-property-decorator'
 import { SCalendar, SIconButton } from '@/shared/components'
 import CreateGroupScheduleModal from '@/views/groups/modals/CreateGroupScheduleModal.vue'
 import { ModalSize } from '@/shared/abstract'
@@ -33,16 +33,9 @@ import UpdateLessonModal from '@/views/groups/modals/UpdateLessonModal.vue'
   components: {
     SCalendar,
     SIconButton
-  },
-
-  mounted (): void {
-    this.getGroupSchedule({ group: this._group.id }).then(events => {
-      this.events = events
-    })
   }
 })
 export class GroupSchedule  extends Vue {
-
   @PropSync( 'group', { type: Object, required: false, default: () => ({}) })
   public _group!: Group
 
@@ -83,6 +76,13 @@ export class GroupSchedule  extends Vue {
           persistent: true
         }
     )
+  }
+
+  @Watch('group')
+  protected onGroup (): void {
+    this.getGroupSchedule({ group: this._group.id }).then(events => {
+      this.events = events
+    })
   }
 }
 export default GroupSchedule

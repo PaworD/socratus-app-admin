@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="SettingsBar" :class="{ '--open': open }">
     <div class="overlay"></div>
     <div class="settings">
 
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
+import {Component, Prop, Vue} from "vue-property-decorator"
 
 import { SIconButton, SAccordion } from '@/shared/components'
 
@@ -57,7 +57,10 @@ import { Resources, Rooms, Settings } from '@/views/root'
     Settings
   }
 })
-export class SettingsBar extends Vue{
+export class SettingsBar extends Vue {
+  @Prop({ type: Boolean, required: true })
+  public readonly open!: boolean
+
   public close (): void {
     this.$emit('close')
   }

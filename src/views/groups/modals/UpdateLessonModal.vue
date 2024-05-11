@@ -1,7 +1,7 @@
 <template>
   <div class="groups__modals__update-lesson">
     <div class="groups__modals__update-lesson__date">
-      <div class="form-group">
+      <div class="input-group">
         <h5>Scheduled date:</h5>
         <Datepicker input-class="input input--medium input--flat" v-model="date"
                     format="dd-MM-yyyy" id="startDate" placeholder="Date" />
@@ -44,9 +44,9 @@
 
 import { Component } from 'vue-property-decorator'
 import ModalWrapper from '@/components/_abstract/ModalWrapper.vue'
+import Datepicker from 'vuejs-datepicker'
 
 import { Action, Getter } from 'vuex-class'
-import Datepicker from 'vuejs-datepicker'
 import VueTimePicker from 'vue2-timepicker'
 
 import { AnyObject, Room, Teacher } from '@/shared/models'
