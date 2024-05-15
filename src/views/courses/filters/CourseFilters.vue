@@ -112,7 +112,6 @@ export class CoursesFilters extends Filters<Course> {
       this._items = this.originalList.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
     }
   }
-
 }
 export default CoursesFilters
 </script>

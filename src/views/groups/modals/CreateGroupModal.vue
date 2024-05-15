@@ -81,7 +81,6 @@ import ColorPicker from '@/components/ColorPicker.vue'
   }
 })
 export class CreateGroupModal extends ModalWrapper {
-
   @Action
   private createGroup!: (payload: Group) => Promise<void>
   @Action
@@ -152,7 +151,10 @@ export class CreateGroupModal extends ModalWrapper {
         await this.updateGroup({
           group: {
             ...this.groupData,
-            teacher: this.groupData.teacher
+            teacher:
+                typeof this.groupData.teacher === 'number' ?
+                    this.groupData.teacher :
+                    this.groupData.teacher.id
           },
           id: this.modalData.id
         })

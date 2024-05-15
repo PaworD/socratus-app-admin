@@ -2,23 +2,35 @@
   <div class="courses__modals__create">
     <form @submit.prevent="submit">
       <div class="input-group">
-        <label for="course-name">Write name for the course</label>
+        <label for="course-name">Write name of the course</label>
         <STextInput placeholder="Course name" flat size="medium" v-model="payload.name"
                     id="course-name" required/>
       </div>
 
       <div class="input-group">
-        <label for="course-price">Define price for the course</label>
+        <label for="course-price">Define price of the course</label>
         <money class="Input__input --flat --medium" placeholder="Price"
                v-model.lazy="payload.price"
                id="course-price" v-bind="moneyMask" required/>
       </div>
 
-      <div class="input-group">
+      <div v-if="!isUpdateMode" class="input-group">
         <label for="course-level">
-          Define level for the course (Beginner)
+          Define level of the course
         </label>
         <SDropdown value="Select level" :list="levels" @on-select="selectLevel" id="course-level"/>
+      </div>
+
+      <div v-else class="input-group">
+        <label for="course-level">
+          Selected level ({{ this.payload.level ? this.payload.level : '---' }})
+        </label>
+        <SDropdown
+            :value="payload.level ? payload.level : 'Select level'"
+            :list="levels"
+            @on-select="selectLevel"
+            id="course-level"
+        />
       </div>
 
 
@@ -66,6 +78,8 @@ export class CreateCourseModal extends ModalWrapper {
 
   @Action
   public updateCourse!: (payload: { course: Course, id: number }) => Promise<void>
+
+  public Levels = Levels
 
   public payload: {
     name: string

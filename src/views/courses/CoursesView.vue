@@ -3,12 +3,15 @@
     <div class="courses__lead">
       <h2>Courses List</h2>
       <div class="courses__lead__btns">
-        <SIconButton @onClick="toggleFiltersBar" :class="{ '--active' : isFiltersActive }">
-          <template v-slot:icon>
-            <i class="bi-filter"></i>
-          </template>
-          Filters
-        </SIconButton>
+        <STextInput
+            type="text"
+            :errors="[]"
+            size="small"
+            flat
+            with-radius
+            placeholder="Search course..."
+            v-model="searchQuery"
+        />
         <SIconButton @onClick="openCreateCourseModal">
           <template v-slot:icon>
             <i class="bi-plus-circle"></i>
@@ -16,11 +19,10 @@
         </SIconButton>
       </div>
     </div>
-    <CoursesFilters v-if="isFiltersActive" :items.sync="allCourses" />
     <!--    <div v-if="allCourses && !isLoading" class="courses__list">-->
     <transition-group name="flip-complete" tag="div" class="courses__list"
                       v-if="allCourses && !isLoading" appear>
-      <SingleCourse v-for="course in courses" :key="course.id" :course="course"
+      <SingleCourse v-for="course in allCourses" :key="course.id" :course="course"
                     @updateCourse="openUpdateCourseModal" @deleteCourse="openDeleteCourseModal" />
     </transition-group>
     <!--    </div>-->
@@ -32,12 +34,12 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'vue-property-decorator'
+import {Component, Vue, Watch} from 'vue-property-decorator'
 import { Action, Getter } from 'vuex-class'
 
 import { AnyObject, Course } from '@/shared/models'
 import { ModalSize } from '@/shared/abstract'
-import { SBadge, SButton, SCard, SIconButton, SImage, SSkeleton } from '@/shared/components'
+import { SBadge, SButton, SCard, SIconButton, SImage, SSkeleton, STextInput } from '@/shared/components'
 
 import { SingleCourse } from './components/Course.vue'
 import { CreateCourseModal } from './modals/CreateCourseModal.vue'
@@ -57,7 +59,8 @@ import CoursesFilters from './filters/CourseFilters.vue'
     CoursesFilters,
     SSkeleton,
     SImage,
-    SingleCourse
+    SingleCourse,
+    STextInput
   },
 
   mounted (): void {
@@ -78,6 +81,7 @@ export class CoursesView extends Vue {
   public isFiltersActive = false
 
   public isLoading = false
+  public searchQuery = ''
 
   public get queryParams (): AnyObject {
     return this.$route.query
@@ -146,6 +150,14 @@ export class CoursesView extends Vue {
 
   public toggleFiltersBar (): void {
     this.isFiltersActive = !this.isFiltersActive
+  }
+
+  @Watch('searchQuery')
+  protected onSearch(val: string): void {
+    console.log(val)
+    this.allCourses = [...this.courses].filter((course) => {
+      return course.name.indexOf(val) !== -1
+    })
   }
 }
 
