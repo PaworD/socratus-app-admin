@@ -29,6 +29,7 @@ export class CourseService extends AbstractService<Course> {
     async create(payload: Course): Promise<string | Course> {
         try {
             const response = await this.http.post(this.url, decomposeModel(payload))
+            console.log(response.data)
             return response.data.message
         } catch (e) {
             throw new Error(e.response.data.message)
@@ -71,7 +72,7 @@ export class CourseService extends AbstractService<Course> {
     async update(id: number, payload: Partial<Course>): Promise<string | Course> {
         try {
             const response = await this.http.put(this.url + `/${id}`, decomposeModel(payload))
-            return response.data
+            return response.data.message
         } catch (e) {
             return e.toString()
         }

@@ -33,7 +33,7 @@ export class CourseModule extends VuexModule {
             const createdCourse = await this.courseService.create(payload)
             this.toastService.show(true, String(createdCourse), ToastType.SUCCESS, 100000)
         } catch (e) {
-            this.toastService.show(true, e, ToastType.ERROR, 200)
+            this.toastService.show(true, e.message, ToastType.ERROR, 200)
         }
     }
 

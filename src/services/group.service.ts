@@ -64,7 +64,7 @@ export class GroupService extends AbstractService<Group> {
     public async update(id: number, payload: Partial<Group>): Promise<string | Group> {
         try {
             const response = await this.http.patch(this.url + `/${id}`, decomposeModel(payload))
-            return response.data
+            return response.data.message
         } catch (e) {
             throw new Error(e.toString())
         }
