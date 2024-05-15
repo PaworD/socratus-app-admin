@@ -1,14 +1,17 @@
 <template>
   <div class="courses__modals__create">
     <form @submit.prevent="submit">
-      <div class="input-group">
-        <label for="course-name">Write name of the course</label>
-        <STextInput placeholder="Course name" flat size="medium" v-model="payload.name"
-                    id="course-name" required/>
-      </div>
+        <STextInput
+            label="Write name of the course"
+            placeholder="Course name"
+            flat size="medium"
+            v-model="payload.name"
+            id="course-name"
+            required
+        />
 
       <div class="input-group">
-        <label for="course-price">Define price of the course</label>
+        <label for="course-price">Define price of the course *</label>
         <money class="Input__input --flat --medium" placeholder="Price"
                v-model.lazy="payload.price"
                id="course-price" v-bind="moneyMask" required/>
