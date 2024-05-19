@@ -18,18 +18,14 @@
     background-color: #30475EE6;
 
     &__logo {
-
-      width: 3rem;
-      height: 3rem;
+      width: 5rem;
+      height: auto;
 
       img {
         width: 100%;
-        height: 100%;
-
+        height: auto;
         object-fit: cover;
-
         border-radius: 7px;
-
         box-shadow: 0px 0px 7px -3px $light;
       }
     }
@@ -46,6 +42,7 @@
 
       small {
         color: inherit;
+        font-size: 12px;
       }
     }
   }

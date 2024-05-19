@@ -5,7 +5,7 @@
     </div>
     <div class="sidebar__organization__info">
       <p>{{ organization.name }}</p>
-      <small>{{ organization.address.split(' ')[1] }} {{organization.address.split(' ')[2]}}</small>
+      <small>Claus-Krämer-Ring 36, Bramsche</small>
     </div>
   </div>
 </template>
