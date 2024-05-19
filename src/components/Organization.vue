@@ -4,7 +4,7 @@
       <img src="@/assets/org.png" alt="LOGO">
     </div>
     <div class="sidebar__organization__info">
-      <p>{{ organization.name }}</p>
+      <p>{{ organization.label }}</p>
       <small>Claus-Krämer-Ring 36, Bramsche</small>
     </div>
   </div>

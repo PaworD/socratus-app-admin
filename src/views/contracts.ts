@@ -4,4 +4,5 @@ export interface Organization extends Identifier {
     name: string
     address: string
     logo: Image
+    label: string
 }
