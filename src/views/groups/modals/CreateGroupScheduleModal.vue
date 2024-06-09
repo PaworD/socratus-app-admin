@@ -107,8 +107,8 @@ export class CreateGroupScheduleModal extends ModalWrapper {
   public error: string | null = null
 
   public payload: ScheduleIntention = {
-    startDate: moment().format('DD-MM-yyyy'),
-    endDate: moment().format('DD-MM-yyyy'),
+    startDate: moment().toDate(),
+    endDate: moment().toDate(),
     roomId: 'Select room',
     days: {
       Mon: {
