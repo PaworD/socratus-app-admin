@@ -2,8 +2,9 @@ import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
 import {Inject} from "inversify-props";
 
-import { TeacherService, ToastService, ToastType, TYPES } from '@/services'
-import { AnyObject, Pageable, Teacher } from '@/shared/models'
+import {TeacherService, ToastService, ToastType, TYPES} from '@/services'
+import {AnyObject, Pageable, Teacher} from '@/shared/models'
+import {ValidationError} from "@/shared/helpers";
 
 @Module
 export class TeacherModule extends VuexModule {
@@ -15,20 +16,24 @@ export class TeacherModule extends VuexModule {
 
     public _teachers: Teacher[] = []
 
-    @Action
+    @Action({ rawError: true })
     public async createTeacher(teacher: Teacher): Promise<void> {
         try {
             const message = await this.teacherService.create(teacher)
             this.toastService.show(true, String(message), ToastType.SUCCESS, 200)
         } catch (e) {
-            this.toastService.show(true, e, ToastType.ERROR, 200)
+            if (e instanceof ValidationError) {
+                throw e
+            } else {
+                this.toastService.show(true, e, ToastType.ERROR, 200)
+            }
         }
     }
 
     @Action
     public async deleteTeacher(id: number): Promise<void> {
         try {
-            const message= await this.teacherService.delete(id)
+            const message = await this.teacherService.delete(id)
             this.toastService.show(true, message, ToastType.SUCCESS, 200)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
@@ -49,7 +54,7 @@ export class TeacherModule extends VuexModule {
     }
 
     @Mutation
-    public setTeachers (teachers: Teacher[]): void {
+    public setTeachers(teachers: Teacher[]): void {
         this._teachers = teachers
     }
 

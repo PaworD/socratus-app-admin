@@ -1,4 +1,4 @@
-import { AbstractService } from "@/shared/abstract";
+import {AbstractService} from "@/shared/abstract";
 
 import {
     Teacher,
@@ -7,9 +7,9 @@ import {
 import {
     composeModel, decomposeModel,
     hasResponseFailed,
-    resolveWithError
+    resolveWithError, ValidationError
 } from '@/shared/helpers'
-import { injectable } from 'inversify-props'
+import {injectable} from 'inversify-props'
 
 @injectable()
 export class TeacherService extends AbstractService<Teacher> {
@@ -23,15 +23,18 @@ export class TeacherService extends AbstractService<Teacher> {
     public async create(payload: Teacher): Promise<Teacher | string> {
         try {
             const _response = await this.http.post(this.url, decomposeModel(payload))
-
-            if(hasResponseFailed(_response)) {
+            if (hasResponseFailed(_response)) {
+                console.log('Here')
                 return resolveWithError(_response)
             }
 
-            return _response.data.data.message
-
+            return _response.data.message
         } catch (e) {
-            throw new Error(e)
+            if (typeof e.response.data.message === 'string') {
+                throw new Error(e.response.data.message)
+            }
+
+            throw new ValidationError(e)
         }
     }
 
@@ -44,11 +47,14 @@ export class TeacherService extends AbstractService<Teacher> {
         }
     }
 
-    public async get(query?: AnyObject): Promise<{ results: Teacher[]; meta: Pageable } | string | { results: Teacher; meta: Pageable }> {
+    public async get(query?: AnyObject): Promise<{ results: Teacher[]; meta: Pageable } | string | {
+        results: Teacher;
+        meta: Pageable
+    }> {
         try {
-            const _response = await this.http.get(this.url, { params: {...query} })
+            const _response = await this.http.get(this.url, {params: {...query}})
 
-            if(hasResponseFailed(_response)) {
+            if (hasResponseFailed(_response)) {
                 return resolveWithError(_response)
             }
 
@@ -59,8 +65,8 @@ export class TeacherService extends AbstractService<Teacher> {
             }
 
             return {
-               results: composeModel<Teacher>(_response.data.data.results) as Teacher[],
-               meta
+                results: composeModel<Teacher>(_response.data.data.results) as Teacher[],
+                meta
             }
         } catch (e) {
             return e.toString()

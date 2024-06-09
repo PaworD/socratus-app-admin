@@ -21,7 +21,7 @@ export class SRadio extends Vue {
   @Prop({ type: String, required: true })
   private readonly value!: string
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: [String, Number], required: true })
   private readonly model!: string
 
   public get radioValue (): string {

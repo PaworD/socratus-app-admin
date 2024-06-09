@@ -91,8 +91,10 @@ export class TeachersView extends Vue {
       size: ModalSize.ExtraSmall,
       persistent: false,
       headerText: 'Create Teacher'
-    }).then(() => {
-      this.fetchTeachers()
+    }).then((success) => {
+      if (success) {
+        this.fetchTeachers()
+      }
     })
   }
 

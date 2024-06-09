@@ -1,29 +1,50 @@
 <template>
   <div class="students__modals__create">
     <form @submit.prevent="onSubmit">
-      <div class="input-group">
-        <label for="teacher_name">Enter first name of the teacher</label>
-        <STextInput placeholder="First name" size="medium" type="text" id="teacher_name"
-                    v-model="teacherData.firstName" flat required/>
-      </div>
+      <STextInput
+          placeholder="First name"
+          size="medium"
+          type="text"
+          label="First name"
+          id="teacher_name"
+          v-model="teacherData.firstName"
+          flat
+          required
+      />
 
-      <div class="input-group">
-        <label for="teacher_surname">Enter last name of the teacher</label>
-        <STextInput placeholder="Last name" size="medium" type="text" id="teacher_surname"
-                    v-model="teacherData.lastName" flat required/>
-      </div>
+      <STextInput
+          placeholder="Last name"
+          size="medium"
+          type="text"
+          label="Last name"
+          id="teacher_surname"
+          v-model="teacherData.lastName"
+          flat
+          required
+      />
 
-      <div class="input-group">
-        <label for="teacher_phone">Enter phone of the teacher</label>
-        <STextInput placeholder="Phone" size="medium" type="phone" id="teacher_phone"
-                    v-model="teacherData.phone" flat required/>
-      </div>
+      <STextInput
+          placeholder="Phone"
+          size="medium"
+          type="number"
+          label="Phone"
+          id="teacher_phone"
+          :errors="errors && errors.phone ? errors['phone'] : []"
+          v-model="teacherData.phone"
+          flat
+          required
+      />
 
-      <div class="input-group">
-        <label for="teacher_email">Enter email of the teacher</label>
-        <STextInput placeholder="Email" size="medium" type="email" id="teacher_email"
-                    v-model="teacherData.email" flat/>
-      </div>
+      <STextInput
+          placeholder="Email"
+          size="medium"
+          type="text"
+          label="Email"
+          :errors="errors && errors.email ? errors['email'] : []"
+          id="teacher_email"
+          v-model="teacherData.email"
+          flat
+      />
 
       <SButton :label=" isUpdateMode ? 'Update' : 'Create'" theme="secondary" size="medium"
                :isLoading="isLoading" flat/>
@@ -46,7 +67,7 @@ import {
 import {
   Teacher,
   TeacherUpdateIntention,
-  StudentUpdateIntention
+  TeacherData
 } from '@/shared/models'
 
 /**
@@ -73,14 +94,14 @@ import {
   }
 })
 export class CreateTeacherModal extends ModalWrapper {
-
   @Action
   private createTeacher!: (student: Teacher) => Promise<void>
 
   @Action
-  private updateTeacher!: (payload: { teacher: StudentUpdateIntention, id: number }) => Promise<void>
+  private updateTeacher!: (payload: { teacher: TeacherUpdateIntention, id: number }) => Promise<void>
 
   public isLoading = false
+  public errors: Record<keyof TeacherData, string[]> | null = null
 
   public teacherData : {
     email: string
@@ -94,21 +115,29 @@ export class CreateTeacherModal extends ModalWrapper {
     phone: ''
   }
 
-  public onSubmit (): void {
-    this.isLoading = true
-    if (this.isUpdateMode) {
-      this.updateTeacher({
-        teacher: this.teacherData as TeacherUpdateIntention,
-        id: this.modalData.id
-      }).then(() => {
-        this.isLoading = true
-        this.closeModal(null)
-      })
-    } else {
-      this.createTeacher(this.teacherData as Teacher).then(() => {
-        this.isLoading = true
-        this.closeModal(null)
-      })
+  public async  onSubmit (): Promise<void> {
+    try {
+      this.errors = null
+      this.isLoading = true
+
+      if (this.isUpdateMode) {
+        await this.updateTeacher({
+          teacher: this.teacherData as TeacherUpdateIntention,
+          id: this.modalData.id
+        })
+      } else {
+        await this.createTeacher({
+          ...this.teacherData,
+          email: this.teacherData.email || null
+        } as Teacher)
+      }
+
+      this.closeModal(true)
+    } catch (e) {
+      console.log('Error occured', e)
+      this.errors = e.payload
+    } finally {
+      this.isLoading = false
     }
   }
 }
