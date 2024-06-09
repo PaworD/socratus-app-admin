@@ -238,9 +238,6 @@ export class SCalendar extends Vue {
       let weekDay = this.getWeekDay(countDayInCurrentMonth);
       let formattedDay = this.formattingDay(day);
 
-      console.log(this.filteredEventListForSelectedDate(moment(formattedCurrentYear +
-          formattedCurrentMonth + formattedDay).format('DD-MM-YYYY')))
-
       dateList[countDayInCurrentMonth] = {
         key: countDayInCurrentMonth,
         dayNumber: formattedDay,

@@ -8,8 +8,9 @@
   overflow: hidden;
 
   &__content {
-    width: 100%;
+    width: calc(100vw - 15%);
     height: 100vh;
+    overflow-x: hidden;
 
     display: flex;
     flex-flow: column;

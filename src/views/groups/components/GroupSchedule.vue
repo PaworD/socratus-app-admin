@@ -1,15 +1,6 @@
 <template>
   <div class="groupSchedule">
     <div class="groupSchedule__lead">
-<!--      <div>-->
-<!--        <SIconButton borderless @onClick="() => { this.$router.go(-1) }">-->
-<!--          <template v-slot:icon>-->
-<!--            <i class="bi-arrow-left"></i>-->
-<!--          </template>-->
-<!--          Back to <strong>Groups</strong>-->
-<!--        </SIconButton>-->
-<!--      </div>-->
-
       <SIconButton @onClick="openCreateScheduleModal">
         <template v-slot:icon>
           <i class="bi-plus"></i>
@@ -56,10 +47,15 @@ export class GroupSchedule  extends Vue {
         {
           hasHeader: true,
           headerText: 'Create Schedule',
-          size: ModalSize.Small,
+          size: ModalSize.FullScreen,
           persistent: true
         }
-    )
+    ).then((success) => {
+      if (success) {
+        this.getGroupSchedule({ group: this._group.id }).then(events => {
+          this.events = events
+        })      }
+    })
   }
 
   public selectDay (date: any): void {

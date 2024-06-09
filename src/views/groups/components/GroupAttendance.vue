@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SAttendanceDesk v-if="desk" :data="desk"
+    <SAttendanceDesk v-if="desk" :attendanceDesk="desk"
                      @onCheckForTrue="checkForTrue"
                      @onCheckForFalse="checkForFalse"
                      @onCheckForReason="checkForReason"

@@ -91,7 +91,6 @@ export class AddStudentModal extends ModalWrapper {
     if (this.selectedStudents.some(st => st.id === student.id)) {
       return
     }
-    console.log(student)
 
     this.selectedStudents.push(student)
   }

@@ -54,7 +54,6 @@ export class RootModule extends VuexModule {
     public async fetchSchoolSet(query?: AnyObject): Promise<void> {
         try {
             const schools = await this.rootService.get(query) as { results: School[]; meta: Pageable }
-            console.log(schools)
             this.context.commit('setSchools', schools.results)
         } catch (e) {
             throw new Error(e)

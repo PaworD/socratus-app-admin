@@ -10,7 +10,7 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from "vue-property-decorator"
-import { ButtonTheme } from '@/shared/components'
+import { ButtonTheme } from '../Button/Button.contracts'
 
 @Component<SIconButton>({name: 'SIconButton'})
 export class SIconButton extends Vue {

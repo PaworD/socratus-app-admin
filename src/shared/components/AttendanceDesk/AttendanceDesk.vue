@@ -1,7 +1,7 @@
 <template>
-  <div class="attendance">
+  <div v-if="attendanceDesk" class="attendance">
     <AttendanceControllers @onChangeInterval="onChangeInterval"/>
-    <AttendanceTable v-bind="{ data }"
+    <AttendanceTable v-bind="{ attendanceDesk }"
       @onCheckForTrue="onCheckForTrue"
       @onCheckForFalse="onCheckForFalse"
       @onCheckForReason="onCheckForReason"
@@ -13,9 +13,8 @@
 
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-import { AttendanceDesk, AttendanceInterval } from './Attendance.contracts'
-import { AttendanceTable } from './partials'
-import AttendanceControllers from '@/shared/components/AttendanceDesk/partials/Controllers.vue'
+import { AttendanceDesk, AttendanceInterval } from '@/shared/components'
+import { AttendanceTable, AttendanceControllers } from './partials'
 
 @Component({
   name: "SAttendanceDesk",
@@ -25,8 +24,8 @@ import AttendanceControllers from '@/shared/components/AttendanceDesk/partials/C
   }
 })
 export class SAttendanceDesk extends Vue {
-  @Prop(  { type: Array, required: true })
-  public readonly data!: AttendanceDesk[]
+  @Prop({ type: Object, required: false, default: null })
+  public readonly attendanceDesk!: AttendanceDesk
 
   /**
    * @see AttendanceTable.onCheckForTrue

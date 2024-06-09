@@ -76,8 +76,6 @@ export class RootService extends AbstractService<School> {
     public async search (q: string): Promise<GlobalSearchResults> {
         try {
             const response = await this.http.get(this.url + 'search', { params: { q } })
-            console.log(response.data)
-
             return composeModel<GlobalSearchResults>(response.data.data) as GlobalSearchResults
         } catch (e) {
             throw new Error(e)

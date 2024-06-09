@@ -65,8 +65,6 @@ export class UpdatePaymentModal extends ModalWrapper {
       return
     }
 
-    console.log(this.modalData)
-
     await this.updatePayment({id: this.modalData.id, payload: { ...this.payload }})
     this.closeModal(null)
   }

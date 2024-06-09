@@ -16,8 +16,10 @@
 
     <div class="attendance__controllers__intervals">
       <SDropdown
-          :list="[]"
+          theme="light"
+          :list="intervals"
           :value="interval"
+          @on-select="onIntervalChange"
           id="intervals-controller"
       />
     </div>
@@ -28,19 +30,17 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-import {
-  AttendanceInterval,
-  DropdownItemProps,
-  SDropdown,
-  SIconButton,
-  STextInput
-} from '@/shared/components'
+import { AttendanceInterval } from '../Attendance.contracts'
+
+import { SDropdown, DropdownItemProps } from "../../Dropdown"
+import { SIconButton } from "../../IconButton"
+import { STextInput } from "../../TextInput"
 
 /**
  * @author Javlon Khalimjonov <khalimjnaov.code@gmail.com>
  */
 @Component<AttendanceControllers>({
-  name: 'Controllers',
+  name: 'AttendanceControllers',
   components: {
     STextInput,
     SDropdown,

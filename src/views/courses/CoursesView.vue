@@ -154,7 +154,6 @@ export class CoursesView extends Vue {
 
   @Watch('searchQuery')
   protected onSearch(val: string): void {
-    console.log(val)
     this.allCourses = [...this.courses].filter((course) => {
       return course.name.indexOf(val) !== -1
     })

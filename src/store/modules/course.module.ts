@@ -51,7 +51,6 @@ export class CourseModule extends VuexModule {
     public async deleteCourse(id: number): Promise<void> {
         try {
             const deleteCourse = await this.courseService.delete(id)
-            console.log(deleteCourse)
             this.toastService.show(true, deleteCourse, ToastType.SUCCESS, 200)
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)

@@ -9,11 +9,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import ModalWrapper from "@/components/_abstract/ModalWrapper.vue";
 
-@Component<HelloWorld>({name: 'HelloWorld',
-  mounted(): void {
-    console.log(this.modalData)
-  }
-})
+@Component<HelloWorld>({name: 'HelloWorld'})
 export class HelloWorld extends ModalWrapper {
   @Prop() private msg!: string;
 

@@ -9,7 +9,7 @@
   &__modals {
     &__create {
       margin: 1rem;
-
+      height: calc(100% - 10%);
       display: flex;
       flex-direction: column;
 
@@ -24,34 +24,64 @@
         gap: 1rem;
 
         .input-group {
-          width: 100%;
+          width: 15%;
 
           input {
             width: 100%;
-            padding: .7rem;
+            padding: .58rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
           }
         }
       }
 
       &__days {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         gap: 1rem;
+        justify-content: flex-start;
 
         &__day {
           display: flex;
-          flex-flow: column;
+          flex-flow: row;
           gap: 1rem;
+          align-items: center;
+          justify-content: flex-start;
 
-          width: 30%;
+          width: 10%;
+
+          .checkbox {
+            min-width: 60px;
+          }
         }
 
         &__time {
           display: flex;
-          flex-flow: column;
+          flex-flow: row;
+          justify-content: flex-start;
 
           gap: .5rem;
+        }
+      }
+
+      &__footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        border-top: 1px solid $gray-10;
+        padding-top: 20px;
+
+        &__error {
+          color: $danger;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        &__actions {
+          display: flex;
+          gap: 12px;
         }
       }
     }

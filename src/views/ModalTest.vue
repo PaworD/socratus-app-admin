@@ -8,11 +8,7 @@
 import {Component ,Vue} from 'vue-property-decorator'
 
 @Component<ModalTest>({
-  name: "ModalTest.vue",
-
-  mounted(): void {
-    console.log(this.$el)
-  }
+  name: "ModalTest.vue"
 })
 export class ModalTest extends Vue {
 }
