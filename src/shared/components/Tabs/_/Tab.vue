@@ -1,5 +1,5 @@
 <template>
-  <div v-show='isActive'>
+  <div>
     <slot></slot>
   </div>
 </template>
@@ -15,9 +15,11 @@ export class STab extends Vue {
   @Prop({type: String, required: true})
   public title!: string
 
-  public isActive = false
+  @Prop({type: String, required: true})
+  public refKey!: string
 
-
+  @Prop({type: Boolean, required: true})
+  public isActive!: boolean
 }
 export default STab
 </script>

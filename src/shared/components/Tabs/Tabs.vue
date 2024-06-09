@@ -1,42 +1,40 @@
 <template>
   <div class="tabs">
     <ul class='tabs__header'>
-      <li v-for='(tab, index) in tabs' :class="[{'selected' : index === selected}]" :key='index' @click="select(index)" >
+      <li v-for='(tab, index) in tabs' :class="{'selected' : tab.refKey === activeTab}" :key='index' @click="select(tab.refKey)">
         {{ tab.title }}
       </li>
     </ul>
-    <slot></slot>
+    <slot v-bind="{ activeTab }"></slot>
   </div>
 </template>
 
 <script lang="ts">
 
-import { Vue , Component } from "vue-property-decorator";
-import { STab } from "@/shared/components/Tabs/_";
+import {Vue, Component} from "vue-property-decorator";
+import {STab} from "@/shared/components/Tabs/_";
 
 @Component<STabs>({
   name: 'STabs',
-
-  created (): void {
+  created(): void {
     this.tabs = this.$children as STab[]
   },
-
-  mounted (): void {
-    this.tabs[0].isActive = true
-  }
 })
 export class STabs extends Vue {
-  public selected = 0
   public tabs: STab[] = []
 
-  public select (index: number) {
-    this.selected = index
-
-    this.tabs.forEach((tab, i) => {
-      tab.isActive = (index === i)
+  public select(title: string): void {
+    this.$router.push({
+      path: this.$route.path,
+      hash: title
     })
   }
 
+  public get activeTab(): string {
+    return this.$route.hash.length > 0
+        ? this.$route.hash.split('#')[1]
+        : this.tabs.find(el => el.isActive)?.refKey ?? ""
+  }
 }
 export default STabs
 </script>

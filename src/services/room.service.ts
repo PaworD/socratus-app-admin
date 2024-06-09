@@ -68,7 +68,7 @@ export class RoomService extends AbstractService<Room> {
   async update(id: number ,payload: Partial<Room>): Promise<string | Room> {
     try {
       const response = await this.http.put(this.url + `/${id}`, decomposeModel(payload))
-      return response.data
+      return response.data.message
     } catch (e) {
       return e.toString()
     }

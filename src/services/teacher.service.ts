@@ -24,7 +24,6 @@ export class TeacherService extends AbstractService<Teacher> {
         try {
             const _response = await this.http.post(this.url, decomposeModel(payload))
             if (hasResponseFailed(_response)) {
-                console.log('Here')
                 return resolveWithError(_response)
             }
 

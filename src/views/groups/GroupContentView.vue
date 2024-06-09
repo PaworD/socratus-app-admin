@@ -1,8 +1,17 @@
 <template>
     <STabs>
-      <STab v-for="(tab, index) in tabs" :key="index" :title="tab.title">
-        <component :is="tab.component" v-bind="{ group }" />
-      </STab>
+      <template #default="{ activeTab }">
+        <STab
+            v-for="(tab, index) in tabs"
+            v-show="activeTab === tab.key"
+            :key="index"
+            :is-active="tab.isActive"
+            :refKey="tab.key"
+            :title="tab.title"
+        >
+          <component :is="tab.component" v-bind="{ group }" />
+        </STab>
+      </template>
     </STabs>
 </template>
 
@@ -58,14 +67,20 @@ export class GroupContentView extends Vue {
     return [
       {
         title: 'Schedule',
+        key: 'schedule',
+        isActive: true,
         component: GroupSchedule
       },
       {
         title: 'Students list',
+        key: 'students-list',
+        isActive: false,
         component: GroupStudents
       },
       {
         title: 'Attendance',
+        key: 'attendance',
+        isActive: false,
         component: GroupAttendance
       }
     ]
