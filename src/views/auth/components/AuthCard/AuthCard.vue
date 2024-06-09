@@ -3,7 +3,7 @@
     <form @submit.prevent="signIn">
       <p class="title">Socratus</p>
       <STextInput
-          placeholder="Email"
+          placeholder="Email/Phone number"
           size="normal"
           :errors="errors && errors['phone'] ? errors['phone'] : []"
           v-model="payload.phone"

@@ -12,7 +12,7 @@
         <div class="layout__content__header__actions">
             <SIconButton borderless @onClick="toggleSettingsBar">
               <template v-slot:icon>
-                <i class="bi-toggles"></i>
+                <i class="bi-gear"></i>
               </template>
             </SIconButton>
           <SIconButton borderless @onClick="openLogoutModal">
