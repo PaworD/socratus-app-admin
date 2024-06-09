@@ -6,21 +6,17 @@ import {composeModel, obsKeysToString, resolveWithError, ValidationError} from '
 
 @injectable()
 export class RootService extends AbstractService<School> {
+    protected readonly url ='/'
 
     constructor() {
         super();
     }
-
-    protected readonly url ='/'
-
     async create(payload: School): Promise<School | string> {
         return Promise.resolve({});
     }
-
     async delete(id: number): Promise<string> {
         return Promise.resolve("");
     }
-
     async get(q?: AnyObject): Promise<{ results: School[], meta: Pageable } | string | { results: School, meta: Pageable }> {
         try {
             const _response = await this.http.get(this.url + 'schools')
