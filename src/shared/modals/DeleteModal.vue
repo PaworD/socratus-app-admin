@@ -13,7 +13,7 @@
           Cancel
         </template>
       </SIconButton>
-      <SIconButton :theme="'danger'" @onClick="removeItem">
+      <SIconButton theme="danger" @onClick="removeItem">
         <template v-slot:icon>
           <i class="bi-trash"></i>
           Delete
@@ -58,6 +58,9 @@ export class DeleteModal extends ModalWrapper {
   @Action
   private deleteGroup!: (id: number) => void
 
+  @Action
+  private deleteCourse!: (id: number) => void
+
   /**
    * Gets the type of module , to define in which module deletion should be done
    *
@@ -87,23 +90,28 @@ export class DeleteModal extends ModalWrapper {
    * Notice!: Do not forget to register module here , if there is new one
    */
   public async removeItem (): Promise<void> {
-    switch (this.getModule) {
-      case 'applicant':
-        await this.deleteApplicant(Number(this.getId))
-        this.closeModal(null)
-        break
-      case 'group':
-        await this.deleteGroup(Number(this.getId))
-        this.closeModal(null)
-        break
-      case 'teacher':
-        await this.deleteTeacher(Number(this.getId))
-        this.closeModal(null)
-        break
-      case 'room':
-        await this.deleteRoom(Number(this.getId))
-        this.closeModal(null)
-        break
+    try {
+      switch (this.getModule) {
+        case 'applicant':
+          await this.deleteApplicant(Number(this.getId))
+          break
+        case 'group':
+          await this.deleteGroup(Number(this.getId))
+          break
+        case 'teacher':
+          await this.deleteTeacher(Number(this.getId))
+          break
+        case 'room':
+          await this.deleteRoom(Number(this.getId))
+          break
+        case 'course':
+          await this.deleteCourse(Number(this.getId))
+          break
+      }
+
+      this.closeModal(true)
+    } catch (e) {
+      this.closeModal(null)
     }
   }
 

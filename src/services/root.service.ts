@@ -20,7 +20,6 @@ export class RootService extends AbstractService<School> {
     async get(q?: AnyObject): Promise<{ results: School[], meta: Pageable } | string | { results: School, meta: Pageable }> {
         try {
             const _response = await this.http.get(this.url + 'schools')
-
             const meta: Pageable = {} as Pageable
 
             return {

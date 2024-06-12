@@ -2,8 +2,15 @@ import {Action, Module, Mutation, VuexModule} from "vuex-module-decorators";
 
 import {Inject} from "inversify-props";
 
-import {AddonData, Admin, AnyObject, GlobalSearchResults, Pageable, School} from '@/shared/models'
-
+import {
+    AddonData,
+    Admin,
+    AnyObject,
+    GlobalSearchResults,
+    Meta,
+    Pageable,
+    School
+} from '@/shared/models'
 import {
     LocalStorageService,
     ToastService,
@@ -11,6 +18,7 @@ import {
     ToastType,
     TYPES
 } from '@/services'
+
 import {Organization} from '@/views/contracts'
 import {ValidationError} from "@/shared/helpers";
 
@@ -30,6 +38,7 @@ export class RootModule extends VuexModule {
     public _addons: AddonData[] = []
     public _organization: Organization = {} as Organization
     public _schools: School[] = []
+    public _meta: Meta | null = null
 
     @Action({rawError: true})
     public async init(): Promise<void> {
@@ -45,6 +54,7 @@ export class RootModule extends VuexModule {
                     name: 'payments',
                 }
             ])
+            this.context.commit('setMeta', { currency: 'UZS' })
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
         }
@@ -86,7 +96,6 @@ export class RootModule extends VuexModule {
     public async search(q: string): Promise<GlobalSearchResults> {
         try {
             const response = await this.rootService.search(q)
-
             return response
         } catch (e) {
             this.toastService.show(true, e, ToastType.ERROR, 200)
@@ -119,6 +128,11 @@ export class RootModule extends VuexModule {
         this._addons = addons
     }
 
+    @Mutation
+    public setMeta(meta: Meta): void {
+        this._meta = meta
+    }
+
     /**
      * Gets information about this organization (school)
      */
@@ -140,4 +154,7 @@ export class RootModule extends VuexModule {
         return this._addons.filter(addon => addon.isActive)
     }
 
+    public get meta(): Meta | null {
+        return this._meta
+    }
 }

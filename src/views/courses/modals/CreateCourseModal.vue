@@ -14,7 +14,7 @@
         <label for="course-price">Define price of the course *</label>
         <money class="Input__input --flat --medium" placeholder="Price"
                v-model.lazy="payload.price"
-               id="course-price" v-bind="moneyMask" required/>
+               id="course-price" v-bind="money" required/>
       </div>
 
       <div v-if="!isUpdateMode" class="input-group">
@@ -51,10 +51,11 @@ import {Money} from 'v-money'
 import {ModalWrapper} from "@/components/_abstract/ModalWrapper.vue";
 import {SButton} from "@/shared/components/Button";
 import {STextInput} from "@/shared/components/TextInput/TextInput.vue";
-import {Action} from "vuex-class";
-import {Course} from "@/shared/models";
+import {Action, Getter} from "vuex-class";
+import {AnyObject, Course, Meta} from "@/shared/models";
 import {DropdownItemProps, SDropdown} from '@/shared/components/Dropdown'
 import {Levels} from '@/views/courses/contracts/levels'
+import {moneyMask} from "@/shared/helpers/money-mask.helper";
 
 @Component<CreateCourseModal>({
   name: 'CreateCourseModal',
@@ -82,6 +83,9 @@ export class CreateCourseModal extends ModalWrapper {
   @Action
   public updateCourse!: (payload: { course: Course, id: number }) => Promise<void>
 
+  @Getter
+  public meta!: Meta
+
   public Levels = Levels
 
   public payload: {
@@ -94,12 +98,8 @@ export class CreateCourseModal extends ModalWrapper {
     price: 0,
   }
 
-  public moneyMask = {
-    precision: 0,
-    decimal: ",",
-    thousands: " ",
-    prefix: "UZS ",
-    masked: false
+  public get money (): AnyObject {
+     return moneyMask(this.meta.currency)
   }
 
   public isLoading = false

@@ -38,7 +38,7 @@
           Teachers
         </router-link>
       </li>
-      <li>
+      <li v-if="myAddons.length">
         <hr>
       </li>
       <li v-for="addon in myAddons" :key="addon.id">
@@ -55,7 +55,6 @@
 </template>
 
 <script lang="ts">
-
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Organization } from "@/views/contracts";
 import OrganizationWidget from '@/components/Organization.vue'

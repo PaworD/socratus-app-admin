@@ -35,3 +35,7 @@ export interface GlobalSearchResults {
     groups: Group[],
     courses: Course[]
 }
+
+export interface Meta {
+    currency: string
+}

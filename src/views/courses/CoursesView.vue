@@ -23,11 +23,11 @@
     <transition-group name="flip-complete" tag="div" class="courses__list"
                       v-if="allCourses && !isLoading" appear>
       <SingleCourse v-for="course in allCourses" :key="course.id" :course="course"
-                    @updateCourse="openUpdateCourseModal" @deleteCourse="openDeleteCourseModal" />
+                    @updateCourse="openUpdateCourseModal" @deleteCourse="openDeleteCourseModal"/>
     </transition-group>
     <!--    </div>-->
     <div class="courses__list" v-else>
-      <SSkeleton v-for="i in 10" :key="i" type="block" />
+      <SSkeleton v-for="i in 10" :key="i" type="block"/>
     </div>
   </div>
 </template>
@@ -35,16 +35,17 @@
 <script lang="ts">
 
 import {Component, Vue, Watch} from 'vue-property-decorator'
-import { Action, Getter } from 'vuex-class'
+import {Action, Getter} from 'vuex-class'
 
-import { AnyObject, Course } from '@/shared/models'
-import { ModalSize } from '@/shared/abstract'
-import { SBadge, SButton, SCard, SIconButton, SImage, SSkeleton, STextInput } from '@/shared/components'
+import {AnyObject, Course} from '@/shared/models'
+import {ModalSize} from '@/shared/abstract'
+import {SBadge, SButton, SCard, SIconButton, SImage, SSkeleton, STextInput} from '@/shared/components'
 
-import { SingleCourse } from './components/Course.vue'
-import { CreateCourseModal } from './modals/CreateCourseModal.vue'
-import { DeleteCourseModal } from './modals/DeleteCourseModal.vue'
+import {SingleCourse} from './components/Course.vue'
+import {CreateCourseModal} from './modals/CreateCourseModal.vue'
+import {DeleteCourseModal} from './modals/DeleteCourseModal.vue'
 import CoursesFilters from './filters/CourseFilters.vue'
+import {DeleteModal} from "@/shared/modals";
 
 /**
  * @author Javlon Khalimjonov <khalimjonov2000@gmail.com>
@@ -63,8 +64,8 @@ import CoursesFilters from './filters/CourseFilters.vue'
     STextInput
   },
 
-  mounted (): void {
-    this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
+  mounted(): void {
+    this.fetchCourses({...this.queryParams, page_size: 30}).then(() => {
       this.allCourses = this.courses
       this.isLoading = false
     })
@@ -83,72 +84,79 @@ export class CoursesView extends Vue {
   public isLoading = false
   public searchQuery = ''
 
-  public get queryParams (): AnyObject {
+  public get queryParams(): AnyObject {
     return this.$route.query
   }
 
-  public async openCreateCourseModal (): Promise<void> {
+  public async openCreateCourseModal(): Promise<void> {
     const shouldUpdate = await this.$modalService.open(
-      CreateCourseModal,
-      { payload: 'Create Course Payload' },
-      {
-        size: ModalSize.ExtraSmall,
-        persistent: false,
-        hasHeader: true,
-        headerText: 'Create Course'
-      }
+        CreateCourseModal,
+        {payload: 'Create Course Payload'},
+        {
+          size: ModalSize.ExtraSmall,
+          persistent: false,
+          hasHeader: true,
+          headerText: 'Create Course'
+        }
     )
 
     if (shouldUpdate)
-      this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
+      this.fetchCourses({...this.queryParams, page_size: 30}).then(() => {
         this.allCourses = this.courses
         this.isLoading = false
       })
   }
 
-  public async openUpdateCourseModal (course: Course): Promise<void> {
+  public async openUpdateCourseModal(course: Course): Promise<void> {
     const shouldUpdate = await this.$modalService.open(
-      CreateCourseModal,
-      {
-        id: course.id,
-        course: course
-      },
-      {
-        size: ModalSize.ExtraSmall,
-        persistent: false,
-        hasHeader: true,
-        headerText: 'Update Course'
-      }
+        CreateCourseModal,
+        {
+          id: course.id,
+          course: course
+        },
+        {
+          size: ModalSize.ExtraSmall,
+          persistent: false,
+          hasHeader: true,
+          headerText: 'Update Course'
+        }
     )
 
 
     if (shouldUpdate)
-      this.fetchCourses({ ...this.queryParams, page_size: 30 }).then(() => {
+      this.fetchCourses({...this.queryParams, page_size: 30}).then(() => {
         this.allCourses = this.courses
         this.isLoading = false
       })
   }
 
-  public async openDeleteCourseModal (course: Course): Promise<void> {
-    const modalResponse = await this.$modalService.open(
-      DeleteCourseModal,
-      {
-        id: course.id,
-        name: course.name
-      },
-      {
-        size: ModalSize.ExtraSmall,
-        persistent: false,
-        hasHeader: true,
-        headerText: 'Delete Course'
+  public async openDeleteCourseModal(course: Course): Promise<void> {
+    const modalResponse = await this.$modalService.open(DeleteModal,
+        {
+          id: course.id,
+          module: 'course',
+          message: `Are you sure to delete course: ${course.name} `
+        },
+        {
+          hasHeader: true,
+          size: ModalSize.ExtraSmall,
+          persistent: false
+        })
+
+    if (modalResponse) {
+      try {
+        this.isLoading = true
+        await this.fetchCourses({...this.queryParams, page_size: 30})
+        this.allCourses = this.courses
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.isLoading = false
       }
-    )
-    if (typeof modalResponse !== 'undefined') {
-      this.courses.splice(this.courses.indexOf(course), 1)
     }
   }
 
-  public toggleFiltersBar (): void {
+  public toggleFiltersBar(): void {
     this.isFiltersActive = !this.isFiltersActive
   }
 

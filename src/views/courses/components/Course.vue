@@ -17,7 +17,7 @@
         <div class="course-badges">
           <SBadge v-if="course.level" :title="course.level" theme="light" />
         </div>
-        <SImage src="https://akm-img-a-in.tosshub.com/indiatoday/images/bodyeditor/202009/e-learning_digital_education-1200x1080.jpg?XjMNHsb4gLoU_cC7110HB7jVghJQROOj" alt="" />
+        <img src="@/assets/courses/course.png" alt="" />
       </div>
       <div class="course__description">
         <p>{{ course.name }}</p>
